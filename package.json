@@ -2,9 +2,14 @@
   "name": "protocol-validation",
   "version": "1.0.0",
   "description": "A utility for validating a Network Canvas protocol against a versioned JSON schema",
+  "private": true,
+  "engines": {
+    "node": "8.11.1",
+    "npm": "6.4.1"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "validate-protocol": "node scripts/validate-protocol.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/codaco/protocol-validation/issues"
   },
-  "homepage": "https://github.com/codaco/protocol-validation#readme"
+  "homepage": "https://github.com/codaco/protocol-validation",
+  "dependencies": {
+    "ajv": "^6.10.0",
+    "chalk": "^2.4.2",
+    "jszip": "^3.2.1"
+  }
 }

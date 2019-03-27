@@ -1,6 +1,6 @@
 const Ajv = require('ajv');
 
-const { v1 } = require('../../../schemas/');
+const { v1 } = require('../schemas/');
 
 /**
  * Statically validate the protocol based on its JSON schema
