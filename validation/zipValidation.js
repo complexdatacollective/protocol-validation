@@ -1,5 +1,5 @@
-import environments from '../../environments';
-import inEnvironment from '../../Environment';
+import environments from '../utils/environments';
+import inEnvironment from '../utils/Environment';
 
 /**
  * @param {string} pathname a pathname contained in a protocol archive
