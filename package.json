@@ -1,0 +1,19 @@
+{
+  "name": "protocol-validation",
+  "version": "1.0.0",
+  "description": "A utility for validating a Network Canvas protocol against a versioned JSON schema",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codaco/protocol-validation.git"
+  },
+  "author": "Complex Data Collective",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codaco/protocol-validation/issues"
+  },
+  "homepage": "https://github.com/codaco/protocol-validation#readme"
+}
