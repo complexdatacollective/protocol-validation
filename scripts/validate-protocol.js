@@ -20,7 +20,7 @@ const schemaDir = path.join(projectDir, 'schemas');
 const protocolArg = process.argv[2];
 
 if (!protocolArg) {
-  console.error("You must specify a protocol file to validate.");
+  console.error('You must specify a protocol file to validate.');
   process.exit(1);
 }
 
