@@ -61,8 +61,30 @@ const assertRelativePath = inEnvironment((environment) => {
   throw new Error('assertRelativePath() not available on platform');
 });
 
+const checkZipPaths = inEnvironment((environment) => {
+  if (environment === environments.ELECTRON || environment === environments.CORDOVA) {
+    return zipPaths =>
+      new Promise((resolve, reject) => {
+        try {
+          zipPaths.forEach((pathname) => {
+            assertNonEmptyPath(pathname);
+            assertRelativePath(pathname);
+            assertNoTraversalInPath(pathname);
+          });
+        } catch (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+  }
+
+  return () => Promise.reject(new Error('checkZipPaths() not available on platform'));
+});
+
 export {
   assertNonEmptyPath,
   assertNoTraversalInPath,
   assertRelativePath,
+  checkZipPaths,
 };
