@@ -111,8 +111,7 @@ class Validator {
         failureMessage = makeFailureMessage(fragment, subject);
       } catch (err) {
         debugLog(err);
-        console.log(err);
-        // this.warnings.push(`makeFailureMessage error for ${keypathString(keypath.shift())}: ${err.toString()}`);
+        this.warnings.push(`makeFailureMessage error for ${keypathString(keypath.shift())}: ${err.toString()}`);
         return true;
       }
       this.errors.push(`${keypathString(keypath)}: ${failureMessage}`);
@@ -127,7 +126,8 @@ class Validator {
    */
   validateSequence(keypath, fragment, sequence, subject) {
     sequence.every(
-      ([validate, makeFailureMessage]) => this.validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject)
+      ([validate, makeFailureMessage]) =>
+        this.validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject),
     );
   }
 
@@ -164,7 +164,7 @@ class Validator {
    * Recursively traverse to validate parts of a protocol for which we have validations
    * @private
    */
-  traverse(fragment = this.protocol, keypath = ['protocol'], subject = null, ) {
+  traverse(fragment = this.protocol, keypath = ['protocol'], subject = null) {
     const stageSubject = subject || fragment.subject;
 
     this.checkFragment(keypath, fragment, stageSubject);
