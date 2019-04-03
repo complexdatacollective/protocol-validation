@@ -16,7 +16,7 @@
           "type": "string",
           "format": "date-time"
         },
-        "networkCanvasVersion": {
+        "schemaVersion": {
           "type": "string"
         },
         "codebook": {
@@ -24,9 +24,6 @@
         },
         "assetManifest": {
           "$ref": "#/definitions/AssetManifest"
-        },
-        "forms": {
-          "$ref": "#/definitions/Forms"
         },
         "stages": {
           "type": "array",
@@ -47,27 +44,11 @@
       "type": "object",
       "title": "AssetManifest"
     },
-    "Forms": {
-      "type": "object",
-      "additionalProperties": false,
-      "title": "Forms",
-      "patternProperties": {
-        ".+": {
-          "$ref": "#/definitions/Form"
-        }
-      }
-    },
     "Form": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "title": {
-          "type": "string"
-        },
-        "entity": {
-          "$ref": "#/definitions/Entity"
-        },
-        "type": {
           "type": "string"
         },
         "fields": {
@@ -78,7 +59,6 @@
         }
       },
       "required": [
-        "entity",
         "fields",
         "title"
       ],
@@ -94,26 +74,25 @@
         "component": {
           "type": "string",
           "enum": [
-            "Checkbox",
             "CheckboxGroup",
             "Number",
             "RadioGroup",
             "Text",
             "Toggle",
-            "ToggleButton",
             "ToggleButtonGroup"
           ]
         },
-        "label": {
+        "prompt": {
           "type": "string"
         },
-        "value": {
-          "type": "string"
+        "validation": {
+          "$ref": "#/definitions/Validation"
         }
       },
       "required": [
         "component",
-        "variable"
+        "variable",
+        "prompt"
       ],
       "title": "Field"
     },
@@ -129,8 +108,8 @@
           "enum": [
             "Narrative",
             "AlterForm",
-            "EgoForm",
             "AlterEdgeForm",
+            "EgoForm",
             "NameGenerator",
             "NameGeneratorList",
             "NameGeneratorAutoComplete",
@@ -144,11 +123,7 @@
           "type": "string"
         },
         "form": {
-          "type": [
-            "string",
-            "array",
-            "null"
-          ]
+          "$ref": "#/definitions/Form"
         },
         "quickAdd": {
           "type": "boolean"
@@ -921,12 +896,6 @@
         "name": {
           "type": "string"
         },
-        "label": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
         "type": {
           "type": "string",
           "enum": [
@@ -940,9 +909,6 @@
             "location"
           ]
         },
-        "validation": {
-          "$ref": "#/definitions/Validation"
-        },
         "options": {
           "type": "array",
           "items": {
@@ -951,7 +917,8 @@
         }
       },
       "required": [
-        "type"
+        "type",
+        "name"
       ],
       "title": "Variable"
     },
