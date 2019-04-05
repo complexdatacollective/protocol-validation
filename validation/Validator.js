@@ -99,7 +99,7 @@ class Validator {
   validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject) {
     let result;
     try {
-      result = validate(fragment, subject);
+      result = validate(fragment, subject, keypath);
     } catch (err) {
       debugLog(err);
       this.warnings.push(`Validation error for ${keypathString(keypath)}: ${err.toString()}`);
@@ -111,7 +111,7 @@ class Validator {
         failureMessage = makeFailureMessage(fragment, subject);
       } catch (err) {
         debugLog(err);
-        this.warnings.push(`makeFailureMessage error for ${keypathString(keypath)}: ${err.toString()}`);
+        this.warnings.push(`makeFailureMessage error for ${keypathString(keypath.shift())}: ${err.toString()}`);
         return true;
       }
       this.errors.push(`${keypathString(keypath)}: ${failureMessage}`);
@@ -125,8 +125,10 @@ class Validator {
    * @private
    */
   validateSequence(keypath, fragment, sequence, subject) {
-    sequence.every(([validate, makeFailureMessage]) =>
-      this.validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject));
+    sequence.every(
+      ([validate, makeFailureMessage]) =>
+        this.validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject),
+    );
   }
 
   /**

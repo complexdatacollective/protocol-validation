@@ -6,8 +6,8 @@ const {
   getVariablesForSubject,
   getVariableNames,
   nodeVarsIncludeDisplayVar,
-  undefinedFormVariables,
 } = require('./helpers');
+
 
 /**
  * Define and run all dynamic validations (which aren't covered by the JSON Schema).
@@ -16,54 +16,104 @@ const {
  */
 const validateLogic = (protocol) => {
   const v = new Validator(protocol);
-  const registry = protocol.codebook;
+  const codebook = protocol.codebook;
+
+  const get = (obj, path, def) => {
+    /**
+     * If the path is a string, convert it to an array
+     * @param  {String|Array} path The path
+     * @return {Array}             The path array
+     */
+    const stringToPath = (inputPath) => {
+      // If the inputPath isn't a string, return it
+      if (typeof inputPath !== 'string') return inputPath;
+
+      // Create new array
+      const output = [];
+
+      // Split to an array with dot notation
+      inputPath.split('.').forEach((item) => {
+        // Split to an array with bracket notation
+        item.split(/\[([^}]+)\]/g).forEach((key) => {
+          // Push to the new array
+          if (key.length > 0) {
+            output.push(key);
+          }
+        });
+      });
+
+      return output;
+    };
+
+    // Get the path as an array
+    const pathArray = stringToPath(path);
+
+    // Cache the current object
+    let current = obj;
+
+    // For each item in the path, dig into the object
+    for (let i = 0; i < pathArray.length; i += 1) {
+      // If the item isn't found, return the default (or null)
+      if (!current[pathArray[i]]) return def;
+
+      // Otherwise, update the current  value
+      current = current[pathArray[i]];
+    }
+
+    return current;
+  };
 
   v.addValidation('codebook.node.*',
     nodeType => nodeVarsIncludeDisplayVar(nodeType),
     nodeType => `node displayVariable "${nodeType.displayVariable}" did not match any node variable`);
 
-  v.addValidation('stages[].form',
-    form => form === null || (protocol.forms && protocol.forms[form]), // `null` form is allowed
-    form => `protocol.forms does not contain the form "${form}"`,
-  );
-
   v.addValidationSequence('stages[].subject',
     [
-      subject => registry[subject.entity],
+      subject => codebook[subject.entity],
       subject => `"${subject.entity}" is not defined in the codebook`,
     ],
     [
-      subject => Object.keys(registry[subject.entity]).includes(subject.type),
+      subject => Object.keys(codebook[subject.entity]).includes(subject.type),
       subject => `"${subject.type}" definition not found in codebook["${subject.entity}"]`,
     ],
   );
 
-  v.addValidationSequence('forms.*',
+  // Tries to validate inline forms.
+  // If the stage type is egoform, lookup variables in codebook[ego]
+  // Otherwise, use stage.subject to get codebook reference
+  v.addValidationSequence('stages[].form.fields[]',
     [
-      form => registry[form.entity],
-      form => `form entity "${form.entity}" is not defined in codebook`,
-    ],
-    [
-      form => (registry[form.entity][form.type] || !form.type),
-      form => `"${form.type}" definition not found in codebook["${form.entity}"]`,
-    ],
-    [
-      form =>
-        form.fields.every(field => (form.type ?
-          registry[form.entity][form.type].variables[field.variable] :
-          registry[form.entity].variables[field.variable])),
-      form => `Undefined form field variables in codebook: ${undefinedFormVariables(form, registry)}`,
+      (field, subject, keypath) => {
+        // We know that keypath will be in key order, with dedicated keys for array index.
+        // Therefore: keypath[1] = 'stages', keypath[2] = [index]
+        const stage = get(protocol, `${keypath[1]}${keypath[2]}`);
+        let codebookEntity;
+
+        if (stage.type === 'EgoForm') {
+          codebookEntity = codebook.ego;
+        } else {
+          const stageSubject = stage.subject;
+          const path = `codebook.${stageSubject.entity}.${stageSubject.type}`;
+
+          codebookEntity = get(protocol, path);
+        }
+
+        const variable = field.variable;
+
+        return codebookEntity.variables[variable];
+      },
+      () => 'Form field variable not found in codebook.',
     ],
   );
 
   v.addValidationSequence('filter.rules[]',
     [
-      rule => entityDefFromRule(rule, registry),
+      rule => entityDefFromRule(rule, codebook),
       rule => `Rule option type "${rule.options.type}" is not defined in codebook`,
     ],
     [
       (rule) => {
-        const variables = entityDefFromRule(rule, registry).variables;
+        const variables = entityDefFromRule(rule, codebook).variables;
         return variables && variables[rule.options.attribute];
       },
       rule => `"${rule.options.attribute}" is not a valid variable ID`,
@@ -101,33 +151,33 @@ const validateLogic = (protocol) => {
   );
 
   v.addValidation('prompts[].variable',
-    (variable, subject) => getVariablesForSubject(registry, subject)[variable],
+    (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
     (variable, subject) => `"${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
   v.addValidation('prompts[].cardOptions.additionalProperties[].variable',
-    (variable, subject) => getVariablesForSubject(registry, subject)[variable],
+    (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
     (variable, subject) => `"${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
   v.addValidation('prompts[].sortOptions.sortOrder[].property',
-    (prop, subject) => getVariablesForSubject(registry, subject)[prop],
+    (prop, subject) => getVariablesForSubject(codebook, subject)[prop],
     (prop, subject) => `Sort order property "${prop}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
   v.addValidation('prompts[].sortOptions.sortableProperties[].variable',
-    (variable, subject) => getVariablesForSubject(registry, subject)[variable],
+    (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
     (variable, subject) => `Sortable property "${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
   v.addValidation('prompts[].layout.layoutVariable',
-    (variable, subject) => getVariablesForSubject(registry, subject)[variable],
+    (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
     (variable, subject) => `Layout variable "${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
   v.addValidation('prompts[].additionalAttributes',
     (attrMap, subject) => Object.keys(attrMap).every(attr => (
-      getVariablesForSubject(registry, subject)[attr]
+      getVariablesForSubject(codebook, subject)[attr]
     )),
     attrMap => `One or more sortable properties not defined in codebook: ${Object.keys(attrMap)}`,
   );
