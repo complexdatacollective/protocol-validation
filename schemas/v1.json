@@ -875,7 +875,8 @@
       },
       "required": [
         "label",
-        "name"
+        "name",
+        "color"
       ],
       "title": "EdgeTypeDef"
     },
@@ -1006,7 +1007,8 @@
       "required": [
         "name",
         "label",
-        "variables"
+        "variables",
+        "color"
       ],
       "title": "NodeTypeDef"
     },
