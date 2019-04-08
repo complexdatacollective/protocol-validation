@@ -875,7 +875,8 @@
       },
       "required": [
         "label",
-        "name"
+        "name",
+        "color"
       ],
       "title": "EdgeTypeDef"
     },
