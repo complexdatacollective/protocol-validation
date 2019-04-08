@@ -1006,7 +1006,8 @@
       "required": [
         "name",
         "label",
-        "variables"
+        "variables",
+        "color"
       ],
       "title": "NodeTypeDef"
     },
