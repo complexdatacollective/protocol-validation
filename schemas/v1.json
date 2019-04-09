@@ -863,9 +863,6 @@
         "name": {
           "type": "string"
         },
-        "label": {
-          "type": "string"
-        },
         "color": {
           "type": "string"
         },
@@ -874,7 +871,6 @@
         }
       },
       "required": [
-        "label",
         "name",
         "color"
       ],
@@ -988,9 +984,6 @@
         "name": {
           "type": "string"
         },
-        "label": {
-          "type": "string"
-        },
         "displayVariable": {
           "type": "string"
         },
@@ -1006,7 +999,6 @@
       },
       "required": [
         "name",
-        "label",
         "variables",
         "color"
       ],
