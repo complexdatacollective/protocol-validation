@@ -155,11 +155,6 @@ const validateLogic = (protocol) => {
     (variable, subject) => `"${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
-  v.addValidation('prompts[].sortOptions.sortOrder[].property',
-    (prop, subject) => getVariablesForSubject(codebook, subject)[prop],
-    (prop, subject) => `Sort order property "${prop}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
-  );
-
   v.addValidation('prompts[].sortOptions.sortableProperties[].variable',
     (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
     (variable, subject) => `Sortable property "${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
