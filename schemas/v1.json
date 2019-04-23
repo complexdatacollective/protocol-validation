@@ -126,7 +126,7 @@
           "$ref": "#/definitions/Form"
         },
         "quickAdd": {
-          "type": "boolean"
+          "type": "string"
         },
         "subject": {
           "$ref": "#/definitions/Subject"
