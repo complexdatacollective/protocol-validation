@@ -162,7 +162,7 @@ const validateLogic = (protocol) => {
 
   v.addValidation('prompts[].additionalAttributes',
     (additionalAttributes, subject) => additionalAttributes.every(
-      ({ variable }) => getVariablesForSubject(codebook, subject)[variable]
+      ({ variable }) => getVariablesForSubject(codebook, subject)[variable],
     ),
     additionalAttributes => `One or more sortable properties not defined in codebook: ${additionalAttributes.map(({ variable }) => variable)}`,
   );
