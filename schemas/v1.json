@@ -282,9 +282,7 @@
           "type": "string",
           "enum": [
             "text",
-            "image",
-            "audio",
-            "video"
+            "asset"
           ]
         },
         "content": {
