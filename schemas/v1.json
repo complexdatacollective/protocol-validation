@@ -461,7 +461,10 @@
           "type": "string"
         },
         "additionalAttributes": {
-          "$ref": "#/definitions/AdditionalAttributes"
+          "$ref": "#/definitions/AdditionalAttributes",
+          "items": {
+            "$ref": "#/definitions/AdditionalAttribute"
+          }
         },
         "variable": {
           "type": "string"
@@ -569,9 +572,26 @@
       "title": "Behaviours"
     },
     "AdditionalAttributes": {
-      "type": "object",
+      "type": "array",
       "required": [],
       "title": "AdditionalAttributes"
+    },
+    "AdditionalAttribute": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variable": {
+          "type": "string"
+        },
+        "value": {
+          "type": ["integer", "string"]
+        }
+      },
+      "required": [
+        "variable",
+        "value"
+      ],
+      "title": "AdditionalAttribute"
     },
     "Background": {
       "type": "object",
