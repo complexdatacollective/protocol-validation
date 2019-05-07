@@ -703,7 +703,7 @@
         }
       },
       "required": [
-        "variable"
+        "allowHighlighting"
       ],
       "title": "Highlight"
     },
