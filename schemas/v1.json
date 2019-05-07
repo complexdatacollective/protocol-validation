@@ -348,7 +348,7 @@
       "title": "Panel"
     },
     "Filter": {
-      "type": "object",
+      "type": ["object", "null"],
       "additionalProperties": false,
       "properties": {
         "join": {
