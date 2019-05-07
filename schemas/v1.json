@@ -678,9 +678,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "display"
-      ],
+      "required": [],
       "title": "Edges"
     },
     "NarrativeHighlight": {
