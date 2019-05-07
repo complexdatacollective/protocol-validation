@@ -582,7 +582,7 @@
           "type": "string"
         },
         "value": {
-          "type": ["integer", "string"]
+          "type": ["integer", "string", "array"]
         }
       },
       "required": [
