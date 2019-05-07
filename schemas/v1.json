@@ -719,7 +719,6 @@
         }
       },
       "required": [
-        "allowPositioning",
         "layoutVariable"
       ],
       "title": "Layout"
