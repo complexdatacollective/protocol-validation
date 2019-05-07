@@ -45,7 +45,7 @@
       "title": "AssetManifest"
     },
     "Form": {
-      "type": "object",
+      "type": ["object", "null"],
       "additionalProperties": false,
       "properties": {
         "title": {
@@ -126,7 +126,7 @@
           "$ref": "#/definitions/Form"
         },
         "quickAdd": {
-          "type": "string"
+          "type": ["string", "null"]
         },
         "subject": {
           "$ref": "#/definitions/Subject"
