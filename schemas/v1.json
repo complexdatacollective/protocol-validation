@@ -460,10 +460,7 @@
           "type": "string"
         },
         "additionalAttributes": {
-          "$ref": "#/definitions/AdditionalAttributes",
-          "items": {
-            "$ref": "#/definitions/AdditionalAttribute"
-          }
+          "$ref": "#/definitions/AdditionalAttributes"
         },
         "variable": {
           "type": "string"
@@ -572,8 +569,10 @@
     },
     "AdditionalAttributes": {
       "type": "array",
-      "required": [],
-      "title": "AdditionalAttributes"
+      "title": "AdditionalAttributes",
+      "items": {
+        "$ref": "#/definitions/AdditionalAttribute"
+      }
     },
     "AdditionalAttribute": {
       "type": "object",
