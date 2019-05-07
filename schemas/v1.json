@@ -421,7 +421,6 @@
         }
       },
       "required": [
-        "attribute",
         "operator",
         "type"
       ],

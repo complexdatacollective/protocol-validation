@@ -113,6 +113,7 @@ const validateLogic = (protocol) => {
     ],
     [
       (rule) => {
+        if (!rule.options.attribute) { return true } // Entity type rules do not have an attribute
         const variables = entityDefFromRule(rule, codebook).variables;
         return variables && variables[rule.options.attribute];
       },
