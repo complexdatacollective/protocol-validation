@@ -59,8 +59,7 @@
         }
       },
       "required": [
-        "fields",
-        "title"
+        "fields"
       ],
       "title": "Form"
     },
@@ -111,6 +110,7 @@
             "AlterEdgeForm",
             "EgoForm",
             "NameGenerator",
+            "NameGeneratorQuickAdd",
             "NameGeneratorList",
             "NameGeneratorAutoComplete",
             "Sociogram",
@@ -126,6 +126,9 @@
           "$ref": "#/definitions/Form"
         },
         "quickAdd": {
+          "type": ["string", "null"]
+        },
+        "dataSource": {
           "type": ["string", "null"]
         },
         "subject": {
@@ -158,10 +161,22 @@
           },
           "minItems": 1
         },
-        "sortOrder": {
-          "type": "array",
+        "sortOptions": {
+          "type": "object",
           "items": {
-            "$ref": "#/definitions/SortOrder"
+            "$ref": "#/definitions/SortOptions"
+          }
+        },
+        "cardOptions": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/CardOptions"
+          }
+        },
+        "searchOptions": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/SearchOptions"
           }
         },
         "behaviours": {
@@ -257,6 +272,7 @@
             "type": {
               "enum": [
                 "NameGenerator",
+                "NameGeneratorQuickAdd",
                 "NameGeneratorList",
                 "NameGeneratorAutoComplete",
                 "Sociogram",
@@ -331,17 +347,17 @@
         "title": {
           "type": "string"
         },
-        "dataSource": {
-          "type": "string"
-        },
         "filter": {
           "$ref": "#/definitions/Filter"
+        },
+        "dataSource": {
+          "type": ["string", "null"]
         }
       },
       "required": [
-        "dataSource",
         "id",
-        "title"
+        "title",
+        "dataSource"
       ],
       "title": "Panel"
     },
@@ -475,20 +491,14 @@
             "$ref": "#/definitions/SortOrder"
           }
         },
+        "sortOrder": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SortOrder"
+          }
+        },
         "color": {
           "type": "string"
-        },
-        "dataSource": {
-          "type": "string"
-        },
-        "subject": {
-          "$ref": "#/definitions/Subject"
-        },
-        "cardOptions": {
-          "$ref": "#/definitions/CardOptions"
-        },
-        "sortOptions": {
-          "$ref": "#/definitions/SortOptions"
         },
         "layout": {
           "$ref": "#/definitions/Layout"
@@ -498,18 +508,6 @@
         },
         "highlight": {
           "$ref": "#/definitions/Highlight"
-        },
-        "sortOrder": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SortOrder"
-          }
-        },
-        "background": {
-          "$ref": "#/definitions/Background"
-        },
-        "searchOptions": {
-          "$ref": "#/definitions/SearchOptions"
         }
       },
       "required": [
@@ -790,19 +788,6 @@
             "SKIP"
           ]
         },
-        "operator": {
-          "type": "string",
-          "enum": [
-            "ANY",
-            "NONE",
-            "EXACTLY",
-            "NOT",
-            "GREATER_THAN",
-            "GREATER_THAN_OR_EQUAL",
-            "LESS_THAN",
-            "LESS_THAN_OR_EQUAL"
-          ]
-        },
         "value": {
           "type": "integer",
           "minimum": 1,
@@ -814,33 +799,9 @@
       },
       "required": [
         "action",
-        "filter",
-        "operator"
+        "filter"
       ],
-      "title": "SkipLogic",
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "enum": [
-                  "EXACTLY",
-                  "NOT",
-                  "GREATER_THAN",
-                  "GREATER_THAN_OR_EQUAL",
-                  "LESS_THAN",
-                  "LESS_THAN_OR_EQUAL"
-                ]
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "value"
-            ]
-          }
-        }
-      ]
+      "title": "SkipLogic"
     },
     "codebook": {
       "type": "object",
