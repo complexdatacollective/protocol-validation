@@ -435,8 +435,7 @@
         }
       },
       "required": [
-        "operator",
-        "type"
+        "operator"
       ],
       "title": "Rule Options",
       "allOf": [
@@ -787,11 +786,6 @@
             "SHOW",
             "SKIP"
           ]
-        },
-        "value": {
-          "type": "integer",
-          "minimum": 1,
-          "multipleOf": 1
         },
         "filter": {
           "$ref": "#/definitions/Filter"

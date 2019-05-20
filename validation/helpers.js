@@ -27,8 +27,11 @@ const nodeVarsIncludeDisplayVar = node =>
   !node.displayVariable // displayVariable is optional
     || Object.keys(node.variables).some(variableId => variableId === node.displayVariable);
 
-const entityDefFromRule = (rule, codebook) =>
-  codebook[rule.type === 'edge' ? 'edge' : 'node'][rule.options.type];
+const entityDefFromRule = (rule, codebook) => {
+  if (rule.type === 'ego') { return codebook.ego; } // Ego is always defined
+  return codebook[rule.type === 'edge' ? 'edge' : 'node'][rule.options.type];
+}
+  
 
 const getVariablesForSubject = (registry, subject = {}) =>
   (
