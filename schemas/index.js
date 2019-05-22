@@ -1,5 +1,3 @@
-const v1 = require('./v1.json');
+const v1 = require('./v1.js');
 
-module.exports = {
-  v1,
-};
+module.exports = { v1 };
