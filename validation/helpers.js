@@ -30,8 +30,7 @@ const nodeVarsIncludeDisplayVar = node =>
 const entityDefFromRule = (rule, codebook) => {
   if (rule.type === 'ego') { return codebook.ego; } // Ego is always defined
   return codebook[rule.type === 'edge' ? 'edge' : 'node'][rule.options.type];
-}
-  
+};
 
 const getVariablesForSubject = (registry, subject = {}) =>
   (
