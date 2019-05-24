@@ -10,6 +10,7 @@
   "main": "index.js",
   "scripts": {
     "validate-protocol": "node scripts/validate-protocol.js",
+    "build": "node scripts/build-schemas.js",
     "lint": "eslint ."
   },
   "repository": {
@@ -24,15 +25,17 @@
   "homepage": "https://github.com/codaco/protocol-validation",
   "dependencies": {
     "ajv": "^6.10.0",
+    "ajv-pack": "^0.3.1",
     "babel-eslint": "7.2.3",
     "chalk": "^2.4.2",
-    "jszip": "^3.2.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-loader": "1.9.0",
-    "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-flowtype": "2.35.0",
     "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-jsx-a11y": "5.1.1"
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "fs-extra": "^8.0.1",
+    "jszip": "^3.2.1"
   }
 }
