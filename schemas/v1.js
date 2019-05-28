@@ -211,9 +211,9 @@ var validate = (function() {
                               var valid1;
                               for (var i1 = 0; i1 < data1.length; i1++) {
                                 var errs_2 = errors;
-                                if (!refVal14(data1[i1], (dataPath || '') + '.stages[' + i1 + ']', data1, i1, rootData)) {
-                                  if (vErrors === null) vErrors = refVal14.errors;
-                                  else vErrors = vErrors.concat(refVal14.errors);
+                                if (!refVal15(data1[i1], (dataPath || '') + '.stages[' + i1 + ']', data1, i1, rootData)) {
+                                  if (vErrors === null) vErrors = refVal15.errors;
+                                  else vErrors = vErrors.concat(refVal15.errors);
                                   errors = vErrors.length;
                                 }
                                 var valid2 = errors === errs_2;
@@ -339,9 +339,9 @@ var validate = (function() {
                 valid1 = true;
               } else {
                 var errs_1 = errors;
-                if (!refVal10(data.edge, (dataPath || '') + '.edge', data, 'edge', rootData)) {
-                  if (vErrors === null) vErrors = refVal10.errors;
-                  else vErrors = vErrors.concat(refVal10.errors);
+                if (!refVal11(data.edge, (dataPath || '') + '.edge', data, 'edge', rootData)) {
+                  if (vErrors === null) vErrors = refVal11.errors;
+                  else vErrors = vErrors.concat(refVal11.errors);
                   errors = vErrors.length;
                 }
                 var valid1 = errors === errs_1;
@@ -351,9 +351,9 @@ var validate = (function() {
                   valid1 = true;
                 } else {
                   var errs_1 = errors;
-                  if (!refVal12(data.ego, (dataPath || '') + '.ego', data, 'ego', rootData)) {
-                    if (vErrors === null) vErrors = refVal12.errors;
-                    else vErrors = vErrors.concat(refVal12.errors);
+                  if (!refVal13(data.ego, (dataPath || '') + '.ego', data, 'ego', rootData)) {
+                    if (vErrors === null) vErrors = refVal13.errors;
+                    else vErrors = vErrors.concat(refVal13.errors);
                     errors = vErrors.length;
                   }
                   var valid1 = errors === errs_1;
@@ -740,7 +740,7 @@ var validate = (function() {
           var errs__0 = errors;
           var valid1 = true;
           for (var key0 in data) {
-            var isAdditional0 = !(false || key0 == 'name' || key0 == 'type' || key0 == 'options');
+            var isAdditional0 = !(false || key0 == 'name' || key0 == 'type' || key0 == 'component' || key0 == 'options' || key0 == 'validation');
             if (isAdditional0) {
               valid1 = false;
               validate.errors = [{
@@ -835,37 +835,286 @@ var validate = (function() {
                 var valid1 = errors === errs_1;
               }
               if (valid1) {
-                var data1 = data.options;
+                var data1 = data.component;
                 if (data1 === undefined) {
                   valid1 = true;
                 } else {
                   var errs_1 = errors;
-                  if (Array.isArray(data1)) {
-                    var errs__1 = errors;
-                    var valid1;
-                    for (var i1 = 0; i1 < data1.length; i1++) {
-                      var errs_2 = errors;
-                      if (!refVal7(data1[i1], (dataPath || '') + '.options[' + i1 + ']', data1, i1, rootData)) {
-                        if (vErrors === null) vErrors = refVal7.errors;
-                        else vErrors = vErrors.concat(refVal7.errors);
-                        errors = vErrors.length;
-                      }
-                      var valid2 = errors === errs_2;
-                      if (!valid2) break;
-                    }
-                  } else {
+                  if (typeof data1 !== "string") {
                     validate.errors = [{
                       keyword: 'type',
-                      dataPath: (dataPath || '') + '.options',
-                      schemaPath: '#/properties/options/type',
+                      dataPath: (dataPath || '') + '.component',
+                      schemaPath: '#/properties/component/type',
                       params: {
-                        type: 'array'
+                        type: 'string'
                       },
-                      message: 'should be array'
+                      message: 'should be string'
+                    }];
+                    return false;
+                  }
+                  var schema1 = validate.schema.properties.component.enum;
+                  var valid1;
+                  valid1 = false;
+                  for (var i1 = 0; i1 < schema1.length; i1++)
+                    if (equal(data1, schema1[i1])) {
+                      valid1 = true;
+                      break;
+                    } if (!valid1) {
+                    validate.errors = [{
+                      keyword: 'enum',
+                      dataPath: (dataPath || '') + '.component',
+                      schemaPath: '#/properties/component/enum',
+                      params: {
+                        allowedValues: schema1
+                      },
+                      message: 'should be equal to one of the allowed values'
                     }];
                     return false;
                   }
                   var valid1 = errors === errs_1;
+                }
+                if (valid1) {
+                  var data1 = data.options;
+                  if (data1 === undefined) {
+                    valid1 = true;
+                  } else {
+                    var errs_1 = errors;
+                    if (Array.isArray(data1)) {
+                      var errs__1 = errors;
+                      var valid1;
+                      for (var i1 = 0; i1 < data1.length; i1++) {
+                        var errs_2 = errors;
+                        if (!refVal7(data1[i1], (dataPath || '') + '.options[' + i1 + ']', data1, i1, rootData)) {
+                          if (vErrors === null) vErrors = refVal7.errors;
+                          else vErrors = vErrors.concat(refVal7.errors);
+                          errors = vErrors.length;
+                        }
+                        var valid2 = errors === errs_2;
+                        if (!valid2) break;
+                      }
+                    } else {
+                      validate.errors = [{
+                        keyword: 'type',
+                        dataPath: (dataPath || '') + '.options',
+                        schemaPath: '#/properties/options/type',
+                        params: {
+                          type: 'array'
+                        },
+                        message: 'should be array'
+                      }];
+                      return false;
+                    }
+                    var valid1 = errors === errs_1;
+                  }
+                  if (valid1) {
+                    var data1 = data.validation;
+                    if (data1 === undefined) {
+                      valid1 = true;
+                    } else {
+                      var errs_1 = errors;
+                      var errs_2 = errors;
+                      if ((data1 && typeof data1 === "object" && !Array.isArray(data1))) {
+                        var errs__2 = errors;
+                        var valid3 = true;
+                        for (var key2 in data1) {
+                          var isAdditional2 = !(false || key2 == 'required' || key2 == 'requiredAcceptsNull' || key2 == 'minLength' || key2 == 'maxLength' || key2 == 'minValue' || key2 == 'maxValue' || key2 == 'minSelected' || key2 == 'maxSelected');
+                          if (isAdditional2) {
+                            valid3 = false;
+                            validate.errors = [{
+                              keyword: 'additionalProperties',
+                              dataPath: (dataPath || '') + '.validation',
+                              schemaPath: '#/definitions/Validation/additionalProperties',
+                              params: {
+                                additionalProperty: '' + key2 + ''
+                              },
+                              message: 'should NOT have additional properties'
+                            }];
+                            return false;
+                            break;
+                          }
+                        }
+                        if (valid3) {
+                          if (data1.required === undefined) {
+                            valid3 = true;
+                          } else {
+                            var errs_3 = errors;
+                            if (typeof data1.required !== "boolean") {
+                              validate.errors = [{
+                                keyword: 'type',
+                                dataPath: (dataPath || '') + '.validation.required',
+                                schemaPath: '#/definitions/Validation/properties/required/type',
+                                params: {
+                                  type: 'boolean'
+                                },
+                                message: 'should be boolean'
+                              }];
+                              return false;
+                            }
+                            var valid3 = errors === errs_3;
+                          }
+                          if (valid3) {
+                            if (data1.requiredAcceptsNull === undefined) {
+                              valid3 = true;
+                            } else {
+                              var errs_3 = errors;
+                              if (typeof data1.requiredAcceptsNull !== "boolean") {
+                                validate.errors = [{
+                                  keyword: 'type',
+                                  dataPath: (dataPath || '') + '.validation.requiredAcceptsNull',
+                                  schemaPath: '#/definitions/Validation/properties/requiredAcceptsNull/type',
+                                  params: {
+                                    type: 'boolean'
+                                  },
+                                  message: 'should be boolean'
+                                }];
+                                return false;
+                              }
+                              var valid3 = errors === errs_3;
+                            }
+                            if (valid3) {
+                              var data2 = data1.minLength;
+                              if (data2 === undefined) {
+                                valid3 = true;
+                              } else {
+                                var errs_3 = errors;
+                                if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
+                                  validate.errors = [{
+                                    keyword: 'type',
+                                    dataPath: (dataPath || '') + '.validation.minLength',
+                                    schemaPath: '#/definitions/Validation/properties/minLength/type',
+                                    params: {
+                                      type: 'integer'
+                                    },
+                                    message: 'should be integer'
+                                  }];
+                                  return false;
+                                }
+                                var valid3 = errors === errs_3;
+                              }
+                              if (valid3) {
+                                var data2 = data1.maxLength;
+                                if (data2 === undefined) {
+                                  valid3 = true;
+                                } else {
+                                  var errs_3 = errors;
+                                  if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
+                                    validate.errors = [{
+                                      keyword: 'type',
+                                      dataPath: (dataPath || '') + '.validation.maxLength',
+                                      schemaPath: '#/definitions/Validation/properties/maxLength/type',
+                                      params: {
+                                        type: 'integer'
+                                      },
+                                      message: 'should be integer'
+                                    }];
+                                    return false;
+                                  }
+                                  var valid3 = errors === errs_3;
+                                }
+                                if (valid3) {
+                                  var data2 = data1.minValue;
+                                  if (data2 === undefined) {
+                                    valid3 = true;
+                                  } else {
+                                    var errs_3 = errors;
+                                    if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
+                                      validate.errors = [{
+                                        keyword: 'type',
+                                        dataPath: (dataPath || '') + '.validation.minValue',
+                                        schemaPath: '#/definitions/Validation/properties/minValue/type',
+                                        params: {
+                                          type: 'integer'
+                                        },
+                                        message: 'should be integer'
+                                      }];
+                                      return false;
+                                    }
+                                    var valid3 = errors === errs_3;
+                                  }
+                                  if (valid3) {
+                                    var data2 = data1.maxValue;
+                                    if (data2 === undefined) {
+                                      valid3 = true;
+                                    } else {
+                                      var errs_3 = errors;
+                                      if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
+                                        validate.errors = [{
+                                          keyword: 'type',
+                                          dataPath: (dataPath || '') + '.validation.maxValue',
+                                          schemaPath: '#/definitions/Validation/properties/maxValue/type',
+                                          params: {
+                                            type: 'integer'
+                                          },
+                                          message: 'should be integer'
+                                        }];
+                                        return false;
+                                      }
+                                      var valid3 = errors === errs_3;
+                                    }
+                                    if (valid3) {
+                                      var data2 = data1.minSelected;
+                                      if (data2 === undefined) {
+                                        valid3 = true;
+                                      } else {
+                                        var errs_3 = errors;
+                                        if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
+                                          validate.errors = [{
+                                            keyword: 'type',
+                                            dataPath: (dataPath || '') + '.validation.minSelected',
+                                            schemaPath: '#/definitions/Validation/properties/minSelected/type',
+                                            params: {
+                                              type: 'integer'
+                                            },
+                                            message: 'should be integer'
+                                          }];
+                                          return false;
+                                        }
+                                        var valid3 = errors === errs_3;
+                                      }
+                                      if (valid3) {
+                                        var data2 = data1.maxSelected;
+                                        if (data2 === undefined) {
+                                          valid3 = true;
+                                        } else {
+                                          var errs_3 = errors;
+                                          if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
+                                            validate.errors = [{
+                                              keyword: 'type',
+                                              dataPath: (dataPath || '') + '.validation.maxSelected',
+                                              schemaPath: '#/definitions/Validation/properties/maxSelected/type',
+                                              params: {
+                                                type: 'integer'
+                                              },
+                                              message: 'should be integer'
+                                            }];
+                                            return false;
+                                          }
+                                          var valid3 = errors === errs_3;
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      } else {
+                        validate.errors = [{
+                          keyword: 'type',
+                          dataPath: (dataPath || '') + '.validation',
+                          schemaPath: '#/definitions/Validation/type',
+                          params: {
+                            type: 'object'
+                          },
+                          message: 'should be object'
+                        }];
+                        return false;
+                      }
+                      var valid2 = errors === errs_2;
+                      var valid1 = errors === errs_1;
+                    }
+                  }
                 }
               }
             }
@@ -898,11 +1147,18 @@ var validate = (function() {
         "type": "string",
         "enum": ["boolean", "text", "number", "datetime", "ordinal", "categorical", "layout", "location"]
       },
+      "component": {
+        "type": "string",
+        "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup"]
+      },
       "options": {
         "type": "array",
         "items": {
           "$ref": "#/definitions/OptionElement"
         }
+      },
+      "validation": {
+        "$ref": "#/definitions/Validation"
       }
     },
     "required": ["type", "name"],
@@ -1179,7 +1435,39 @@ var validate = (function() {
     "title": "Value"
   };
   refVal[9] = refVal9;
-  var refVal10 = (function() {
+  var refVal10 = {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "required": {
+        "type": "boolean"
+      },
+      "requiredAcceptsNull": {
+        "type": "boolean"
+      },
+      "minLength": {
+        "type": "integer"
+      },
+      "maxLength": {
+        "type": "integer"
+      },
+      "minValue": {
+        "type": "integer"
+      },
+      "maxValue": {
+        "type": "integer"
+      },
+      "minSelected": {
+        "type": "integer"
+      },
+      "maxSelected": {
+        "type": "integer"
+      }
+    },
+    "title": "Validation"
+  };
+  refVal[10] = refVal10;
+  var refVal11 = (function() {
     var pattern0 = new RegExp('.+');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
@@ -1210,9 +1498,9 @@ var validate = (function() {
           for (var key0 in data) {
             if (pattern0.test(key0)) {
               var errs_1 = errors;
-              if (!refVal11(data[key0], (dataPath || '') + '[\'' + key0 + '\']', data, key0, rootData)) {
-                if (vErrors === null) vErrors = refVal11.errors;
-                else vErrors = vErrors.concat(refVal11.errors);
+              if (!refVal12(data[key0], (dataPath || '') + '[\'' + key0 + '\']', data, key0, rootData)) {
+                if (vErrors === null) vErrors = refVal12.errors;
+                else vErrors = vErrors.concat(refVal12.errors);
                 errors = vErrors.length;
               }
               var valid1 = errors === errs_1;
@@ -1236,7 +1524,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal10.schema = {
+  refVal11.schema = {
     "type": "object",
     "additionalProperties": false,
     "title": "Edge",
@@ -1246,9 +1534,9 @@ var validate = (function() {
       }
     }
   };
-  refVal10.errors = null;
-  refVal[10] = refVal10;
-  var refVal11 = (function() {
+  refVal11.errors = null;
+  refVal[11] = refVal11;
+  var refVal12 = (function() {
     var pattern0 = new RegExp('.+');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
@@ -1366,7 +1654,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal11.schema = {
+  refVal12.schema = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -1383,9 +1671,9 @@ var validate = (function() {
     "required": ["name", "color"],
     "title": "EdgeTypeDef"
   };
-  refVal11.errors = null;
-  refVal[11] = refVal11;
-  var refVal12 = (function() {
+  refVal12.errors = null;
+  refVal[12] = refVal12;
+  var refVal13 = (function() {
     var pattern0 = new RegExp('.+');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
@@ -1393,7 +1681,7 @@ var validate = (function() {
       return true;
     };
   })();
-  refVal12.schema = {
+  refVal13.schema = {
     "label": "string",
     "color": "string",
     "title": "Ego",
@@ -1401,14 +1689,14 @@ var validate = (function() {
       "$ref": "#/definitions/Variables"
     }
   };
-  refVal12.errors = null;
-  refVal[12] = refVal12;
-  var refVal13 = {
+  refVal13.errors = null;
+  refVal[13] = refVal13;
+  var refVal14 = {
     "type": "object",
     "title": "AssetManifest"
   };
-  refVal[13] = refVal13;
-  var refVal14 = (function() {
+  refVal[14] = refVal14;
+  var refVal15 = (function() {
     var pattern0 = new RegExp('.+');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
@@ -1548,9 +1836,9 @@ var validate = (function() {
                     valid1 = true;
                   } else {
                     var errs_1 = errors;
-                    if (!refVal15(data.form, (dataPath || '') + '.form', data, 'form', rootData)) {
-                      if (vErrors === null) vErrors = refVal15.errors;
-                      else vErrors = vErrors.concat(refVal15.errors);
+                    if (!refVal16(data.form, (dataPath || '') + '.form', data, 'form', rootData)) {
+                      if (vErrors === null) vErrors = refVal16.errors;
+                      else vErrors = vErrors.concat(refVal16.errors);
                       errors = vErrors.length;
                     }
                     var valid1 = errors === errs_1;
@@ -2981,7 +3269,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal14.schema = {
+  refVal15.schema = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -3124,15 +3412,14 @@ var validate = (function() {
       "required": ["prompts"]
     }]
   };
-  refVal14.errors = null;
-  refVal[14] = refVal14;
-  var refVal15 = (function() {
+  refVal15.errors = null;
+  refVal[15] = refVal15;
+  var refVal16 = (function() {
     var pattern0 = new RegExp('.+');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
       var errors = 0;
-      if (rootData === undefined) rootData = data;
       if ((!data || typeof data !== "object" || Array.isArray(data)) && data !== null) {
         validate.errors = [{
           keyword: 'type',
@@ -3205,12 +3492,104 @@ var validate = (function() {
                   var errs__1 = errors;
                   var valid1;
                   for (var i1 = 0; i1 < data1.length; i1++) {
+                    var data2 = data1[i1];
                     var errs_2 = errors;
-                    if (!refVal16(data1[i1], (dataPath || '') + '.fields[' + i1 + ']', data1, i1, rootData)) {
-                      if (vErrors === null) vErrors = refVal16.errors;
-                      else vErrors = vErrors.concat(refVal16.errors);
-                      errors = vErrors.length;
+                    var errs_3 = errors;
+                    if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
+                      if (true) {
+                        var errs__3 = errors;
+                        var valid4 = true;
+                        for (var key3 in data2) {
+                          var isAdditional3 = !(false || key3 == 'variable' || key3 == 'prompt');
+                          if (isAdditional3) {
+                            valid4 = false;
+                            validate.errors = [{
+                              keyword: 'additionalProperties',
+                              dataPath: (dataPath || '') + '.fields[' + i1 + ']',
+                              schemaPath: '#/definitions/Field/additionalProperties',
+                              params: {
+                                additionalProperty: '' + key3 + ''
+                              },
+                              message: 'should NOT have additional properties'
+                            }];
+                            return false;
+                            break;
+                          }
+                        }
+                        if (valid4) {
+                          if (data2.variable === undefined) {
+                            valid4 = false;
+                            validate.errors = [{
+                              keyword: 'required',
+                              dataPath: (dataPath || '') + '.fields[' + i1 + ']',
+                              schemaPath: '#/definitions/Field/required',
+                              params: {
+                                missingProperty: 'variable'
+                              },
+                              message: 'should have required property \'variable\''
+                            }];
+                            return false;
+                          } else {
+                            var errs_4 = errors;
+                            if (typeof data2.variable !== "string") {
+                              validate.errors = [{
+                                keyword: 'type',
+                                dataPath: (dataPath || '') + '.fields[' + i1 + '].variable',
+                                schemaPath: '#/definitions/Field/properties/variable/type',
+                                params: {
+                                  type: 'string'
+                                },
+                                message: 'should be string'
+                              }];
+                              return false;
+                            }
+                            var valid4 = errors === errs_4;
+                          }
+                          if (valid4) {
+                            if (data2.prompt === undefined) {
+                              valid4 = false;
+                              validate.errors = [{
+                                keyword: 'required',
+                                dataPath: (dataPath || '') + '.fields[' + i1 + ']',
+                                schemaPath: '#/definitions/Field/required',
+                                params: {
+                                  missingProperty: 'prompt'
+                                },
+                                message: 'should have required property \'prompt\''
+                              }];
+                              return false;
+                            } else {
+                              var errs_4 = errors;
+                              if (typeof data2.prompt !== "string") {
+                                validate.errors = [{
+                                  keyword: 'type',
+                                  dataPath: (dataPath || '') + '.fields[' + i1 + '].prompt',
+                                  schemaPath: '#/definitions/Field/properties/prompt/type',
+                                  params: {
+                                    type: 'string'
+                                  },
+                                  message: 'should be string'
+                                }];
+                                return false;
+                              }
+                              var valid4 = errors === errs_4;
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      validate.errors = [{
+                        keyword: 'type',
+                        dataPath: (dataPath || '') + '.fields[' + i1 + ']',
+                        schemaPath: '#/definitions/Field/type',
+                        params: {
+                          type: 'object'
+                        },
+                        message: 'should be object'
+                      }];
+                      return false;
                     }
+                    var valid3 = errors === errs_3;
                     var valid2 = errors === errs_2;
                     if (!valid2) break;
                   }
@@ -3236,7 +3615,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal15.schema = {
+  refVal16.schema = {
     "type": ["object", "null"],
     "additionalProperties": false,
     "properties": {
@@ -3253,424 +3632,21 @@ var validate = (function() {
     "required": ["fields"],
     "title": "Form"
   };
-  refVal15.errors = null;
-  refVal[15] = refVal15;
-  var refVal16 = (function() {
-    var pattern0 = new RegExp('.+');
-    return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
-      'use strict';
-      var vErrors = null;
-      var errors = 0;
-      if ((data && typeof data === "object" && !Array.isArray(data))) {
-        if (true) {
-          var errs__0 = errors;
-          var valid1 = true;
-          for (var key0 in data) {
-            var isAdditional0 = !(false || key0 == 'variable' || key0 == 'component' || key0 == 'prompt' || key0 == 'validation');
-            if (isAdditional0) {
-              valid1 = false;
-              validate.errors = [{
-                keyword: 'additionalProperties',
-                dataPath: (dataPath || '') + "",
-                schemaPath: '#/additionalProperties',
-                params: {
-                  additionalProperty: '' + key0 + ''
-                },
-                message: 'should NOT have additional properties'
-              }];
-              return false;
-              break;
-            }
-          }
-          if (valid1) {
-            if (data.variable === undefined) {
-              valid1 = false;
-              validate.errors = [{
-                keyword: 'required',
-                dataPath: (dataPath || '') + "",
-                schemaPath: '#/required',
-                params: {
-                  missingProperty: 'variable'
-                },
-                message: 'should have required property \'variable\''
-              }];
-              return false;
-            } else {
-              var errs_1 = errors;
-              if (typeof data.variable !== "string") {
-                validate.errors = [{
-                  keyword: 'type',
-                  dataPath: (dataPath || '') + '.variable',
-                  schemaPath: '#/properties/variable/type',
-                  params: {
-                    type: 'string'
-                  },
-                  message: 'should be string'
-                }];
-                return false;
-              }
-              var valid1 = errors === errs_1;
-            }
-            if (valid1) {
-              var data1 = data.component;
-              if (data1 === undefined) {
-                valid1 = false;
-                validate.errors = [{
-                  keyword: 'required',
-                  dataPath: (dataPath || '') + "",
-                  schemaPath: '#/required',
-                  params: {
-                    missingProperty: 'component'
-                  },
-                  message: 'should have required property \'component\''
-                }];
-                return false;
-              } else {
-                var errs_1 = errors;
-                if (typeof data1 !== "string") {
-                  validate.errors = [{
-                    keyword: 'type',
-                    dataPath: (dataPath || '') + '.component',
-                    schemaPath: '#/properties/component/type',
-                    params: {
-                      type: 'string'
-                    },
-                    message: 'should be string'
-                  }];
-                  return false;
-                }
-                var schema1 = validate.schema.properties.component.enum;
-                var valid1;
-                valid1 = false;
-                for (var i1 = 0; i1 < schema1.length; i1++)
-                  if (equal(data1, schema1[i1])) {
-                    valid1 = true;
-                    break;
-                  } if (!valid1) {
-                  validate.errors = [{
-                    keyword: 'enum',
-                    dataPath: (dataPath || '') + '.component',
-                    schemaPath: '#/properties/component/enum',
-                    params: {
-                      allowedValues: schema1
-                    },
-                    message: 'should be equal to one of the allowed values'
-                  }];
-                  return false;
-                }
-                var valid1 = errors === errs_1;
-              }
-              if (valid1) {
-                if (data.prompt === undefined) {
-                  valid1 = false;
-                  validate.errors = [{
-                    keyword: 'required',
-                    dataPath: (dataPath || '') + "",
-                    schemaPath: '#/required',
-                    params: {
-                      missingProperty: 'prompt'
-                    },
-                    message: 'should have required property \'prompt\''
-                  }];
-                  return false;
-                } else {
-                  var errs_1 = errors;
-                  if (typeof data.prompt !== "string") {
-                    validate.errors = [{
-                      keyword: 'type',
-                      dataPath: (dataPath || '') + '.prompt',
-                      schemaPath: '#/properties/prompt/type',
-                      params: {
-                        type: 'string'
-                      },
-                      message: 'should be string'
-                    }];
-                    return false;
-                  }
-                  var valid1 = errors === errs_1;
-                }
-                if (valid1) {
-                  var data1 = data.validation;
-                  if (data1 === undefined) {
-                    valid1 = true;
-                  } else {
-                    var errs_1 = errors;
-                    var errs_2 = errors;
-                    if ((data1 && typeof data1 === "object" && !Array.isArray(data1))) {
-                      var errs__2 = errors;
-                      var valid3 = true;
-                      for (var key2 in data1) {
-                        var isAdditional2 = !(false || key2 == 'required' || key2 == 'requiredAcceptsNull' || key2 == 'minLength' || key2 == 'maxLength' || key2 == 'minValue' || key2 == 'maxValue' || key2 == 'minSelected' || key2 == 'maxSelected');
-                        if (isAdditional2) {
-                          valid3 = false;
-                          validate.errors = [{
-                            keyword: 'additionalProperties',
-                            dataPath: (dataPath || '') + '.validation',
-                            schemaPath: '#/definitions/Validation/additionalProperties',
-                            params: {
-                              additionalProperty: '' + key2 + ''
-                            },
-                            message: 'should NOT have additional properties'
-                          }];
-                          return false;
-                          break;
-                        }
-                      }
-                      if (valid3) {
-                        if (data1.required === undefined) {
-                          valid3 = true;
-                        } else {
-                          var errs_3 = errors;
-                          if (typeof data1.required !== "boolean") {
-                            validate.errors = [{
-                              keyword: 'type',
-                              dataPath: (dataPath || '') + '.validation.required',
-                              schemaPath: '#/definitions/Validation/properties/required/type',
-                              params: {
-                                type: 'boolean'
-                              },
-                              message: 'should be boolean'
-                            }];
-                            return false;
-                          }
-                          var valid3 = errors === errs_3;
-                        }
-                        if (valid3) {
-                          if (data1.requiredAcceptsNull === undefined) {
-                            valid3 = true;
-                          } else {
-                            var errs_3 = errors;
-                            if (typeof data1.requiredAcceptsNull !== "boolean") {
-                              validate.errors = [{
-                                keyword: 'type',
-                                dataPath: (dataPath || '') + '.validation.requiredAcceptsNull',
-                                schemaPath: '#/definitions/Validation/properties/requiredAcceptsNull/type',
-                                params: {
-                                  type: 'boolean'
-                                },
-                                message: 'should be boolean'
-                              }];
-                              return false;
-                            }
-                            var valid3 = errors === errs_3;
-                          }
-                          if (valid3) {
-                            var data2 = data1.minLength;
-                            if (data2 === undefined) {
-                              valid3 = true;
-                            } else {
-                              var errs_3 = errors;
-                              if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
-                                validate.errors = [{
-                                  keyword: 'type',
-                                  dataPath: (dataPath || '') + '.validation.minLength',
-                                  schemaPath: '#/definitions/Validation/properties/minLength/type',
-                                  params: {
-                                    type: 'integer'
-                                  },
-                                  message: 'should be integer'
-                                }];
-                                return false;
-                              }
-                              var valid3 = errors === errs_3;
-                            }
-                            if (valid3) {
-                              var data2 = data1.maxLength;
-                              if (data2 === undefined) {
-                                valid3 = true;
-                              } else {
-                                var errs_3 = errors;
-                                if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
-                                  validate.errors = [{
-                                    keyword: 'type',
-                                    dataPath: (dataPath || '') + '.validation.maxLength',
-                                    schemaPath: '#/definitions/Validation/properties/maxLength/type',
-                                    params: {
-                                      type: 'integer'
-                                    },
-                                    message: 'should be integer'
-                                  }];
-                                  return false;
-                                }
-                                var valid3 = errors === errs_3;
-                              }
-                              if (valid3) {
-                                var data2 = data1.minValue;
-                                if (data2 === undefined) {
-                                  valid3 = true;
-                                } else {
-                                  var errs_3 = errors;
-                                  if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
-                                    validate.errors = [{
-                                      keyword: 'type',
-                                      dataPath: (dataPath || '') + '.validation.minValue',
-                                      schemaPath: '#/definitions/Validation/properties/minValue/type',
-                                      params: {
-                                        type: 'integer'
-                                      },
-                                      message: 'should be integer'
-                                    }];
-                                    return false;
-                                  }
-                                  var valid3 = errors === errs_3;
-                                }
-                                if (valid3) {
-                                  var data2 = data1.maxValue;
-                                  if (data2 === undefined) {
-                                    valid3 = true;
-                                  } else {
-                                    var errs_3 = errors;
-                                    if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
-                                      validate.errors = [{
-                                        keyword: 'type',
-                                        dataPath: (dataPath || '') + '.validation.maxValue',
-                                        schemaPath: '#/definitions/Validation/properties/maxValue/type',
-                                        params: {
-                                          type: 'integer'
-                                        },
-                                        message: 'should be integer'
-                                      }];
-                                      return false;
-                                    }
-                                    var valid3 = errors === errs_3;
-                                  }
-                                  if (valid3) {
-                                    var data2 = data1.minSelected;
-                                    if (data2 === undefined) {
-                                      valid3 = true;
-                                    } else {
-                                      var errs_3 = errors;
-                                      if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
-                                        validate.errors = [{
-                                          keyword: 'type',
-                                          dataPath: (dataPath || '') + '.validation.minSelected',
-                                          schemaPath: '#/definitions/Validation/properties/minSelected/type',
-                                          params: {
-                                            type: 'integer'
-                                          },
-                                          message: 'should be integer'
-                                        }];
-                                        return false;
-                                      }
-                                      var valid3 = errors === errs_3;
-                                    }
-                                    if (valid3) {
-                                      var data2 = data1.maxSelected;
-                                      if (data2 === undefined) {
-                                        valid3 = true;
-                                      } else {
-                                        var errs_3 = errors;
-                                        if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2)) {
-                                          validate.errors = [{
-                                            keyword: 'type',
-                                            dataPath: (dataPath || '') + '.validation.maxSelected',
-                                            schemaPath: '#/definitions/Validation/properties/maxSelected/type',
-                                            params: {
-                                              type: 'integer'
-                                            },
-                                            message: 'should be integer'
-                                          }];
-                                          return false;
-                                        }
-                                        var valid3 = errors === errs_3;
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      validate.errors = [{
-                        keyword: 'type',
-                        dataPath: (dataPath || '') + '.validation',
-                        schemaPath: '#/definitions/Validation/type',
-                        params: {
-                          type: 'object'
-                        },
-                        message: 'should be object'
-                      }];
-                      return false;
-                    }
-                    var valid2 = errors === errs_2;
-                    var valid1 = errors === errs_1;
-                  }
-                }
-              }
-            }
-          }
-        }
-      } else {
-        validate.errors = [{
-          keyword: 'type',
-          dataPath: (dataPath || '') + "",
-          schemaPath: '#/type',
-          params: {
-            type: 'object'
-          },
-          message: 'should be object'
-        }];
-        return false;
-      }
-      validate.errors = vErrors;
-      return errors === 0;
-    };
-  })();
-  refVal16.schema = {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "variable": {
-        "type": "string"
-      },
-      "component": {
-        "type": "string",
-        "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup"]
-      },
-      "prompt": {
-        "type": "string"
-      },
-      "validation": {
-        "$ref": "#/definitions/Validation"
-      }
-    },
-    "required": ["component", "variable", "prompt"],
-    "title": "Field"
-  };
   refVal16.errors = null;
   refVal[16] = refVal16;
   var refVal17 = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
-      "required": {
-        "type": "boolean"
+      "variable": {
+        "type": "string"
       },
-      "requiredAcceptsNull": {
-        "type": "boolean"
-      },
-      "minLength": {
-        "type": "integer"
-      },
-      "maxLength": {
-        "type": "integer"
-      },
-      "minValue": {
-        "type": "integer"
-      },
-      "maxValue": {
-        "type": "integer"
-      },
-      "minSelected": {
-        "type": "integer"
-      },
-      "maxSelected": {
-        "type": "integer"
+      "prompt": {
+        "type": "string"
       }
     },
-    "title": "Validation"
+    "required": ["variable", "prompt"],
+    "title": "Field"
   };
   refVal[17] = refVal17;
   var refVal18 = (function() {
@@ -6652,18 +6628,11 @@ validate.schema = {
         "variable": {
           "type": "string"
         },
-        "component": {
-          "type": "string",
-          "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup"]
-        },
         "prompt": {
           "type": "string"
-        },
-        "validation": {
-          "$ref": "#/definitions/Validation"
         }
       },
-      "required": ["component", "variable", "prompt"],
+      "required": ["variable", "prompt"],
       "title": "Field"
     },
     "Stage": {
@@ -7297,11 +7266,18 @@ validate.schema = {
           "type": "string",
           "enum": ["boolean", "text", "number", "datetime", "ordinal", "categorical", "layout", "location"]
         },
+        "component": {
+          "type": "string",
+          "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup"]
+        },
         "options": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/OptionElement"
           }
+        },
+        "validation": {
+          "$ref": "#/definitions/Validation"
         }
       },
       "required": ["type", "name"],
