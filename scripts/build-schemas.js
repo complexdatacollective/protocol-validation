@@ -3,7 +3,7 @@ const path = require('path');
 const Ajv = require('ajv');
 const pack = require('ajv-pack');
 
-const ajv = new Ajv({ sourceCode: true });
+const ajv = new Ajv({ sourceCode: true, allErrors: true });
 ajv.addFormat('integer', /\d+/);
 
 const isJsonFile = fileName =>
