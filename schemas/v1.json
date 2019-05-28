@@ -70,26 +70,11 @@
         "variable": {
           "type": "string"
         },
-        "component": {
-          "type": "string",
-          "enum": [
-            "CheckboxGroup",
-            "Number",
-            "RadioGroup",
-            "Text",
-            "Toggle",
-            "ToggleButtonGroup"
-          ]
-        },
         "prompt": {
           "type": "string"
-        },
-        "validation": {
-          "$ref": "#/definitions/Validation"
         }
       },
       "required": [
-        "component",
         "variable",
         "prompt"
       ],
@@ -874,11 +859,25 @@
             "location"
           ]
         },
+        "component": {
+          "type": "string",
+          "enum": [
+            "CheckboxGroup",
+            "Number",
+            "RadioGroup",
+            "Text",
+            "Toggle",
+            "ToggleButtonGroup"
+          ]
+        },
         "options": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/OptionElement"
           }
+        },
+        "validation": {
+          "$ref": "#/definitions/Validation"
         }
       },
       "required": [
