@@ -62,7 +62,7 @@ const validateJson = (jsonString) => {
     process.exit(1);
   }
 
-  const schemaErrors = validateSchema(data, schema);
+  const schemaErrors = validateSchema(data);
   const dataErrors = validateLogic(data);
   const isValid = !schemaErrors.length && !dataErrors.length;
 
