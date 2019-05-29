@@ -32,21 +32,7 @@ var validate = (function() {
             errors++;
           }
         }
-        if (data.name === undefined) {
-          valid1 = false;
-          var err = {
-            keyword: 'required',
-            dataPath: (dataPath || '') + "",
-            schemaPath: '#/required',
-            params: {
-              missingProperty: 'name'
-            },
-            message: 'should have required property \'name\''
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        } else {
+        if (data.name !== undefined) {
           var errs_1 = errors;
           if (typeof data.name !== "string") {
             var err = {
@@ -286,7 +272,7 @@ var validate = (function() {
         "minItems": 1
       }
     },
-    "required": ["name", "stages", "codebook"],
+    "required": ["stages", "codebook"],
     "title": "Protocol"
   };
   refVal1.errors = null;
@@ -6607,7 +6593,7 @@ validate.schema = {
           "minItems": 1
         }
       },
-      "required": ["name", "stages", "codebook"],
+      "required": ["stages", "codebook"],
       "title": "Protocol"
     },
     "AssetManifest": {
