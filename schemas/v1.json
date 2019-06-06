@@ -415,7 +415,7 @@
           ]
         },
         "value": {
-          "type": "string"
+          "type": ["integer", "string", "array", "boolean"]
         }
       },
       "required": [
