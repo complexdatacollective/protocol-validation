@@ -175,7 +175,12 @@ class Validator {
       });
     } else if (fragment && typeof fragment === 'object') {
       Object.entries(fragment).forEach(([key, val]) => {
-        this.traverse(val, [...keypath, key], stageSubject);
+        if (val !== undefined) {
+          this.traverse(val, [...keypath, key], stageSubject);
+        } else {
+          // don't traverse on undefined
+          debugLog('-', keypathString(keypath));
+        }
       });
     } else { // Leaf node
       debugLog('-', keypathString(keypath));
