@@ -164,7 +164,12 @@ class Validator {
    * Recursively traverse to validate parts of a protocol for which we have validations
    * @private
    */
-  traverse(fragment = this.protocol, keypath = ['protocol'], subject = null) {
+  traverse(fragment, keypath = ['protocol'], subject = null) {
+    if (!fragment) {
+      debugLog('-', keypathString(keypath));
+      return;
+    }
+
     const stageSubject = subject || fragment.subject;
 
     this.checkFragment(keypath, fragment, stageSubject);
