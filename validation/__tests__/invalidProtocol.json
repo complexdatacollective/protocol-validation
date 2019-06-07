@@ -4,16 +4,6 @@
       "d248f88d-2ff5-41a4-b88d-f23f78c2d25e": {
         "color": "node-color-seq-2",
         "variables": {
-          "60e5d2ab-0e3e-422d-80b5-181080742978": {
-            "type": "text",
-            "name": "hhy",
-            "component": "Text",
-            "validation": {
-              "minLength": 4,
-              "maxLength": 4,
-              "required": true
-            }
-          },
           "744bdce0-7003-412b-a218-21a04568a97d": {
             "type": "ordinal",
             "name": "ord",

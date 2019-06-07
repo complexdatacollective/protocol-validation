@@ -1,13 +1,19 @@
 /* eslint-env jest */
 
 const validateLogic = require('../validateLogic');
-const protocolWithUndefinedNodes = require('./protocolWithUndefinedNodes.json');
-protocolWithUndefinedNodes.stages[0].skipLogic.filter.rules = undefined;
+const invalidProtocol = require('./invalidProtocol.json');
 
 describe('validateLogic', () => {
-  it('It can accept an invalid protocol', () => {
+  it('A well formed protocol will return an array of errors', () => {
+    const logicErrors = validateLogic(invalidProtocol);
+    expect(logicErrors).toMatchSnapshot();
+  });
+
+  it('It can handle undefined values in the protocol', () => {
+    invalidProtocol.stages[0].skipLogic.filter.rules = undefined;
+
     expect(() => {
-      validateLogic(protocolWithUndefinedNodes)
+      validateLogic(invalidProtocol)
     }).not.toThrow();
   });
 })
