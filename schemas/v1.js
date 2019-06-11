@@ -3132,20 +3132,6 @@ var validate = (function() {
                   else vErrors.push(err);
                   errors++;
                 }
-                if (data.behaviours === undefined) {
-                  var err = {
-                    keyword: 'required',
-                    dataPath: (dataPath || '') + "",
-                    schemaPath: '#/anyOf/4/required',
-                    params: {
-                      missingProperty: 'behaviours'
-                    },
-                    message: 'should have required property \'behaviours\''
-                  };
-                  if (vErrors === null) vErrors = [err];
-                  else vErrors.push(err);
-                  errors++;
-                }
                 var errs__1 = errors;
                 var valid2 = true;
                 if (data.type !== undefined) {
@@ -3378,7 +3364,7 @@ var validate = (function() {
           "const": "Narrative"
         }
       },
-      "required": ["presets", "background", "behaviours"]
+      "required": ["presets", "background"]
     }, {
       "properties": {
         "type": {
@@ -6765,7 +6751,7 @@ validate.schema = {
             "const": "Narrative"
           }
         },
-        "required": ["presets", "background", "behaviours"]
+        "required": ["presets", "background"]
       }, {
         "properties": {
           "type": {
