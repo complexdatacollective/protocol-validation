@@ -247,8 +247,7 @@
           },
           "required": [
             "presets",
-            "background",
-            "behaviours"
+            "background"
           ]
         },
         {
