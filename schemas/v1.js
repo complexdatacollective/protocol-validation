@@ -534,21 +534,7 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
-        if (data.variables === undefined) {
-          valid1 = false;
-          var err = {
-            keyword: 'required',
-            dataPath: (dataPath || '') + "",
-            schemaPath: '#/required',
-            params: {
-              missingProperty: 'variables'
-            },
-            message: 'should have required property \'variables\''
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        } else {
+        if (data.variables !== undefined) {
           var errs_1 = errors;
           if (!refVal5(data.variables, (dataPath || '') + '.variables', data, 'variables', rootData)) {
             if (vErrors === null) vErrors = refVal5.errors;
@@ -627,7 +613,7 @@ var validate = (function() {
         "type": "string"
       }
     },
-    "required": ["name", "variables", "color"],
+    "required": ["name", "color"],
     "title": "NodeTypeDef"
   };
   refVal4.errors = null;
@@ -7341,7 +7327,7 @@ validate.schema = {
           "type": "string"
         }
       },
-      "required": ["name", "variables", "color"],
+      "required": ["name", "color"],
       "title": "NodeTypeDef"
     },
     "Ego": {
