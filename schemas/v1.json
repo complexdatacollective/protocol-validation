@@ -964,7 +964,6 @@
       },
       "required": [
         "name",
-        "variables",
         "color"
       ],
       "title": "NodeTypeDef"
