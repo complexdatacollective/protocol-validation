@@ -1,4 +1,10 @@
-const v2 = require('./v2.js');
-const v1 = require('./v1.js');
+const version_2 = require('./2.js');
+const version_v1 = require('./v1.js');
 
-module.exports = { v2, v1 };
+const versions = {
+  '2': version_2,
+  'v1': version_v1,
+};
+
+module.exports = versions;
+

@@ -30,7 +30,6 @@ const exitOnValidationFailure = !!process.env.CI;
 
 let protocolContents;
 
-let schema;
 let data;
 
 const chalk = new Chalk({ enabled: !!process.stderr.isTTY });
@@ -42,18 +41,7 @@ const extractProtocolSource = async (zippedProtocol) => {
   return contents;
 };
 
-const schemaVersion = 1;
-
 const validateJson = (jsonString) => {
-  try {
-    schema = JSON.parse(fs.readFileSync(path.join(schemaDir, `v${schemaVersion}.json`)));
-  } catch (e) {
-    console.error(chalk.red('Invalid schema'));
-    console.error();
-    console.error(e);
-    process.exit(1);
-  }
-
   try {
     data = JSON.parse(jsonString);
   } catch (e) {
