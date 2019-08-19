@@ -3,11 +3,11 @@ const schemas = require('../schemas/');
 /**
  * Statically validate the protocol based on its JSON schema
  */
-const validateSchema = (protocol, version = '1') => {
+const validateSchema = (protocol, version = 1) => {
   // Check protocol matches version specified
-  if (protocol.schemaVersion !== version) {
-    return [new Error(`Schema version '${version}' provided does not match protocol schema version '${protocol.schemaVersion}'`)];
-  }
+  // if (protocol.schemaVersion !== version) {
+  //   return [new Error(`Schema version '${version}' provided does not match protocol schema version '${protocol.schemaVersion}'`)];
+  // }
 
   // Check resultant version exists
   if (!schemas[version]) {

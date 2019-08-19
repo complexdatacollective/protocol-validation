@@ -32,7 +32,7 @@ const generateModuleIndex = (schemas) => {
   };
 
   const formatVersions = (schemaName) => {
-    return `  '${schemaName}': ${asVariableName(schemaName)},`;
+    return `  ${schemaName}: ${asVariableName(schemaName)},`;
   };
 
   const schemaRequires = schemas.map(formatRequire).join('\n');
