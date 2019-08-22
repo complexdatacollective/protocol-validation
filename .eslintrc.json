@@ -25,6 +25,8 @@
     "jsx-a11y/no-static-element-interactions": "off",
     "import/no-extraneous-dependencies": "off",
     "import/no-named-as-default": "off",
+    "camelcase": "off",
+    "quote-props": "off",
     "no-mixed-operators": [1, {"allowSamePrecedence": true}]
   }
 }
