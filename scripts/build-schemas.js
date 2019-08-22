@@ -31,18 +31,17 @@ const generateModuleIndex = (schemas) => {
     return `const ${asVariableName(schemaName)} = require('./${relativeModulePath}');`;
   };
 
-  const formatVersions = (schemaName) => {
-    return `  ${schemaName}: ${asVariableName(schemaName)},`;
-  };
+  const formatVersions = schemaName =>
+    `  { version: '${schemaName}', schema: ${asVariableName(schemaName)} },`;
 
   const schemaRequires = schemas.map(formatRequire).join('\n');
   const schemaVersions = `${schemas.map(formatVersions).join('\n')}`;
 
   return `${schemaRequires}
 
-const versions = {
+const versions = [
 ${schemaVersions}
-};
+];
 
 module.exports = versions;
 \r\n`;
@@ -63,7 +62,7 @@ const buildSchemas = async () => {
 
     await fs.writeFile(modulePath, moduleCode);
 
-    console.log(`${schemaName} done.`);
+    console.log(`${schemaName} done.`); // eslint-disable-line
   });
 
   const moduleIndexPath = path.join(schemasDirectory, 'index.js');
