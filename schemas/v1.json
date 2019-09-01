@@ -118,6 +118,9 @@
         "subject": {
           "$ref": "#/definitions/Subject"
         },
+        "filter": {
+          "$ref": "#/definitions/Filter"
+        },
         "panels": {
           "type": "array",
           "items": {

@@ -1844,6 +1844,15 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
+        if (data.filter !== undefined) {
+          var errs_1 = errors;
+          if (!refVal20(data.filter, (dataPath || '') + '.filter', data, 'filter', rootData)) {
+            if (vErrors === null) vErrors = refVal20.errors;
+            else vErrors = vErrors.concat(refVal20.errors);
+            errors = vErrors.length;
+          }
+          var valid1 = errors === errs_1;
+        }
         var data1 = data.panels;
         if (data1 !== undefined) {
           var errs_1 = errors;
@@ -1852,9 +1861,9 @@ var validate = (function() {
             var valid1;
             for (var i1 = 0; i1 < data1.length; i1++) {
               var errs_2 = errors;
-              if (!refVal20(data1[i1], (dataPath || '') + '.panels[' + i1 + ']', data1, i1, rootData)) {
-                if (vErrors === null) vErrors = refVal20.errors;
-                else vErrors = vErrors.concat(refVal20.errors);
+              if (!refVal23(data1[i1], (dataPath || '') + '.panels[' + i1 + ']', data1, i1, rootData)) {
+                if (vErrors === null) vErrors = refVal23.errors;
+                else vErrors = vErrors.concat(refVal23.errors);
                 errors = vErrors.length;
               }
               var valid2 = errors === errs_2;
@@ -3243,6 +3252,9 @@ var validate = (function() {
       "subject": {
         "$ref": "#/definitions/Subject"
       },
+      "filter": {
+        "$ref": "#/definitions/Filter"
+      },
       "panels": {
         "type": "array",
         "items": {
@@ -3764,180 +3776,6 @@ var validate = (function() {
       var vErrors = null;
       var errors = 0;
       if (rootData === undefined) rootData = data;
-      if ((data && typeof data === "object" && !Array.isArray(data))) {
-        var errs__0 = errors;
-        var valid1 = true;
-        for (var key0 in data) {
-          var isAdditional0 = !(false || key0 == 'id' || key0 == 'title' || key0 == 'filter' || key0 == 'dataSource');
-          if (isAdditional0) {
-            valid1 = false;
-            var err = {
-              keyword: 'additionalProperties',
-              dataPath: (dataPath || '') + "",
-              schemaPath: '#/additionalProperties',
-              params: {
-                additionalProperty: '' + key0 + ''
-              },
-              message: 'should NOT have additional properties'
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
-        }
-        if (data.id === undefined) {
-          valid1 = false;
-          var err = {
-            keyword: 'required',
-            dataPath: (dataPath || '') + "",
-            schemaPath: '#/required',
-            params: {
-              missingProperty: 'id'
-            },
-            message: 'should have required property \'id\''
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        } else {
-          var errs_1 = errors;
-          if (typeof data.id !== "string") {
-            var err = {
-              keyword: 'type',
-              dataPath: (dataPath || '') + '.id',
-              schemaPath: '#/properties/id/type',
-              params: {
-                type: 'string'
-              },
-              message: 'should be string'
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
-          var valid1 = errors === errs_1;
-        }
-        if (data.title === undefined) {
-          valid1 = false;
-          var err = {
-            keyword: 'required',
-            dataPath: (dataPath || '') + "",
-            schemaPath: '#/required',
-            params: {
-              missingProperty: 'title'
-            },
-            message: 'should have required property \'title\''
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        } else {
-          var errs_1 = errors;
-          if (typeof data.title !== "string") {
-            var err = {
-              keyword: 'type',
-              dataPath: (dataPath || '') + '.title',
-              schemaPath: '#/properties/title/type',
-              params: {
-                type: 'string'
-              },
-              message: 'should be string'
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
-          var valid1 = errors === errs_1;
-        }
-        if (data.filter !== undefined) {
-          var errs_1 = errors;
-          if (!refVal21(data.filter, (dataPath || '') + '.filter', data, 'filter', rootData)) {
-            if (vErrors === null) vErrors = refVal21.errors;
-            else vErrors = vErrors.concat(refVal21.errors);
-            errors = vErrors.length;
-          }
-          var valid1 = errors === errs_1;
-        }
-        var data1 = data.dataSource;
-        if (data1 === undefined) {
-          valid1 = false;
-          var err = {
-            keyword: 'required',
-            dataPath: (dataPath || '') + "",
-            schemaPath: '#/required',
-            params: {
-              missingProperty: 'dataSource'
-            },
-            message: 'should have required property \'dataSource\''
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        } else {
-          var errs_1 = errors;
-          if (typeof data1 !== "string" && data1 !== null) {
-            var err = {
-              keyword: 'type',
-              dataPath: (dataPath || '') + '.dataSource',
-              schemaPath: '#/properties/dataSource/type',
-              params: {
-                type: 'string,null'
-              },
-              message: 'should be string,null'
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
-          var valid1 = errors === errs_1;
-        }
-      } else {
-        var err = {
-          keyword: 'type',
-          dataPath: (dataPath || '') + "",
-          schemaPath: '#/type',
-          params: {
-            type: 'object'
-          },
-          message: 'should be object'
-        };
-        if (vErrors === null) vErrors = [err];
-        else vErrors.push(err);
-        errors++;
-      }
-      validate.errors = vErrors;
-      return errors === 0;
-    };
-  })();
-  refVal20.schema = {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "id": {
-        "type": "string"
-      },
-      "title": {
-        "type": "string"
-      },
-      "filter": {
-        "$ref": "#/definitions/Filter"
-      },
-      "dataSource": {
-        "type": ["string", "null"]
-      }
-    },
-    "required": ["id", "title", "dataSource"],
-    "title": "Panel"
-  };
-  refVal20.errors = null;
-  refVal[20] = refVal20;
-  var refVal21 = (function() {
-    var pattern0 = new RegExp('.+');
-    return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
-      'use strict';
-      var vErrors = null;
-      var errors = 0;
-      if (rootData === undefined) rootData = data;
       if ((!data || typeof data !== "object" || Array.isArray(data)) && data !== null) {
         var err = {
           keyword: 'type',
@@ -4021,9 +3859,9 @@ var validate = (function() {
             var valid1;
             for (var i1 = 0; i1 < data1.length; i1++) {
               var errs_2 = errors;
-              if (!refVal22(data1[i1], (dataPath || '') + '.rules[' + i1 + ']', data1, i1, rootData)) {
-                if (vErrors === null) vErrors = refVal22.errors;
-                else vErrors = vErrors.concat(refVal22.errors);
+              if (!refVal21(data1[i1], (dataPath || '') + '.rules[' + i1 + ']', data1, i1, rootData)) {
+                if (vErrors === null) vErrors = refVal21.errors;
+                else vErrors = vErrors.concat(refVal21.errors);
                 errors = vErrors.length;
               }
               var valid2 = errors === errs_2;
@@ -4049,7 +3887,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal21.schema = {
+  refVal20.schema = {
     "type": ["object", "null"],
     "additionalProperties": false,
     "properties": {
@@ -4066,9 +3904,9 @@ var validate = (function() {
     },
     "title": "Filter"
   };
-  refVal21.errors = null;
-  refVal[21] = refVal21;
-  var refVal22 = (function() {
+  refVal20.errors = null;
+  refVal[20] = refVal20;
+  var refVal21 = (function() {
     var pattern0 = new RegExp('.+');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
@@ -4287,7 +4125,7 @@ var validate = (function() {
                 else vErrors.push(err);
                 errors++;
               }
-              var schema3 = refVal23.properties.operator.enum;
+              var schema3 = refVal22.properties.operator.enum;
               var valid3;
               valid3 = false;
               for (var i3 = 0; i3 < schema3.length; i3++)
@@ -4352,7 +4190,7 @@ var validate = (function() {
             var valid5 = true;
             if (data1.operator !== undefined) {
               var errs_5 = errors;
-              var schema5 = refVal23.allOf[0].if.properties.operator.enum;
+              var schema5 = refVal22.allOf[0].if.properties.operator.enum;
               var valid5;
               valid5 = false;
               for (var i5 = 0; i5 < schema5.length; i5++)
@@ -4431,7 +4269,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal22.schema = {
+  refVal21.schema = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -4449,9 +4287,9 @@ var validate = (function() {
     "required": ["id", "options", "type"],
     "title": "Rule"
   };
-  refVal22.errors = null;
-  refVal[22] = refVal22;
-  var refVal23 = {
+  refVal21.errors = null;
+  refVal[21] = refVal21;
+  var refVal22 = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -4484,6 +4322,180 @@ var validate = (function() {
       }
     }]
   };
+  refVal[22] = refVal22;
+  var refVal23 = (function() {
+    var pattern0 = new RegExp('.+');
+    return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
+      'use strict';
+      var vErrors = null;
+      var errors = 0;
+      if (rootData === undefined) rootData = data;
+      if ((data && typeof data === "object" && !Array.isArray(data))) {
+        var errs__0 = errors;
+        var valid1 = true;
+        for (var key0 in data) {
+          var isAdditional0 = !(false || key0 == 'id' || key0 == 'title' || key0 == 'filter' || key0 == 'dataSource');
+          if (isAdditional0) {
+            valid1 = false;
+            var err = {
+              keyword: 'additionalProperties',
+              dataPath: (dataPath || '') + "",
+              schemaPath: '#/additionalProperties',
+              params: {
+                additionalProperty: '' + key0 + ''
+              },
+              message: 'should NOT have additional properties'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+        }
+        if (data.id === undefined) {
+          valid1 = false;
+          var err = {
+            keyword: 'required',
+            dataPath: (dataPath || '') + "",
+            schemaPath: '#/required',
+            params: {
+              missingProperty: 'id'
+            },
+            message: 'should have required property \'id\''
+          };
+          if (vErrors === null) vErrors = [err];
+          else vErrors.push(err);
+          errors++;
+        } else {
+          var errs_1 = errors;
+          if (typeof data.id !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.id',
+              schemaPath: '#/properties/id/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        if (data.title === undefined) {
+          valid1 = false;
+          var err = {
+            keyword: 'required',
+            dataPath: (dataPath || '') + "",
+            schemaPath: '#/required',
+            params: {
+              missingProperty: 'title'
+            },
+            message: 'should have required property \'title\''
+          };
+          if (vErrors === null) vErrors = [err];
+          else vErrors.push(err);
+          errors++;
+        } else {
+          var errs_1 = errors;
+          if (typeof data.title !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.title',
+              schemaPath: '#/properties/title/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        if (data.filter !== undefined) {
+          var errs_1 = errors;
+          if (!refVal[20](data.filter, (dataPath || '') + '.filter', data, 'filter', rootData)) {
+            if (vErrors === null) vErrors = refVal[20].errors;
+            else vErrors = vErrors.concat(refVal[20].errors);
+            errors = vErrors.length;
+          }
+          var valid1 = errors === errs_1;
+        }
+        var data1 = data.dataSource;
+        if (data1 === undefined) {
+          valid1 = false;
+          var err = {
+            keyword: 'required',
+            dataPath: (dataPath || '') + "",
+            schemaPath: '#/required',
+            params: {
+              missingProperty: 'dataSource'
+            },
+            message: 'should have required property \'dataSource\''
+          };
+          if (vErrors === null) vErrors = [err];
+          else vErrors.push(err);
+          errors++;
+        } else {
+          var errs_1 = errors;
+          if (typeof data1 !== "string" && data1 !== null) {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.dataSource',
+              schemaPath: '#/properties/dataSource/type',
+              params: {
+                type: 'string,null'
+              },
+              message: 'should be string,null'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+      } else {
+        var err = {
+          keyword: 'type',
+          dataPath: (dataPath || '') + "",
+          schemaPath: '#/type',
+          params: {
+            type: 'object'
+          },
+          message: 'should be object'
+        };
+        if (vErrors === null) vErrors = [err];
+        else vErrors.push(err);
+        errors++;
+      }
+      validate.errors = vErrors;
+      return errors === 0;
+    };
+  })();
+  refVal23.schema = {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "filter": {
+        "$ref": "#/definitions/Filter"
+      },
+      "dataSource": {
+        "type": ["string", "null"]
+      }
+    },
+    "required": ["id", "title", "dataSource"],
+    "title": "Panel"
+  };
+  refVal23.errors = null;
   refVal[23] = refVal23;
   var refVal24 = (function() {
     var pattern0 = new RegExp('.+');
@@ -6475,9 +6487,9 @@ var validate = (function() {
           errors++;
         } else {
           var errs_1 = errors;
-          if (!refVal[21](data.filter, (dataPath || '') + '.filter', data, 'filter', rootData)) {
-            if (vErrors === null) vErrors = refVal[21].errors;
-            else vErrors = vErrors.concat(refVal[21].errors);
+          if (!refVal[20](data.filter, (dataPath || '') + '.filter', data, 'filter', rootData)) {
+            if (vErrors === null) vErrors = refVal[20].errors;
+            else vErrors = vErrors.concat(refVal[20].errors);
             errors = vErrors.length;
           }
           var valid1 = errors === errs_1;
@@ -6629,6 +6641,9 @@ validate.schema = {
         },
         "subject": {
           "$ref": "#/definitions/Subject"
+        },
+        "filter": {
+          "$ref": "#/definitions/Filter"
         },
         "panels": {
           "type": "array",
