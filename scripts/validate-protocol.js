@@ -15,8 +15,6 @@ const JSZip = require('jszip');
 const { validateSchema, validateLogic } = require('../validation');
 const { errToString } = require('../validation/helpers');
 
-const projectDir = path.join(__dirname, '..');
-const schemaDir = path.join(projectDir, 'schemas');
 const protocolArg = process.argv[2];
 
 if (!protocolArg) {

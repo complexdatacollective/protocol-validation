@@ -6,9 +6,9 @@ const getVersion = version =>
 /**
  * Statically validate the protocol based on its JSON schema
  */
-const validateSchema = (protocol, supportedVersions = ['1.0.0']) => {
-  // Check protocol matches version specified
-  if (!supportedVersions.includes(protocol.schemaVersion)) {
+const validateSchema = (protocol, supportedVersions) => {
+  // If supportedVersions is supplied, check protocol matches version specified
+  if (supportedVersions && !supportedVersions.includes(protocol.schemaVersion)) {
     return [new Error(`Protocol schema version ${JSON.stringify(protocol.schemaVersion)} does not match any supported by application: ${JSON.stringify(supportedVersions)}`)];
   }
 
