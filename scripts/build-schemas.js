@@ -12,6 +12,9 @@ const isJsonFile = fileName =>
 const getSchemaName = schemaFileName =>
   path.basename(schemaFileName, '.json');
 
+const asVariableName = schemaName =>
+  `version_${schemaName.replace(/\./g, '_')}`;
+
 // get schemas,
 const getSchemas = directory =>
   fs.readdir(directory)
@@ -25,13 +28,23 @@ const getSchemas = directory =>
 const generateModuleIndex = (schemas) => {
   const formatRequire = (schemaName) => {
     const relativeModulePath = path.join(`./${schemaName}.js`);
-    return `const ${schemaName} = require('./${relativeModulePath}');\n`;
+    return `const ${asVariableName(schemaName)} = require('./${relativeModulePath}');`;
   };
 
-  const schemaRequires = schemas.map(formatRequire).join('\n');
-  const schemaExports = schemas.join(', ');
+  const formatVersions = schemaName =>
+    `  { version: '${schemaName}', schema: ${asVariableName(schemaName)} },`;
 
-  return `${schemaRequires}\nmodule.exports = { ${schemaExports} };\r\n`;
+  const schemaRequires = schemas.map(formatRequire).join('\n');
+  const schemaVersions = `${schemas.map(formatVersions).join('\n')}`;
+
+  return `${schemaRequires}
+
+const versions = [
+${schemaVersions}
+];
+
+module.exports = versions;
+\r\n`;
 };
 
 const buildSchemas = async () => {
@@ -49,7 +62,7 @@ const buildSchemas = async () => {
 
     await fs.writeFile(modulePath, moduleCode);
 
-    console.log(schemaName, 'done');
+    console.log(`${schemaName} done.`); // eslint-disable-line
   });
 
   const moduleIndexPath = path.join(schemasDirectory, 'index.js');

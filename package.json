@@ -11,7 +11,8 @@
   "scripts": {
     "validate-protocol": "node scripts/validate-protocol.js",
     "build": "node scripts/build-schemas.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
