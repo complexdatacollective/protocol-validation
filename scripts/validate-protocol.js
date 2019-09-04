@@ -16,6 +16,7 @@ const { validateSchema, validateLogic } = require('../validation');
 const { errToString } = require('../validation/helpers');
 
 const protocolArg = process.argv[2];
+const forceSchemaArg = process.argv[3];
 
 if (!protocolArg) {
   console.error('You must specify a protocol file to validate.');
@@ -48,20 +49,21 @@ const validateJson = (jsonString) => {
     process.exit(1);
   }
 
-  const schemaErrors = validateSchema(data);
+  const schemaErrors = validateSchema(data, forceSchemaArg);
   const dataErrors = validateLogic(data);
   const isValid = !schemaErrors.length && !dataErrors.length;
 
   if (isValid) {
-    console.log(`${protocolName} is valid`);
+    console.log(chalk.green(`${protocolName} is valid.`));
   } else {
+    console.log(chalk.red(`${protocolName} is NOT valid!`));
     if (schemaErrors.length) {
-      console.error(chalk.red(`${protocolName} has schema errors:`));
+      console.error(`${protocolName} has the following schema errors:`);
       schemaErrors.forEach(err => console.warn('-', errToString(err)));
     }
 
     if (dataErrors.length) {
-      console.error(chalk.red(`${protocolName} has data errors:`));
+      console.error(`${protocolName} has the following data errors:`);
       dataErrors.forEach(err => console.warn('-', errToString(err)));
     }
 
