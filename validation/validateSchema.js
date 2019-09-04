@@ -12,14 +12,14 @@ const validateSchema = (protocol, forceVersion = false, supportedVersions = fals
     return [new Error(`Protocol schema version ${JSON.stringify(protocol.schemaVersion)} does not match any supported by application: ${JSON.stringify(supportedVersions)}`)];
   }
 
-  // Check resultant version exists
-  const versionToValidate = forceVersion || protocol.schemaVersion;
-  const version = getVersion(versionToValidate);
-
   if (forceVersion) {
     console.log(`Forcing validation against schema version ${forceVersion}`);
   }
 
+  const versionToValidate = forceVersion || protocol.schemaVersion;
+  const version = getVersion(versionToValidate);
+
+  // Check resultant version exists
   if (!version) {
     return [new Error(`Provided schema version '${versionToValidate}' is not defined`)];
   }
