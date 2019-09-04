@@ -2862,6 +2862,15 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
+        if (data.filter !== undefined) {
+          var errs_1 = errors;
+          if (!refVal[21](data.filter, (dataPath || '') + '.filter', data, 'filter', rootData)) {
+            if (vErrors === null) vErrors = refVal[21].errors;
+            else vErrors = vErrors.concat(refVal[21].errors);
+            errors = vErrors.length;
+          }
+          var valid1 = errors === errs_1;
+        }
       } else {
         var err = {
           keyword: 'type',
@@ -3312,6 +3321,9 @@ var validate = (function() {
       },
       "skipLogic": {
         "$ref": "#/definitions/SkipLogic"
+      },
+      "filter": {
+        "$ref": "#/definitions/Filter"
       }
     },
     "required": ["id", "label", "type"],
@@ -6699,6 +6711,9 @@ validate.schema = {
         },
         "skipLogic": {
           "$ref": "#/definitions/SkipLogic"
+        },
+        "filter": {
+          "$ref": "#/definitions/Filter"
         }
       },
       "required": ["id", "label", "type"],
