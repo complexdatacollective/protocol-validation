@@ -13,7 +13,7 @@ jest.mock('../migrations');
 migrations.push({ version: '1', migration: jest.fn(protocol => protocol) });
 migrations.push({ version: '2', migration: jest.fn(protocol => ({ ...protocol, foo: 'bar', bazz: 'buzz' })) });
 migrations.push({ version: '3', migration: jest.fn(({ foo, ...protocol }) => ({ ...protocol, fizz: 'pop' })) });
-migrations.push({ version: '4', migration: jest.fn(() => undefined) });
+migrations.push({ version: '4', migration: null });
 migrations.push({ version: '5', migration: jest.fn(protocol => protocol) });
 
 const mockProtocol = {

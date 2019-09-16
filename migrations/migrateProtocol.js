@@ -6,9 +6,9 @@ const matchVersion = targetVersion =>
     version === targetVersion;
 
 const migrateStep = (protocol, { migration }) => {
-  const updatedProtocol = migration(protocol);
-  if (updatedProtocol === undefined) { throw errors.MigrationNotPossibleError; }
-  return updatedProtocol;
+  if (!migration) { throw errors.MigrationNotPossibleError; }
+
+  return migration(protocol);
 };
 
 const migrateProtocol = (protocol, targetSchemaVersion) => {
