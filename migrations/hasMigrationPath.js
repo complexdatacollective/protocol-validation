@@ -3,7 +3,7 @@ const getMigrationPath = require('./getMigrationPath');
 const hasMigrationPath = (protocol, targetSchemaVersion) => {
   try {
     getMigrationPath(protocol, targetSchemaVersion);
-  } catch(e) {
+  } catch (e) {
     return false;
   }
 
