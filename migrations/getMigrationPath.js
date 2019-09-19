@@ -1,26 +1,26 @@
 const migrations = require('./migrations');
-const getMigrationIndex = require('./getMigrationIndex');
-const errors = require('./errors');
+const MigrationNotPossibleError = require('./errors').MigrationNotPossibleError;
+const VersionMismatchError = require('./errors').VersionMismatchError;
 
 const isMigrationPathValid = path =>
   !path.some(({ migration }) => !migration);
 
+const matchMigrations = (sourceVersion, targetVersion) =>
+  ({ version }) =>
+    version > sourceVersion && version <= targetVersion;
+
 const getMigrationPath = (sourceSchemaVersion, targetSchemaVersion) => {
-  const sourceMigrationIndex = getMigrationIndex(sourceSchemaVersion);
-  const targetMigrationIndex = getMigrationIndex(targetSchemaVersion);
-
-  if (sourceMigrationIndex === null) { throw new errors.VersionNotFoundError(sourceSchemaVersion); }
-  if (targetMigrationIndex === null) { throw new errors.VersionNotFoundError(targetSchemaVersion); }
-
-  if (sourceMigrationIndex >= targetMigrationIndex) {
-    throw new errors.MigrationNotPossibleError(sourceSchemaVersion, targetSchemaVersion);
+  if (sourceSchemaVersion >= targetSchemaVersion) {
+    throw new VersionMismatchError(sourceSchemaVersion, targetSchemaVersion);
   }
 
   // Get migration steps between versions
-  const migrationPath = migrations.slice(sourceMigrationIndex + 1, targetMigrationIndex + 1);
+  const migrationPath = migrations.filter(
+    matchMigrations(sourceSchemaVersion, targetSchemaVersion),
+  );
 
   if (!isMigrationPathValid(migrationPath)) {
-    throw new errors.MigrationNotPossibleError(sourceSchemaVersion, targetSchemaVersion);
+    throw new MigrationNotPossibleError(sourceSchemaVersion, targetSchemaVersion);
   }
 
   return migrationPath;

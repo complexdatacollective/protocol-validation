@@ -1,11 +1,11 @@
 const getMigrationPath = require('./getMigrationPath');
+const MigrationStepError = require('./errors').MigrationStepError;
 
 const migrateStep = (protocol, { version, migration }) => {
   try {
     return migration(protocol);
   } catch (e) {
-    e.message = `Migration step failed: { version: ${JSON.stringify(version)} }`;
-    throw e;
+    throw new MigrationStepError(version, e);
   }
 };
 

@@ -1,16 +1,3 @@
-class VersionNotFoundError extends Error {
-  constructor(version = undefined, ...params) {
-    super(...params);
-
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, VersionNotFoundError);
-    }
-
-    this.name = 'VersionNotFoundError';
-    this.message = `Protocol version ${JSON.stringify(version)} not found.`;
-  }
-}
-
 class MigrationNotPossibleError extends Error {
   constructor(from = undefined, to = undefined, ...params) {
     super(...params);
@@ -20,25 +7,38 @@ class MigrationNotPossibleError extends Error {
     }
 
     this.name = 'MigrationNotPossibleError';
-    this.message = `Migration to this version is not possible from ${JSON.stringify(from)} to ${JSON.stringify(to)}.`;
+    this.message = `Migration to this version is not possible (${JSON.stringify(from)} -> ${JSON.stringify(to)}).`;
   }
 }
 
-class VersionOutmatchError extends Error {
+class VersionMismatchError extends Error {
   constructor(from = undefined, to = undefined, ...params) {
     super(...params);
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, VersionOutmatchError);
+      Error.captureStackTrace(this, VersionMismatchError);
     }
 
-    this.name = 'MigrationNotPossibleError';
-    this.message = `Source version (${JSON.stringify(from)}) outmatches target version(${JSON.stringify(to)}).`;
+    this.name = 'VersionMismatchError';
+    this.message = `Nonsensical migration path (${JSON.stringify(from)} -> ${JSON.stringify(to)}).`;
+  }
+}
+
+class MigrationStepError extends Error {
+  constructor(version = undefined, ...params) {
+    super(...params);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, MigrationStepError);
+    }
+
+    this.name = 'MigrationStepError';
+    this.message = `Migration step failed (${JSON.stringify(version)}).`;
   }
 }
 
 module.exports = {
-  VersionNotFoundError,
-  VersionOutmatchError,
+  VersionMismatchError,
   MigrationNotPossibleError,
+  MigrationStepError,
 };
