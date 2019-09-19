@@ -9,11 +9,19 @@ ajv.addFormat('integer', /\d+/);
 const isJsonFile = fileName =>
   path.extname(fileName) === '.json';
 
-const getSchemaName = schemaFileName =>
+const getBaseName = schemaFileName =>
   path.basename(schemaFileName, '.json');
 
 const asVariableName = schemaName =>
   `version_${schemaName.replace(/\./g, '_')}`;
+
+const asIntName = (schemaName) => {
+  if (isNaN(parseInt(schemaName, 10))) {
+    throw Error('Schema version could not be converted to integer');
+  }
+
+  return parseInt(schemaName, 10);
+}
 
 // get schemas,
 const getSchemas = directory =>
@@ -22,17 +30,17 @@ const getSchemas = directory =>
       files =>
         files
           .filter(isJsonFile)
-          .map(getSchemaName),
+          .map(getBaseName),
     );
 
 const generateModuleIndex = (schemas) => {
-  const formatRequire = (schemaName) => {
-    const relativeModulePath = path.join(`./${schemaName}.js`);
-    return `const ${asVariableName(schemaName)} = require('./${relativeModulePath}');`;
+  const formatRequire = (baseSchemaName) => {
+    const relativeModulePath = path.join(`./${baseSchemaName}.js`);
+    return `const ${asVariableName(baseSchemaName)} = require('./${relativeModulePath}');`;
   };
 
-  const formatVersions = schemaName =>
-    `  { version: '${schemaName}', validator: ${asVariableName(schemaName)} },`;
+  const formatVersions = baseSchemaName =>
+    `  { version: ${asIntName(baseSchemaName)}, validator: ${asVariableName(baseSchemaName)} },`;
 
   const schemaRequires = schemas.map(formatRequire).join('\n');
   const schemaVersions = `${schemas.map(formatVersions).join('\n')}`;
@@ -52,9 +60,9 @@ const buildSchemas = async () => {
 
   const schemas = await getSchemas(schemasDirectory);
 
-  schemas.forEach(async (schemaName) => {
-    const schemaPath = path.join(schemasDirectory, `${schemaName}.json`);
-    const modulePath = path.join(schemasDirectory, `${schemaName}.js`);
+  schemas.forEach(async (baseSchemaName) => {
+    const schemaPath = path.join(schemasDirectory, `${baseSchemaName}.json`);
+    const modulePath = path.join(schemasDirectory, `${baseSchemaName}.js`);
 
     const schema = await fs.readJson(schemaPath);
     const validate = ajv.compile(schema);
@@ -62,7 +70,7 @@ const buildSchemas = async () => {
 
     await fs.writeFile(modulePath, moduleCode);
 
-    console.log(`${schemaName} done.`); // eslint-disable-line
+    console.log(`${baseSchemaName} done.`); // eslint-disable-line
   });
 
   const moduleIndexPath = path.join(schemasDirectory, 'index.js');
