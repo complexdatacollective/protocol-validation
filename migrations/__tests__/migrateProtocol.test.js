@@ -2,7 +2,6 @@
 
 const migrateProtocol = require('../migrateProtocol');
 const migrations = require('../migrations');
-const errors = require('../errors');
 
 jest.mock('../migrations');
 
@@ -46,21 +45,29 @@ describe('migrateProtocol', () => {
   it('throws an error if schema version cannot be found', () => {
     expect(() => {
       migrateProtocol({
-        schemaVersion: '-999',
+        schemaVersion: '-555',
       }, '2');
-    }).toThrow(errors.CurrentProtocolNotFoundError);
+    }).toThrow(/Protocol version "-555" not found./);
   });
 
   it('throws an error if target version cannot be found', () => {
     expect(() => {
       migrateProtocol(mockProtocol, '-999');
-    }).toThrow(errors.TargetProtocolNotFoundError);
+    }).toThrow(/Protocol version "-999" not found./);
+  });
+
+  it('throws an error if we try to migrate downwards', () => {
+    expect(() => {
+      migrateProtocol({
+        schemaVersion: '3',
+      }, '1');
+    }).toThrow(/Migration to this version is not possible from "3" to "1"./);
   });
 
   it('throws an error migration run on a blocking migration path', () => {
     expect(() => {
       migrateProtocol(mockProtocol, '4');
-    }).toThrow(errors.MigrationNotPossibleError);
+    }).toThrow(/Migration to this version is not possible from "1" to "4"./);
   });
 
   it('throws a generic MigrationError error migration step throws an error', () => {
