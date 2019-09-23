@@ -1,32 +1,26 @@
 const migrations = require('./migrations');
-const errors = require('./errors');
-
-const matchVersion = targetVersion =>
-  ({ version }) =>
-    version === targetVersion;
+const MigrationNotPossibleError = require('./errors').MigrationNotPossibleError;
+const VersionMismatchError = require('./errors').VersionMismatchError;
 
 const isMigrationPathValid = path =>
   !path.some(({ migration }) => !migration);
 
-const getMigrationPath = (protocol, targetSchemaVersion) => {
-  const protocolSchemaVersion = protocol.schemaVersion;
+const matchMigrations = (sourceVersion, targetVersion) =>
+  ({ version }) =>
+    version > sourceVersion && version <= targetVersion;
 
-  const protocolMigrationIndex = migrations.findIndex(matchVersion(protocolSchemaVersion));
-  const targetMigrationIndex = migrations.findIndex(matchVersion(targetSchemaVersion));
-
-  if (protocolMigrationIndex === -1) {
-    throw errors.CurrentProtocolNotFoundError;
-  }
-
-  if (targetMigrationIndex === -1) {
-    throw errors.TargetProtocolNotFoundError;
+const getMigrationPath = (sourceSchemaVersion, targetSchemaVersion) => {
+  if (sourceSchemaVersion >= targetSchemaVersion) {
+    throw new VersionMismatchError(sourceSchemaVersion, targetSchemaVersion);
   }
 
   // Get migration steps between versions
-  const migrationPath = migrations.slice(protocolMigrationIndex + 1, targetMigrationIndex + 1);
+  const migrationPath = migrations.filter(
+    matchMigrations(sourceSchemaVersion, targetSchemaVersion),
+  );
 
   if (!isMigrationPathValid(migrationPath)) {
-    throw errors.MigrationNotPossibleError;
+    throw new MigrationNotPossibleError(sourceSchemaVersion, targetSchemaVersion);
   }
 
   return migrationPath;

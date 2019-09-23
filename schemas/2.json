@@ -17,7 +17,7 @@
           "format": "date-time"
         },
         "schemaVersion": {
-          "type": "string"
+          "type": "number"
         },
         "codebook": {
           "$ref": "#/definitions/codebook"

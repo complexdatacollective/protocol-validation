@@ -104,15 +104,15 @@ var validate = (function() {
         }
         if (data.schemaVersion !== undefined) {
           var errs_1 = errors;
-          if (typeof data.schemaVersion !== "string") {
+          if (typeof data.schemaVersion !== "number") {
             var err = {
               keyword: 'type',
               dataPath: (dataPath || '') + '.schemaVersion',
               schemaPath: '#/properties/schemaVersion/type',
               params: {
-                type: 'string'
+                type: 'number'
               },
-              message: 'should be string'
+              message: 'should be number'
             };
             if (vErrors === null) vErrors = [err];
             else vErrors.push(err);
@@ -256,7 +256,7 @@ var validate = (function() {
         "format": "date-time"
       },
       "schemaVersion": {
-        "type": "string"
+        "type": "number"
       },
       "codebook": {
         "$ref": "#/definitions/codebook"
@@ -6562,7 +6562,7 @@ validate.schema = {
           "format": "date-time"
         },
         "schemaVersion": {
-          "type": "string"
+          "type": "number"
         },
         "codebook": {
           "$ref": "#/definitions/codebook"

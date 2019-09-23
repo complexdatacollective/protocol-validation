@@ -7,11 +7,16 @@ const getSchema = version =>
  * Statically validate the protocol based on JSON schema
  */
 const validateSchema = (protocol, forceVersion) => {
-  if (forceVersion) {
-    console.log(`Forcing validation against schema version ${forceVersion}`);
+  const version = parseInt(forceVersion || protocol.schemaVersion, 10);
+
+  if (isNaN(version)) {
+    throw new Error('schemaVersion must be number-like');
   }
 
-  const version = forceVersion || protocol.schemaVersion;
+  if (forceVersion) {
+    console.log(`Forcing validation against schema version ${version}`);
+  }
+
   const schema = getSchema(version);
 
   // Check resultant version exists
