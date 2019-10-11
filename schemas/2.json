@@ -419,7 +419,7 @@
           ]
         },
         "value": {
-          "type": ["integer", "string", "array", "boolean"]
+          "type": ["integer", "string", "boolean"]
         }
       },
       "required": [

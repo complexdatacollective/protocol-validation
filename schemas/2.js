@@ -4325,15 +4325,15 @@ var validate = (function() {
             var data2 = data1.value;
             if (data2 !== undefined) {
               var errs_3 = errors;
-              if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2) && typeof data2 !== "string" && !Array.isArray(data2) && typeof data2 !== "boolean") {
+              if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2) && typeof data2 !== "string" && typeof data2 !== "boolean") {
                 var err = {
                   keyword: 'type',
                   dataPath: (dataPath || '') + '.options.value',
                   schemaPath: '#/definitions/Options/properties/value/type',
                   params: {
-                    type: 'integer,string,array,boolean'
+                    type: 'integer,string,boolean'
                   },
-                  message: 'should be integer,string,array,boolean'
+                  message: 'should be integer,string,boolean'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -4478,7 +4478,7 @@ var validate = (function() {
         "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES"]
       },
       "value": {
-        "type": ["integer", "string", "array", "boolean"]
+        "type": ["integer", "string", "boolean"]
       }
     },
     "required": ["operator"],
@@ -6872,7 +6872,7 @@ validate.schema = {
           "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES"]
         },
         "value": {
-          "type": ["integer", "string", "array", "boolean"]
+          "type": ["integer", "string", "boolean"]
         }
       },
       "required": ["operator"],
