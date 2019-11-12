@@ -4,8 +4,8 @@
   "description": "A utility for validating a Network Canvas protocol against a versioned JSON schema",
   "private": true,
   "engines": {
-    "node": "8.16.0",
-    "npm": "6.4.1"
+    "node": "12.8.0",
+    "npm": "6.10.2"
   },
   "main": "index.js",
   "scripts": {

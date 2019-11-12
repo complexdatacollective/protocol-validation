@@ -1,12 +1,13 @@
 import environments from './environments';
 
-export const isElectron = () => !!window.require;
+export const isElectron = () => !!window.electron || !!window.require;
 
-export const isMacOS = () => isElectron && window.require && window.require('os').platform() === 'darwin';
+const os = (window.require && window.require('os')) || window.os;
+export const isMacOS = () => isElectron && os.platform() === 'darwin';
 
-export const isWindows = () => isElectron && window.require && window.require('os').platform() === 'win32';
+export const isWindows = () => isElectron && os.platform() === 'win32';
 
-export const isLinux = () => isElectron && window.require && window.require('os').platform() === 'linux';
+export const isLinux = () => isElectron && os.platform() === 'linux';
 
 export const isCordova = () => !!window.cordova;
 
