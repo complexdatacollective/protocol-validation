@@ -698,7 +698,7 @@ var validate = (function() {
         var errs__0 = errors;
         var valid1 = true;
         for (var key0 in data) {
-          var isAdditional0 = !(false || key0 == 'name' || key0 == 'type' || key0 == 'component' || key0 == 'options' || key0 == 'validation');
+          var isAdditional0 = !(false || key0 == 'name' || key0 == 'type' || key0 == 'component' || key0 == 'options' || key0 == 'parameters' || key0 == 'validation');
           if (isAdditional0) {
             valid1 = false;
             var err = {
@@ -865,6 +865,25 @@ var validate = (function() {
                 type: 'array'
               },
               message: 'should be array'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        var data1 = data.parameters;
+        if (data1 !== undefined) {
+          var errs_1 = errors;
+          if ((!data1 || typeof data1 !== "object" || Array.isArray(data1))) {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.parameters',
+              schemaPath: '#/properties/parameters/type',
+              params: {
+                type: 'object'
+              },
+              message: 'should be object'
             };
             if (vErrors === null) vErrors = [err];
             else vErrors.push(err);
@@ -1091,17 +1110,20 @@ var validate = (function() {
       },
       "type": {
         "type": "string",
-        "enum": ["boolean", "text", "number", "datetime", "ordinal", "categorical", "layout", "location"]
+        "enum": ["boolean", "text", "number", "datetime", "ordinal", "scalar", "categorical", "layout", "location"]
       },
       "component": {
         "type": "string",
-        "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup"]
+        "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup", "Slider"]
       },
       "options": {
         "type": "array",
         "items": {
           "$ref": "#/definitions/OptionElement"
         }
+      },
+      "parameters": {
+        "type": "object"
       },
       "validation": {
         "$ref": "#/definitions/Validation"
@@ -7357,17 +7379,20 @@ validate.schema = {
         },
         "type": {
           "type": "string",
-          "enum": ["boolean", "text", "number", "datetime", "ordinal", "categorical", "layout", "location"]
+          "enum": ["boolean", "text", "number", "datetime", "ordinal", "scalar", "categorical", "layout", "location"]
         },
         "component": {
           "type": "string",
-          "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup"]
+          "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "Toggle", "ToggleButtonGroup", "Slider"]
         },
         "options": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/OptionElement"
           }
+        },
+        "parameters": {
+          "type": "object"
         },
         "validation": {
           "$ref": "#/definitions/Validation"

@@ -875,6 +875,7 @@
             "number",
             "datetime",
             "ordinal",
+            "scalar",
             "categorical",
             "layout",
             "location"
@@ -888,7 +889,8 @@
             "RadioGroup",
             "Text",
             "Toggle",
-            "ToggleButtonGroup"
+            "ToggleButtonGroup",
+            "Slider"
           ]
         },
         "options": {
@@ -896,6 +898,9 @@
           "items": {
             "$ref": "#/definitions/OptionElement"
           }
+        },
+        "parameters": {
+          "type": "object"
         },
         "validation": {
           "$ref": "#/definitions/Validation"
