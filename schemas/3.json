@@ -890,7 +890,9 @@
             "Text",
             "Toggle",
             "ToggleButtonGroup",
-            "Slider"
+            "Slider",
+            "VisualAnalogScale",
+            "LikertScale"
           ]
         },
         "options": {
