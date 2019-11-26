@@ -892,7 +892,8 @@
             "ToggleButtonGroup",
             "Slider",
             "VisualAnalogScale",
-            "LikertScale"
+            "LikertScale",
+            "DatePicker"
           ]
         },
         "options": {
