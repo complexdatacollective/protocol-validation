@@ -893,7 +893,8 @@
             "Slider",
             "VisualAnalogScale",
             "LikertScale",
-            "DatePicker"
+            "DatePicker",
+            "RelativeDatePicker"
           ]
         },
         "options": {
