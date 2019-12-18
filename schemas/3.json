@@ -888,11 +888,14 @@
             "Number",
             "RadioGroup",
             "Text",
+            "TextArea",
             "Toggle",
             "ToggleButtonGroup",
             "Slider",
             "VisualAnalogScale",
-            "LikertScale"
+            "LikertScale",
+            "DatePicker",
+            "RelativeDatePicker"
           ]
         },
         "options": {
