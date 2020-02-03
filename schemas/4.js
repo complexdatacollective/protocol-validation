@@ -4737,6 +4737,42 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
+        if (data.otherVariable !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.otherVariable !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.otherVariable',
+              schemaPath: '#/properties/otherVariable/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        if (data.otherVariableLabel !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.otherVariableLabel !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.otherVariableLabel',
+              schemaPath: '#/properties/otherVariableLabel/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
         var data1 = data.bucketSortOrder;
         if (data1 !== undefined) {
           var errs_1 = errors;
@@ -5164,6 +5200,12 @@ var validate = (function() {
         "$ref": "#/definitions/AdditionalAttributes"
       },
       "variable": {
+        "type": "string"
+      },
+      "otherVariable": {
+        "type": "string"
+      },
+      "otherVariableLabel": {
         "type": "string"
       },
       "bucketSortOrder": {
@@ -7035,6 +7077,12 @@ validate.schema = {
           "$ref": "#/definitions/AdditionalAttributes"
         },
         "variable": {
+          "type": "string"
+        },
+        "otherVariable": {
+          "type": "string"
+        },
+        "otherVariableLabel": {
           "type": "string"
         },
         "bucketSortOrder": {

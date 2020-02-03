@@ -484,6 +484,12 @@
         "variable": {
           "type": "string"
         },
+        "otherVariable": {
+          "type": "string"
+        },
+        "otherVariableLabel": {
+          "type": "string"
+        },
         "bucketSortOrder": {
           "type": "array",
           "items": {
