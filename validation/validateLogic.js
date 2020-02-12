@@ -156,6 +156,11 @@ const validateLogic = (protocol) => {
     (variable, subject) => `"${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
+  v.addValidation('prompts[].otherVariable',
+    (otherVariable, subject) => getVariablesForSubject(codebook, subject)[otherVariable],
+    (otherVariable, subject) => `"${otherVariable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
+  );
+
   v.addValidation('prompts[].layout.layoutVariable',
     (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
     (variable, subject) => `Layout variable "${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
