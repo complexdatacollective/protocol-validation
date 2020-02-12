@@ -4755,13 +4755,13 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
-        if (data.otherVariableLabel !== undefined) {
+        if (data.otherVariablePrompt !== undefined) {
           var errs_1 = errors;
-          if (typeof data.otherVariableLabel !== "string") {
+          if (typeof data.otherVariablePrompt !== "string") {
             var err = {
               keyword: 'type',
-              dataPath: (dataPath || '') + '.otherVariableLabel',
-              schemaPath: '#/properties/otherVariableLabel/type',
+              dataPath: (dataPath || '') + '.otherVariablePrompt',
+              schemaPath: '#/properties/otherVariablePrompt/type',
               params: {
                 type: 'string'
               },
@@ -5223,7 +5223,7 @@ var validate = (function() {
       "otherVariable": {
         "type": "string"
       },
-      "otherVariableLabel": {
+      "otherVariablePrompt": {
         "type": "string"
       },
       "otherOptionLabel": {
@@ -7103,7 +7103,7 @@ validate.schema = {
         "otherVariable": {
           "type": "string"
         },
-        "otherVariableLabel": {
+        "otherVariablePrompt": {
           "type": "string"
         },
         "otherOptionLabel": {
