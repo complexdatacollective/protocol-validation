@@ -490,6 +490,9 @@
         "otherVariableLabel": {
           "type": "string"
         },
+        "otherOptionLabel": {
+          "type": "string"
+        },
         "bucketSortOrder": {
           "type": "array",
           "items": {

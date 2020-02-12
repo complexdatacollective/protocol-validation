@@ -4773,6 +4773,24 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
+        if (data.otherOptionLabel !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.otherOptionLabel !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.otherOptionLabel',
+              schemaPath: '#/properties/otherOptionLabel/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
         var data1 = data.bucketSortOrder;
         if (data1 !== undefined) {
           var errs_1 = errors;
@@ -5206,6 +5224,9 @@ var validate = (function() {
         "type": "string"
       },
       "otherVariableLabel": {
+        "type": "string"
+      },
+      "otherOptionLabel": {
         "type": "string"
       },
       "bucketSortOrder": {
@@ -7083,6 +7104,9 @@ validate.schema = {
           "type": "string"
         },
         "otherVariableLabel": {
+          "type": "string"
+        },
+        "otherOptionLabel": {
           "type": "string"
         },
         "bucketSortOrder": {
