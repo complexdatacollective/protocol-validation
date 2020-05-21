@@ -3013,20 +3013,6 @@ var validate = (function() {
             else vErrors.push(err);
             errors++;
           }
-          if (data.createEdge === undefined) {
-            var err = {
-              keyword: 'required',
-              dataPath: (dataPath || '') + "",
-              schemaPath: '#/anyOf/1/required',
-              params: {
-                missingProperty: 'createEdge'
-              },
-              message: 'should have required property \'createEdge\''
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
           var errs__1 = errors;
           var valid2 = true;
           if (data.type !== undefined) {
@@ -3455,7 +3441,7 @@ var validate = (function() {
           "const": "DyadCensus"
         }
       },
-      "required": ["subject", "introductionPanel", "createEdge"]
+      "required": ["subject", "introductionPanel"]
     }, {
       "properties": {
         "type": {
@@ -3487,7 +3473,7 @@ var validate = (function() {
     }, {
       "properties": {
         "type": {
-          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin"]
+          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
         }
       },
       "required": ["prompts"]
@@ -5186,6 +5172,24 @@ var validate = (function() {
           var valid2 = errors === errs_2;
           var valid1 = errors === errs_1;
         }
+        if (data.createEdge !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.createEdge !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.createEdge',
+              schemaPath: '#/properties/createEdge/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
       } else {
         var err = {
           keyword: 'type',
@@ -5258,6 +5262,9 @@ var validate = (function() {
       },
       "highlight": {
         "$ref": "#/definitions/Highlight"
+      },
+      "createEdge": {
+        "type": "string"
       }
     },
     "required": ["id", "text"],
@@ -6918,7 +6925,7 @@ validate.schema = {
             "const": "DyadCensus"
           }
         },
-        "required": ["subject", "introductionPanel", "createEdge"]
+        "required": ["subject", "introductionPanel"]
       }, {
         "properties": {
           "type": {
@@ -6950,7 +6957,7 @@ validate.schema = {
       }, {
         "properties": {
           "type": {
-            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin"]
+            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
           }
         },
         "required": ["prompts"]
@@ -7138,6 +7145,9 @@ validate.schema = {
         },
         "highlight": {
           "$ref": "#/definitions/Highlight"
+        },
+        "createEdge": {
+          "type": "string"
         }
       },
       "required": ["id", "text"],
