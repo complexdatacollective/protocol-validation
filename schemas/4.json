@@ -222,8 +222,7 @@
           },
           "required": [
             "subject",
-            "introductionPanel",
-            "createEdge"
+            "introductionPanel"
           ]
         },
         {
@@ -279,7 +278,8 @@
                 "NameGeneratorAutoComplete",
                 "Sociogram",
                 "OrdinalBin",
-                "CategoricalBin"
+                "CategoricalBin",
+                "DyadCensus"
               ]
             }
           },
@@ -522,6 +522,9 @@
         },
         "highlight": {
           "$ref": "#/definitions/Highlight"
+        },
+        "createEdge": {
+          "type": "string"
         }
       },
       "required": [
