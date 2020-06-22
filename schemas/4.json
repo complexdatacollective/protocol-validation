@@ -1042,7 +1042,8 @@
           "type": "integer"
         },
         {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9._:-]+$"
         }
       ],
       "title": "Value"
