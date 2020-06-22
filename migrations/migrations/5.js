@@ -2,7 +2,7 @@
  * Migration from v4 to v5
  */
 
-const propify = (props, source) =>
+const setProps = (props, source = {}) =>
   Object.keys(props)
     .reduce((acc, key) => {
       if (!source[key]) { return acc; }
@@ -15,17 +15,16 @@ const getSafeValue = value => (
     value
 );
 
-const migrateOptionValues = options =>
+const migrateOptionValues = (options = []) =>
   options.map(
     ({ value, ...rest }) =>
       ({ ...rest, value: getSafeValue(value) }),
   );
 
-const migrateVariable = ({ name, options, ...rest }) => ({
-  ...rest,
-  ...(options ? { options: migrateOptionValues(options) } : {}),
-  name: getSafeValue(name),
-});
+const migrateVariable = (variable = {}) => setProps({
+  options: migrateOptionValues(variable.options),
+  name: getSafeValue(variable.name),
+}, variable);
 
 const migrateVariables = (variables = {}) =>
   Object.keys(variables)
@@ -34,10 +33,9 @@ const migrateVariables = (variables = {}) =>
       [variableId]: migrateVariable(variables[variableId]),
     }), {});
 
-const migrateType = (type = {}) => ({
-  ...type,
-  variables: type.variables && migrateVariables(type.variables),
-});
+const migrateType = (type = {}) => setProps({
+  variables: migrateVariables(type.variables),
+}, type);
 
 const migrateTypes = (types = {}) =>
   Object.keys(types)
@@ -46,19 +44,16 @@ const migrateTypes = (types = {}) =>
       [typeId]: migrateType(types[typeId]),
     }), {});
 
-
-// props({
-//   foo: doThing,
-// }, source);
-
 const migrate = (protocol) => {
   const codebook = protocol.codebook;
 
-  const newCodebook = {
-    ...(codebook.node ? { node: migrateTypes(codebook.node) } : {}),
-    ...(codebook.edge ? { edge: migrateTypes(codebook.edge) } : {}),
-    ...(codebook.ego ? { ego: migrateType(codebook.ego) } : {}),
-  };
+  const newCodebook = setProps({
+    node: migrateTypes(codebook.node),
+    edge: migrateTypes(codebook.edge),
+    ego: migrateType(codebook.ego),
+  }, codebook);
+
+  console.log(JSON.stringify(codebook));
 
   return {
     ...protocol,

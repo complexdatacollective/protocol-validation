@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrate v4 -> v5 option values 1`] = `
+Object {
+  "codebook": Object {
+    "node": Object {
+      "exampleNodeType": Object {
+        "variables": Object {
+          "invalidExampleVariable": Object {
+            "name": "variable__with__disallowed_characters_",
+            "options": Array [
+              Object {
+                "label": "foo",
+                "value": "f_o_o_",
+              },
+              Object {
+                "label": "bar",
+                "value": "b_a-r:.",
+              },
+              Object {
+                "label": "bazz",
+                "value": 5,
+              },
+            ],
+          },
+          "validExampleVariable": Object {
+            "name": "variable_with-allowed:characters.",
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`migrate v4 -> v5 variable names 1`] = `
+Object {
+  "codebook": Object {
+    "node": Object {
+      "exampleNodeType": Object {
+        "variables": Object {
+          "invalidExampleVariable": Object {
+            "name": "variable__with__disallowed_characters_",
+            "options": Array [
+              Object {
+                "label": "foo",
+                "value": "f_o_o_",
+              },
+              Object {
+                "label": "bar",
+                "value": "b_a-r:.",
+              },
+              Object {
+                "label": "bazz",
+                "value": 5,
+              },
+            ],
+          },
+          "validExampleVariable": Object {
+            "name": "variable_with-allowed:characters.",
+          },
+        },
+      },
+    },
+  },
+}
+`;

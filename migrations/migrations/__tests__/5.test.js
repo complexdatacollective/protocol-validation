@@ -31,6 +31,7 @@ describe('migrate v4 -> v5', () => {
     const variables = result.codebook.node.exampleNodeType.variables;
     expect(variables.invalidExampleVariable.name).toBe('variable__with__disallowed_characters_');
     expect(variables.validExampleVariable.name).toBe('variable_with-allowed:characters.');
+    expect(result).toMatchSnapshot();
   });
 
   it('option values', () => {
@@ -42,5 +43,6 @@ describe('migrate v4 -> v5', () => {
       expect.objectContaining({ value: 'b_a-r:.' }),
       expect.objectContaining({ value: 5 }),
     ]));
+    expect(result).toMatchSnapshot();
   });
 });
