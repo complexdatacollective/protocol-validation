@@ -9,6 +9,11 @@ const v4protocol = {
         variables: {
           invalidExampleVariable: {
             name: 'variable (with) disallowed characters!',
+            options: [
+              { label: 'foo', value: 'f o o!' },
+              { label: 'bar', value: 'b_a-r:.' },
+              { label: 'bazz', value: 5 },
+            ],
           },
           validExampleVariable: {
             name: 'variable_with-allowed:characters.',
@@ -28,5 +33,14 @@ describe('migrate v4 -> v5', () => {
     expect(variables.validExampleVariable.name).toBe('variable_with-allowed:characters.');
   });
 
-  it.todo('option values');
+  it('option values', () => {
+    const result = migrate(v4protocol);
+
+    const options = result.codebook.node.exampleNodeType.variables.invalidExampleVariable.options;
+    expect(options).toEqual(expect.arrayContaining([
+      expect.objectContaining({ value: 'f_o_o_' }),
+      expect.objectContaining({ value: 'b_a-r:.' }),
+      expect.objectContaining({ value: 5 }),
+    ]));
+  });
 });
