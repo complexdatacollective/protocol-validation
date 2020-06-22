@@ -53,8 +53,6 @@ const migrate = (protocol) => {
     ego: migrateType(codebook.ego),
   }, codebook);
 
-  console.log(JSON.stringify(codebook));
-
   return {
     ...protocol,
     codebook: newCodebook,
