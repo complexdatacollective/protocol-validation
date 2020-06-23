@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`migrate v4 -> v5 migrates codebook 1`] = `
+exports[`migrate v3 -> v4 migrates codebook 1`] = `
 Object {
   "codebook": Object {
     "edge": Object {
@@ -64,7 +64,7 @@ Object {
 }
 `;
 
-exports[`migrate v4 -> v5 option values 1`] = `
+exports[`migrate v3 -> v4 option values 1`] = `
 Array [
   Object {
     "label": "foo",
@@ -85,7 +85,7 @@ Array [
 ]
 `;
 
-exports[`migrate v4 -> v5 type names 1`] = `
+exports[`migrate v3 -> v4 type names 1`] = `
 Object {
   "allowedTypeName": Object {
     "name": "okay_-type:.name",
@@ -128,7 +128,7 @@ Object {
 }
 `;
 
-exports[`migrate v4 -> v5 variable names 1`] = `
+exports[`migrate v3 -> v4 variable names 1`] = `
 Object {
   "invalidExampleVariable": Object {
     "name": "variable_with_disallowed_characters",

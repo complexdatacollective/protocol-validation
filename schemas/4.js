@@ -3,9 +3,11 @@ var formats = require('ajv/lib/compile/formats')();
 var equal = require('ajv/lib/compile/equal');
 var validate = (function() {
   var pattern0 = new RegExp('.+');
+  var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
   var refVal = [];
   var refVal1 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -279,6 +281,7 @@ var validate = (function() {
   refVal[1] = refVal1;
   var refVal2 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -371,6 +374,7 @@ var validate = (function() {
   refVal[2] = refVal2;
   var refVal3 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -440,6 +444,7 @@ var validate = (function() {
   refVal[3] = refVal3;
   var refVal4 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -620,6 +625,7 @@ var validate = (function() {
   refVal[4] = refVal4;
   var refVal5 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -689,6 +695,7 @@ var validate = (function() {
   refVal[5] = refVal5;
   var refVal6 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -715,7 +722,8 @@ var validate = (function() {
             errors++;
           }
         }
-        if (data.name === undefined) {
+        var data1 = data.name;
+        if (data1 === undefined) {
           valid1 = false;
           var err = {
             keyword: 'required',
@@ -731,7 +739,22 @@ var validate = (function() {
           errors++;
         } else {
           var errs_1 = errors;
-          if (typeof data.name !== "string") {
+          if (typeof data1 === "string") {
+            if (!pattern1.test(data1)) {
+              var err = {
+                keyword: 'pattern',
+                dataPath: (dataPath || '') + '.name',
+                schemaPath: '#/properties/name/pattern',
+                params: {
+                  pattern: '^[a-zA-Z0-9._:-]+$'
+                },
+                message: 'should match pattern "^[a-zA-Z0-9._:-]+$"'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+          } else {
             var err = {
               keyword: 'type',
               dataPath: (dataPath || '') + '.name',
@@ -1106,7 +1129,8 @@ var validate = (function() {
     "additionalProperties": false,
     "properties": {
       "name": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9._:-]+$"
       },
       "type": {
         "type": "string",
@@ -1136,6 +1160,7 @@ var validate = (function() {
   refVal[6] = refVal6;
   var refVal7 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -1225,6 +1250,7 @@ var validate = (function() {
   refVal[7] = refVal7;
   var refVal8 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -1321,7 +1347,22 @@ var validate = (function() {
           valid2 = valid2 || valid3;
           if (!valid2) {
             var errs_3 = errors;
-            if (typeof data1 !== "string") {
+            if (typeof data1 === "string") {
+              if (!pattern1.test(data1)) {
+                var err = {
+                  keyword: 'pattern',
+                  dataPath: (dataPath || '') + '.value',
+                  schemaPath: '#/definitions/Value/anyOf/1/pattern',
+                  params: {
+                    pattern: '^[a-zA-Z0-9._:-]+$'
+                  },
+                  message: 'should match pattern "^[a-zA-Z0-9._:-]+$"'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+            } else {
               var err = {
                 keyword: 'type',
                 dataPath: (dataPath || '') + '.value',
@@ -1397,7 +1438,8 @@ var validate = (function() {
     "anyOf": [{
       "type": "integer"
     }, {
-      "type": "string"
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9._:-]+$"
     }],
     "title": "Value"
   };
@@ -1436,6 +1478,7 @@ var validate = (function() {
   refVal[10] = refVal10;
   var refVal11 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -1505,6 +1548,7 @@ var validate = (function() {
   refVal[11] = refVal11;
   var refVal12 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -1643,6 +1687,7 @@ var validate = (function() {
   refVal[12] = refVal12;
   var refVal13 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       validate.errors = null;
@@ -1666,6 +1711,7 @@ var validate = (function() {
   refVal[14] = refVal14;
   var refVal15 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -3483,6 +3529,7 @@ var validate = (function() {
   refVal[15] = refVal15;
   var refVal16 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -3723,6 +3770,7 @@ var validate = (function() {
   refVal[17] = refVal17;
   var refVal18 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -3878,6 +3926,7 @@ var validate = (function() {
   refVal[19] = refVal19;
   var refVal20 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -4052,6 +4101,7 @@ var validate = (function() {
   refVal[20] = refVal20;
   var refVal21 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -4189,6 +4239,7 @@ var validate = (function() {
   refVal[21] = refVal21;
   var refVal22 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -4606,6 +4657,7 @@ var validate = (function() {
   refVal[23] = refVal23;
   var refVal24 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -5274,6 +5326,7 @@ var validate = (function() {
   refVal[24] = refVal24;
   var refVal25 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -5432,6 +5485,7 @@ var validate = (function() {
   refVal[26] = refVal26;
   var refVal27 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -5635,6 +5689,7 @@ var validate = (function() {
   refVal[31] = refVal31;
   var refVal32 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -6010,6 +6065,7 @@ var validate = (function() {
   refVal[34] = refVal34;
   var refVal35 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -6280,6 +6336,7 @@ var validate = (function() {
   refVal[36] = refVal36;
   var refVal37 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -6582,6 +6639,7 @@ var validate = (function() {
   refVal[41] = refVal41;
   var refVal42 = (function() {
     var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
       var vErrors = null;
@@ -7457,7 +7515,8 @@ validate.schema = {
       "additionalProperties": false,
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9._:-]+$"
         },
         "type": {
           "type": "string",
@@ -7583,7 +7642,8 @@ validate.schema = {
       "anyOf": [{
         "type": "integer"
       }, {
-        "type": "string"
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9._:-]+$"
       }],
       "title": "Value"
     },

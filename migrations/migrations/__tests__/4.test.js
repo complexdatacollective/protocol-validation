@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-const version5 = require('../5');
+const version4 = require('../4');
 
 const v4protocol = {
   codebook: {
@@ -50,15 +50,15 @@ const v4protocol = {
   },
 };
 
-describe('migrate v4 -> v5', () => {
+describe('migrate v3 -> v4', () => {
   it('migrates codebook', () => {
-    const result = version5.migration(v4protocol);
+    const result = version4.migration(v4protocol);
 
     expect(result).toMatchSnapshot();
   });
 
   it('type names', () => {
-    const result = version5.migration(v4protocol);
+    const result = version4.migration(v4protocol);
 
     const nodeDefinitions = result.codebook.node;
 
@@ -69,7 +69,7 @@ describe('migrate v4 -> v5', () => {
   });
 
   it('variable names', () => {
-    const result = version5.migration(v4protocol);
+    const result = version4.migration(v4protocol);
 
     const variables = result.codebook.node.disallowedType.variables;
     expect(variables.invalidExampleVariable.name).toBe('variable_with_disallowed_characters');
@@ -79,7 +79,7 @@ describe('migrate v4 -> v5', () => {
   });
 
   it('option values', () => {
-    const result = version5.migration(v4protocol);
+    const result = version4.migration(v4protocol);
 
     const options = result.codebook.node.disallowedType.variables.invalidExampleVariable.options;
     expect(options).toEqual(expect.arrayContaining([
