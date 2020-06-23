@@ -11,7 +11,7 @@ const setProps = (props, source = {}) =>
 
 const getSafeValue = value => (
   typeof value === 'string' ?
-    value.replace(/[^a-zA-Z0-9._:-]/g, '_') :
+    value.replace(/[\s]+/g, '_').replace(/[^a-zA-Z0-9._:-]+/g, '') :
     value
 );
 
@@ -44,7 +44,7 @@ const migrateTypes = (types = {}) =>
       [typeId]: migrateType(types[typeId]),
     }), {});
 
-const migrate = (protocol) => {
+const migration = (protocol) => {
   const codebook = protocol.codebook;
 
   const newCodebook = setProps({
@@ -59,4 +59,18 @@ const migrate = (protocol) => {
   };
 };
 
-module.exports = migrate;
+// Markdown format
+const information = `This update will **rename variables and option values** to match the requirements of graphml exports:
+
+- Only letters, numbers and the symbols ._-: are allowed
+- Spaces will be replaced with _
+- Any other symbols will be removed
+`;
+
+const v5 = {
+  version: 5,
+  information,
+  migration,
+};
+
+module.exports = v5;

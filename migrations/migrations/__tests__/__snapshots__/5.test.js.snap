@@ -7,11 +7,11 @@ Object {
       "exampleNodeType": Object {
         "variables": Object {
           "invalidExampleVariable": Object {
-            "name": "variable__with__disallowed_characters_",
+            "name": "variable_with_disallowed_characters",
             "options": Array [
               Object {
                 "label": "foo",
-                "value": "f_o_o_",
+                "value": "f_o_o",
               },
               Object {
                 "label": "bar",
@@ -40,11 +40,11 @@ Object {
       "exampleNodeType": Object {
         "variables": Object {
           "invalidExampleVariable": Object {
-            "name": "variable__with__disallowed_characters_",
+            "name": "variable_with_disallowed_characters",
             "options": Array [
               Object {
                 "label": "foo",
-                "value": "f_o_o_",
+                "value": "f_o_o",
               },
               Object {
                 "label": "bar",
