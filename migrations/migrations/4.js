@@ -1,5 +1,5 @@
 /**
- * Migration from v4 to v5
+ * Migration from v3 to v4
  */
 
 const setProps = (props, source = {}) =>
@@ -74,17 +74,18 @@ const migration = (protocol) => {
 };
 
 // Markdown format
-const information = `This update will **rename variables and option values** to match the requirements of graphml exports:
+const notes = `This update will automatically **rename** _variables_ and _option values_ to match the requirements of graphml exports:
 
 - Only letters, numbers and the symbols ._-: are allowed
 - Spaces will be replaced with _
 - Any other symbols will be removed
-`;
+- Any variables or options that clash as a result of these changes will get a numerical suffix
+- Entity names must be unique, duplicates will get a numerical suffix.`;
 
-const v5 = {
-  version: 5,
-  information,
+const v4 = {
+  version: 4,
+  notes,
   migration,
 };
 
-module.exports = v5;
+module.exports = v4;
