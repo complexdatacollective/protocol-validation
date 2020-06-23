@@ -39,6 +39,20 @@
         },
         "iconVariant": "add-a-person",
         "name": "fr"
+      },
+      "d248f88d-2ff5-41a4-b88d-f23f78c2d252": {
+        "color": "node-color-seq-2",
+        "variables": {
+        },
+        "iconVariant": "add-a-person",
+        "name": "du"
+      },
+      "d248f88d-2ff5-41a4-b88d-f23f78c2d256": {
+        "color": "node-color-seq-2",
+        "variables": {
+        },
+        "iconVariant": "add-a-person",
+        "name": "du"
       }
     },
     "edge": {

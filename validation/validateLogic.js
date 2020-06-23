@@ -5,6 +5,7 @@ const {
   entityDefFromRule,
   getVariablesForSubject,
   getVariableNames,
+  getEntityNames,
   nodeVarsIncludeDisplayVar,
 } = require('./helpers');
 
@@ -144,6 +145,12 @@ const validateLogic = (protocol) => {
   v.addValidation('stages[].items',
     items => !duplicateId(items),
     items => `Items contain duplicate ID "${duplicateId(items)}"`,
+  );
+
+
+  v.addValidation('codebook',
+    entityMap => !duplicateInArray(getEntityNames(entityMap)),
+    variableMap => `Duplicate entity name "${duplicateInArray(getEntityNames(entityMap))}"`,
   );
 
   v.addValidation('codebook.*.*.variables',
