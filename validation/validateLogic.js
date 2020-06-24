@@ -64,6 +64,11 @@ const validateLogic = (protocol) => {
     return current;
   };
 
+  v.addValidation('codebook',
+    codebook => !duplicateInArray(getEntityNames(codebook)),
+    codebook => `Duplicate entity name "${duplicateInArray(getEntityNames(codebook))}"`,
+  );
+
   v.addValidation('codebook.node.*',
     nodeType => nodeVarsIncludeDisplayVar(nodeType),
     nodeType => `node displayVariable "${nodeType.displayVariable}" did not match any node variable`);
@@ -145,12 +150,6 @@ const validateLogic = (protocol) => {
   v.addValidation('stages[].items',
     items => !duplicateId(items),
     items => `Items contain duplicate ID "${duplicateId(items)}"`,
-  );
-
-
-  v.addValidation('codebook',
-    entityMap => !duplicateInArray(getEntityNames(entityMap)),
-    variableMap => `Duplicate entity name "${duplicateInArray(getEntityNames(entityMap))}"`,
   );
 
   v.addValidation('codebook.*.*.variables',

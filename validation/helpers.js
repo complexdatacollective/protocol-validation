@@ -41,17 +41,10 @@ const getVariablesForSubject = (registry, subject = {}) =>
 
 const getVariableNames = registryVars => Object.values(registryVars).map(vari => vari.name);
 
-const getEntityNames = registryVars => {
-
-  const entityNames = [
-    ...Object.values(registryVars.node).map(vari => vari.name),
-    ...Object.values(registryVars.edge).map(vari => vari.name),
-  ];
-
-  console.log({ registryVars, entityNames });
-
-  return entityNames;
-}
+const getEntityNames = registryVars => ([
+  ...Object.values(registryVars.node).map(vari => vari.name),
+  ...Object.values(registryVars.edge).map(vari => vari.name),
+]);
 
 // @return the ID (or other unique prop) which is a duplicate, undefined otherwise
 const duplicateId = (elements, uniqueProp = 'id') => {
