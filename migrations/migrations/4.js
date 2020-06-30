@@ -75,8 +75,8 @@ const migration = (protocol) => {
 
 // Markdown format
 const notes = `
-- Automatically rename **variable names** and **ordinal/categorical values** to meet stricter requirements. Only letters, numbers and the symbols \`.\`, \`_\`, \`-\`, \`:\` will be permitted. Spaces will be replaced with underscore characters (\`_\`), and any other symbols will be removed. Variables that meet these requirements already **will not be modified**.
-- Add a numerical suffix (variable1, variable2, etc.) to any variables or categorical/ordinal values that clash as a result of these changes.
+- Automatically rename **variable names** and **ordinal/categorical values** to meet stricter requirements. Only letters, numbers, and the symbols \`.\`, \`_\`, \`-\`, \`:\` will be permitted. Spaces will be replaced with underscore characters (\`_\`), and any other symbols will be removed. Variables that meet these requirements already **will not be modified**.
+- Add a numerical suffix (\`variable1\`, \`variable2\`, etc.) to any variables or categorical/ordinal values that clash as a result of these changes.
 - Rename node and edge types to ensure they are unique, and conform to the same requirements as variable names. Names that clash will get a numerical suffix, as above.`;
 
 const v4 = {
