@@ -74,13 +74,10 @@ const migration = (protocol) => {
 };
 
 // Markdown format
-const notes = `This update will automatically **rename** _variables_ and _option values_ to match the requirements of graphml exports:
-
-- Only letters, numbers and the symbols ._-: are allowed
-- Spaces will be replaced with _
-- Any other symbols will be removed
-- Any variables or options that clash as a result of these changes will get a numerical suffix
-- Entity names must be unique, duplicates will get a numerical suffix.`;
+const notes = `
+- Automatically rename **variable names** and **ordinal/categorical values** to meet stricter requirements. Only letters, numbers and the symbols \`.\`, \`_\`, \`-\`, \`:\` will be permitted. Spaces will be replaced with underscore characters (\`_\`), and any other symbols will be removed. Variables that meet these requirements already **will not be modified**.
+- Add a numerical suffix (variable1, variable2, etc.) to any variables or categorical/ordinal values that clash as a result of these changes.
+- Rename node and edge types to ensure they are unique, and conform to the same requirements as variable names. Names that clash will get a numerical suffix, as above.`;
 
 const v4 = {
   version: 4,
