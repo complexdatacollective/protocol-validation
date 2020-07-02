@@ -34,12 +34,13 @@ const makePattern = (pattern) => {
   return pattern;
 };
 
-const keypathString = keypath => keypath.reduce((acc, path) => {
-  if ((/\[\d+\]/).test(path)) {
-    return `${acc}${path}`;
-  }
-  return `${acc}.${path}`;
-});
+const keypathString = keypath =>
+  keypath.reduce((acc, path) => {
+    if ((/\[\d+\]/).test(path)) {
+      return `${acc}${path}`;
+    }
+    return `${acc}.${path}`;
+  });
 
 /**
  * @class
