@@ -1,6 +1,7 @@
 const migrations = require('./migrations');
 const MigrationNotPossibleError = require('./errors').MigrationNotPossibleError;
 const VersionMismatchError = require('./errors').VersionMismatchError;
+const StringVersionError = require('./errors').StringVersionError;
 
 const isMigrationPathValid = path =>
   !path.some(({ migration }) => !migration);
@@ -11,7 +12,7 @@ const matchMigrations = (sourceVersion, targetVersion) =>
 
 const getMigrationPath = (rawSourceSchemaVersion, targetSchemaVersion) => {
   if (!Number.isInteger(targetSchemaVersion)) {
-    throw new Error(`Target schemaVersion ${JSON.stringify(targetSchemaVersion)} must be an integer.`);
+    throw new StringVersionError(targetSchemaVersion, 'target');
   }
 
   // This is a shim for the original schema which used the format "1.0.0"
@@ -19,7 +20,7 @@ const getMigrationPath = (rawSourceSchemaVersion, targetSchemaVersion) => {
 
   // In case string version numbers are accidentally reintroduced.
   if (!Number.isInteger(sourceSchemaVersion)) {
-    throw new Error(`Source protocol schemaVersion ${JSON.stringify(sourceSchemaVersion)} not recognised. Is a string.`);
+    throw new StringVersionError(sourceSchemaVersion, 'source');
   }
 
   if (sourceSchemaVersion >= targetSchemaVersion) {

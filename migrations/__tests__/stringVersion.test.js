@@ -24,7 +24,7 @@ const v1Protocol = {
 
 describe('string version handling', () => {
   it('migrates version "1.0.0" correctly', () => {
-    const result = migrateProtocol(v1Protocol, 4);
+    const [result] = migrateProtocol(v1Protocol, 4);
 
     expect(result).toMatchSnapshot();
   });
@@ -35,12 +35,12 @@ describe('string version handling', () => {
         ...v1Protocol,
         schemaVersion: '2.0.0',
       }, 4);
-    }).toThrow('Source protocol schemaVersion "2.0.0" not recognised. Is a string.');
+    }).toThrow('The source schema version is not recognised, must be an integer ("2.0.0").');
   });
 
   it('throws an error for target string version numbers', () => {
     expect(() => {
       migrateProtocol(v1Protocol, '4.0.0');
-    }).toThrow('Target schemaVersion "4.0.0" must be an integer.');
+    }).toThrow('The target schema version is not recognised, must be an integer ("4.0.0").');
   });
 });

@@ -37,8 +37,22 @@ class MigrationStepError extends Error {
   }
 }
 
+class StringVersionError extends Error {
+  constructor(version = undefined, type = undefined, ...params) {
+    super(...params);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, MigrationNotPossibleError);
+    }
+
+    this.name = 'StringVersionError';
+    this.message = `The ${type} schema version is not recognised, must be an integer (${JSON.stringify(version)}).`;
+  }
+}
+
 module.exports = {
   VersionMismatchError,
   MigrationNotPossibleError,
   MigrationStepError,
+  StringVersionError,
 };
