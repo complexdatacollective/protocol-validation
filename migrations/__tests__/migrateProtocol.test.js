@@ -37,17 +37,17 @@ describe('migrateProtocol', () => {
   });
 
   it('migrations transform protocol successively', () => {
-    const resultProtocol = migrateProtocol(mockProtocol, 3);
+    const [resultProtocol] = migrateProtocol(mockProtocol, 3);
 
     expect(resultProtocol).toEqual({ bazz: 'buzz', fizz: 'pop', schemaVersion: 3 });
   });
 
   it('will migrate when there are no steps', () => {
-    expect(
-      migrateProtocol({
-        schemaVersion: 99,
-      }, 999),
-    ).toEqual({
+    const [newProtocol] = migrateProtocol({
+      schemaVersion: 99,
+    }, 999);
+
+    expect(newProtocol).toEqual({
       schemaVersion: 999,
     });
   });

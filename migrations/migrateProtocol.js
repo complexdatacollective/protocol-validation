@@ -16,10 +16,26 @@ const migrateProtocol = (protocol, targetSchemaVersion) => {
   // Perform migration
   const updatedProtocol = migrationPath.reduce(migrateStep, protocol);
 
-  return {
+  const resultProtocol = {
     ...updatedProtocol,
     schemaVersion: targetSchemaVersion,
   };
+
+  const { migrations } = migrationPath
+    .reduce(
+      (acc, { version }) => {
+        return {
+          previous: version,
+          migrations: [...acc.migrations, [acc.previous, version]],
+        };
+      },
+      { previous: protocol.schemaVersion, migrations: [] },
+    );
+
+  return [
+    resultProtocol,
+    migrations,
+  ];
 };
 
 module.exports = migrateProtocol;
