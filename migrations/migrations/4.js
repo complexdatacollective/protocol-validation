@@ -67,10 +67,14 @@ const migration = (protocol) => {
     ego: migrateType(codebook.ego),
   }, codebook);
 
-  return {
+  const newProtocol = {
     ...protocol,
     codebook: newCodebook,
   };
+
+  console.log(JSON.stringify(newProtocol, null, 2));
+
+  return newProtocol;
 };
 
 // Markdown format

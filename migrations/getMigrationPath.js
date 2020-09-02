@@ -9,7 +9,19 @@ const matchMigrations = (sourceVersion, targetVersion) =>
   ({ version }) =>
     version > sourceVersion && version <= targetVersion;
 
-const getMigrationPath = (sourceSchemaVersion, targetSchemaVersion) => {
+const getMigrationPath = (rawSourceSchemaVersion, targetSchemaVersion) => {
+  if (!Number.isInteger(targetSchemaVersion)) {
+    throw new Error(`Target schemaVersion ${JSON.stringify(targetSchemaVersion)} must be an integer.`);
+  }
+
+  // This is a shim for the original schema which used the format "1.0.0"
+  const sourceSchemaVersion = rawSourceSchemaVersion === '1.0.0' ? 1 : rawSourceSchemaVersion;
+
+  // In case string version numbers are accidentally reintroduced.
+  if (!Number.isInteger(sourceSchemaVersion)) {
+    throw new Error(`Source protocol schemaVersion ${JSON.stringify(sourceSchemaVersion)} not recognised. Is a string.`);
+  }
+
   if (sourceSchemaVersion >= targetSchemaVersion) {
     throw new VersionMismatchError(sourceSchemaVersion, targetSchemaVersion);
   }

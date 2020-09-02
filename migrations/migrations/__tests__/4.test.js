@@ -2,7 +2,7 @@
 
 const version4 = require('../4');
 
-const v4protocol = {
+const v3Protocol = {
   codebook: {
     node: {
       disallowedType: {
@@ -52,13 +52,13 @@ const v4protocol = {
 
 describe('migrate v3 -> v4', () => {
   it('migrates codebook', () => {
-    const result = version4.migration(v4protocol);
+    const result = version4.migration(v3Protocol);
 
     expect(result).toMatchSnapshot();
   });
 
   it('type names', () => {
-    const result = version4.migration(v4protocol);
+    const result = version4.migration(v3Protocol);
 
     const nodeDefinitions = result.codebook.node;
 
@@ -69,7 +69,7 @@ describe('migrate v3 -> v4', () => {
   });
 
   it('variable names', () => {
-    const result = version4.migration(v4protocol);
+    const result = version4.migration(v3Protocol);
 
     const variables = result.codebook.node.disallowedType.variables;
     expect(variables.invalidExampleVariable.name).toBe('variable_with_disallowed_characters');
@@ -79,7 +79,7 @@ describe('migrate v3 -> v4', () => {
   });
 
   it('option values', () => {
-    const result = version4.migration(v4protocol);
+    const result = version4.migration(v3Protocol);
 
     const options = result.codebook.node.disallowedType.variables.invalidExampleVariable.options;
     expect(options).toEqual(expect.arrayContaining([
