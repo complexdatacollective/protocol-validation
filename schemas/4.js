@@ -5408,15 +5408,15 @@ var validate = (function() {
               errors++;
             } else {
               var errs_3 = errors;
-              if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2) && typeof data2 !== "string" && !Array.isArray(data2) && typeof data2 !== "boolean") {
+              if (typeof data2 !== "number" && typeof data2 !== "string" && !Array.isArray(data2) && typeof data2 !== "boolean") {
                 var err = {
                   keyword: 'type',
                   dataPath: (dataPath || '') + '[' + i0 + '].value',
                   schemaPath: '#/definitions/AdditionalAttribute/properties/value/type',
                   params: {
-                    type: 'integer,string,array,boolean'
+                    type: 'number,string,array,boolean'
                   },
-                  message: 'should be integer,string,array,boolean'
+                  message: 'should be number,string,array,boolean'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -5476,7 +5476,7 @@ var validate = (function() {
         "type": "string"
       },
       "value": {
-        "type": ["integer", "string", "array", "boolean"]
+        "type": ["number", "string", "array", "boolean"]
       }
     },
     "required": ["variable", "value"],
@@ -7269,7 +7269,7 @@ validate.schema = {
           "type": "string"
         },
         "value": {
-          "type": ["integer", "string", "array", "boolean"]
+          "type": ["number", "string", "array", "boolean"]
         }
       },
       "required": ["variable", "value"],
