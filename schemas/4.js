@@ -5391,8 +5391,7 @@ var validate = (function() {
               }
               var valid3 = errors === errs_3;
             }
-            var data2 = data1.value;
-            if (data2 === undefined) {
+            if (data1.value === undefined) {
               valid3 = false;
               var err = {
                 keyword: 'required',
@@ -5408,15 +5407,15 @@ var validate = (function() {
               errors++;
             } else {
               var errs_3 = errors;
-              if (typeof data2 !== "number" && typeof data2 !== "string" && !Array.isArray(data2) && typeof data2 !== "boolean") {
+              if (typeof data1.value !== "boolean") {
                 var err = {
                   keyword: 'type',
                   dataPath: (dataPath || '') + '[' + i0 + '].value',
                   schemaPath: '#/definitions/AdditionalAttribute/properties/value/type',
                   params: {
-                    type: 'number,string,array,boolean'
+                    type: 'boolean'
                   },
-                  message: 'should be number,string,array,boolean'
+                  message: 'should be boolean'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -5476,7 +5475,7 @@ var validate = (function() {
         "type": "string"
       },
       "value": {
-        "type": ["number", "string", "array", "boolean"]
+        "type": ["boolean"]
       }
     },
     "required": ["variable", "value"],
@@ -7269,7 +7268,7 @@ validate.schema = {
           "type": "string"
         },
         "value": {
-          "type": ["number", "string", "array", "boolean"]
+          "type": ["boolean"]
         }
       },
       "required": ["variable", "value"],
