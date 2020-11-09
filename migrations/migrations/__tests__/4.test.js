@@ -48,7 +48,48 @@ const v3Protocol = {
       },
     },
   },
+  stages: [],
 };
+
+const v3ProtocolWithPrompts = {
+  codebook: {},
+  stages: [
+    {
+      prompts: [
+        {
+          id: 'someBoolean',
+          additionalAttributes: [
+            {
+              variable: 'foobar',
+              value: true,
+            },
+            {
+              variable: 'fizzpop',
+              value: false,
+            },
+            {
+              variable: 'whizbang',
+              value: 'fds',
+            },
+          ],
+        },
+        {
+          id: 'noBoolean',
+          additionalAttributes: [
+            {
+              variable: 'foobar2',
+              value: 123,
+            },
+            {
+              variable: 'fizzpop2',
+              value: {},
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
 
 describe('migrate v3 -> v4', () => {
   it('migrates codebook', () => {
@@ -89,5 +130,31 @@ describe('migrate v3 -> v4', () => {
       expect.objectContaining({ value: 5 }),
     ]));
     expect(options).toMatchSnapshot();
+  });
+
+  it('migrates additional attributes', () => {
+    const result = version4.migration(v3ProtocolWithPrompts);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('additional attributes values', () => {
+    const result = version4.migration(v3ProtocolWithPrompts);
+
+    console.log(result.stages[0].prompts);
+    const additionalAttributes = result.stages[0].prompts[0].additionalAttributes;
+    expect(additionalAttributes).toEqual(expect.not.arrayContaining([
+      expect.objectContaining({ variable: 'whizbang' }),
+    ]));
+    expect(additionalAttributes).toEqual(expect.arrayContaining([
+      expect.objectContaining({ variable: 'foobar' }),
+      expect.objectContaining({ variable: 'fizzpop' }),
+    ]));
+    expect(additionalAttributes).toMatchSnapshot();
+
+    const prompt = result.stages[0].prompts[1];
+    expect(prompt).toEqual(expect.not.objectContaining({ additionalAttributes: {} }));
+    expect(prompt).toMatchSnapshot();
+
   });
 });

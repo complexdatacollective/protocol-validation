@@ -58,8 +58,32 @@ const migrateTypes = (types = {}) =>
       [typeId]: migrateType(types[typeId], acc),
     }), {});
 
+const migratePrompt = (prompt = {}) => {
+  const booleanOnlyAttributes = prompt.additionalAttributes.filter(additionalAttribute =>
+    additionalAttribute.value === true || additionalAttribute.value === false);
+  return Object.keys(prompt).reduce((object, key) => {
+    if (key !== 'additionalAttributes') {
+      object[key] = prompt[key];
+    } else if (booleanOnlyAttributes.length > 0) {
+      object[key] = booleanOnlyAttributes;
+    }
+    return object;
+  }, {});
+};
+
+const migrateStage = (stage = {}) => ({
+  ...stage,
+  prompts: stage.prompts.map(prompt =>
+    prompt.additionalAttributes ? migratePrompt(prompt) : prompt),
+});
+
+const migrateStages = (stages = []) => stages.map(stage =>
+  stage.prompts ? migrateStage(stage) : stage,
+);
+
 const migration = (protocol) => {
   const codebook = protocol.codebook;
+  const stages = protocol.stages;
 
   const newCodebook = setProps({
     node: migrateTypes(codebook.node),
@@ -67,9 +91,12 @@ const migration = (protocol) => {
     ego: migrateType(codebook.ego),
   }, codebook);
 
+  const newStages = migrateStages(stages);
+
   return {
     ...protocol,
     codebook: newCodebook,
+    stages: newStages,
   };
 };
 
@@ -78,6 +105,7 @@ const notes = `
 - Automatically rename **variable names** and **ordinal/categorical values** to meet stricter requirements. Only letters, numbers, and the symbols \`.\`, \`_\`, \`-\`, \`:\` will be permitted. Spaces will be replaced with underscore characters (\`_\`), and any other symbols will be removed. Variables that meet these requirements already **will not be modified**.
 - Add a numerical suffix (\`variable1\`, \`variable2\`, etc.) to any variables or categorical/ordinal values that clash as a result of these changes.
 - Rename node and edge types to ensure they are unique, and conform to the same requirements as variable names. Names that clash will get a numerical suffix, as above.
+- Removes any non-boolean additional attributes from prompts.
 - **NOTE:** If you are using external network data, you must ensure that you update your column headings manually to meet the same requirements regarding variable names outlined above. See our revised [documentation on variable naming](https://documentation.networkcanvas.com/docs/key-concepts/variable-naming/).`;
 
 const v4 = {

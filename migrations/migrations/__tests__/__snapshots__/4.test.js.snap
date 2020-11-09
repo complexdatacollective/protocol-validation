@@ -1,5 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`migrate v3 -> v4 additional attributes values 1`] = `
+Array [
+  Object {
+    "value": true,
+    "variable": "foobar",
+  },
+  Object {
+    "value": false,
+    "variable": "fizzpop",
+  },
+]
+`;
+
+exports[`migrate v3 -> v4 additional attributes values 2`] = `
+Object {
+  "id": "noBoolean",
+}
+`;
+
+exports[`migrate v3 -> v4 migrates additional attributes 1`] = `
+Object {
+  "codebook": Object {},
+  "stages": Array [
+    Object {
+      "prompts": Array [
+        Object {
+          "additionalAttributes": Array [
+            Object {
+              "value": true,
+              "variable": "foobar",
+            },
+            Object {
+              "value": false,
+              "variable": "fizzpop",
+            },
+          ],
+          "id": "someBoolean",
+        },
+        Object {
+          "id": "noBoolean",
+        },
+      ],
+    },
+  ],
+}
+`;
+
 exports[`migrate v3 -> v4 migrates codebook 1`] = `
 Object {
   "codebook": Object {
@@ -61,6 +108,7 @@ Object {
       },
     },
   },
+  "stages": Array [],
 }
 `;
 
