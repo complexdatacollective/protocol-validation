@@ -595,7 +595,7 @@
           "type": "string"
         },
         "value": {
-          "type": ["number", "string", "array", "boolean"]
+          "type": ["boolean"]
         }
       },
       "required": [
