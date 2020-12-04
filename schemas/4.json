@@ -29,8 +29,7 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Stage"
-          },
-          "minItems": 1
+          }
         }
       },
       "required": [
