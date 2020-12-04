@@ -184,20 +184,6 @@ var validate = (function() {
         } else {
           var errs_1 = errors;
           if (Array.isArray(data1)) {
-            if (data1.length < 1) {
-              var err = {
-                keyword: 'minItems',
-                dataPath: (dataPath || '') + '.stages',
-                schemaPath: '#/properties/stages/minItems',
-                params: {
-                  limit: 1
-                },
-                message: 'should NOT have fewer than 1 items'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
             var errs__1 = errors;
             var valid1;
             for (var i1 = 0; i1 < data1.length; i1++) {
@@ -270,8 +256,7 @@ var validate = (function() {
         "type": "array",
         "items": {
           "$ref": "#/definitions/Stage"
-        },
-        "minItems": 1
+        }
       }
     },
     "required": ["stages", "codebook"],
@@ -6822,8 +6807,7 @@ validate.schema = {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Stage"
-          },
-          "minItems": 1
+          }
         }
       },
       "required": ["stages", "codebook"],
