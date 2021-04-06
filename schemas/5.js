@@ -1818,6 +1818,24 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
+        if (data.interviewScript !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.interviewScript !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.interviewScript',
+              schemaPath: '#/properties/interviewScript/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
         var data1 = data.type;
         if (data1 === undefined) {
           valid1 = false;
@@ -3107,6 +3125,20 @@ var validate = (function() {
             else vErrors.push(err);
             errors++;
           }
+          if (data.prompts === undefined) {
+            var err = {
+              keyword: 'required',
+              dataPath: (dataPath || '') + "",
+              schemaPath: '#/anyOf/1/required',
+              params: {
+                missingProperty: 'prompts'
+              },
+              message: 'should have required property \'prompts\''
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
           var errs__1 = errors;
           var valid2 = true;
           if (data.type !== undefined) {
@@ -3135,15 +3167,15 @@ var validate = (function() {
         if (!valid0) {
           var errs_1 = errors;
           if ((data && typeof data === "object" && !Array.isArray(data))) {
-            if (data.form === undefined) {
+            if (data.subject === undefined) {
               var err = {
                 keyword: 'required',
                 dataPath: (dataPath || '') + "",
                 schemaPath: '#/anyOf/2/required',
                 params: {
-                  missingProperty: 'form'
+                  missingProperty: 'subject'
                 },
-                message: 'should have required property \'form\''
+                message: 'should have required property \'subject\''
               };
               if (vErrors === null) vErrors = [err];
               else vErrors.push(err);
@@ -3158,6 +3190,20 @@ var validate = (function() {
                   missingProperty: 'introductionPanel'
                 },
                 message: 'should have required property \'introductionPanel\''
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            if (data.prompts === undefined) {
+              var err = {
+                keyword: 'required',
+                dataPath: (dataPath || '') + "",
+                schemaPath: '#/anyOf/2/required',
+                params: {
+                  missingProperty: 'prompts'
+                },
+                message: 'should have required property \'prompts\''
               };
               if (vErrors === null) vErrors = [err];
               else vErrors.push(err);
@@ -3247,15 +3293,29 @@ var validate = (function() {
             if (!valid0) {
               var errs_1 = errors;
               if ((data && typeof data === "object" && !Array.isArray(data))) {
-                if (data.items === undefined) {
+                if (data.form === undefined) {
                   var err = {
                     keyword: 'required',
                     dataPath: (dataPath || '') + "",
                     schemaPath: '#/anyOf/4/required',
                     params: {
-                      missingProperty: 'items'
+                      missingProperty: 'form'
                     },
-                    message: 'should have required property \'items\''
+                    message: 'should have required property \'form\''
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                }
+                if (data.introductionPanel === undefined) {
+                  var err = {
+                    keyword: 'required',
+                    dataPath: (dataPath || '') + "",
+                    schemaPath: '#/anyOf/4/required',
+                    params: {
+                      missingProperty: 'introductionPanel'
+                    },
+                    message: 'should have required property \'introductionPanel\''
                   };
                   if (vErrors === null) vErrors = [err];
                   else vErrors.push(err);
@@ -3289,29 +3349,15 @@ var validate = (function() {
               if (!valid0) {
                 var errs_1 = errors;
                 if ((data && typeof data === "object" && !Array.isArray(data))) {
-                  if (data.presets === undefined) {
+                  if (data.items === undefined) {
                     var err = {
                       keyword: 'required',
                       dataPath: (dataPath || '') + "",
                       schemaPath: '#/anyOf/5/required',
                       params: {
-                        missingProperty: 'presets'
+                        missingProperty: 'items'
                       },
-                      message: 'should have required property \'presets\''
-                    };
-                    if (vErrors === null) vErrors = [err];
-                    else vErrors.push(err);
-                    errors++;
-                  }
-                  if (data.background === undefined) {
-                    var err = {
-                      keyword: 'required',
-                      dataPath: (dataPath || '') + "",
-                      schemaPath: '#/anyOf/5/required',
-                      params: {
-                        missingProperty: 'background'
-                      },
-                      message: 'should have required property \'background\''
+                      message: 'should have required property \'items\''
                     };
                     if (vErrors === null) vErrors = [err];
                     else vErrors.push(err);
@@ -3345,15 +3391,29 @@ var validate = (function() {
                 if (!valid0) {
                   var errs_1 = errors;
                   if ((data && typeof data === "object" && !Array.isArray(data))) {
-                    if (data.prompts === undefined) {
+                    if (data.presets === undefined) {
                       var err = {
                         keyword: 'required',
                         dataPath: (dataPath || '') + "",
                         schemaPath: '#/anyOf/6/required',
                         params: {
-                          missingProperty: 'prompts'
+                          missingProperty: 'presets'
                         },
-                        message: 'should have required property \'prompts\''
+                        message: 'should have required property \'presets\''
+                      };
+                      if (vErrors === null) vErrors = [err];
+                      else vErrors.push(err);
+                      errors++;
+                    }
+                    if (data.background === undefined) {
+                      var err = {
+                        keyword: 'required',
+                        dataPath: (dataPath || '') + "",
+                        schemaPath: '#/anyOf/6/required',
+                        params: {
+                          missingProperty: 'background'
+                        },
+                        message: 'should have required property \'background\''
                       };
                       if (vErrors === null) vErrors = [err];
                       else vErrors.push(err);
@@ -3363,22 +3423,17 @@ var validate = (function() {
                     var valid2 = true;
                     if (data.type !== undefined) {
                       var errs_2 = errors;
-                      var schema2 = validate.schema.anyOf[6].properties.type.enum;
-                      var valid2;
-                      valid2 = false;
-                      for (var i2 = 0; i2 < schema2.length; i2++)
-                        if (equal(data.type, schema2[i2])) {
-                          valid2 = true;
-                          break;
-                        } if (!valid2) {
+                      var schema2 = validate.schema.anyOf[6].properties.type.const;
+                      var valid2 = equal(data.type, schema2);
+                      if (!valid2) {
                         var err = {
-                          keyword: 'enum',
+                          keyword: 'const',
                           dataPath: (dataPath || '') + '.type',
-                          schemaPath: '#/anyOf/6/properties/type/enum',
+                          schemaPath: '#/anyOf/6/properties/type/const',
                           params: {
-                            allowedValues: schema2
+                            allowedValue: schema2
                           },
-                          message: 'should be equal to one of the allowed values'
+                          message: 'should be equal to constant'
                         };
                         if (vErrors === null) vErrors = [err];
                         else vErrors.push(err);
@@ -3389,6 +3444,54 @@ var validate = (function() {
                   }
                   var valid1 = errors === errs_1;
                   valid0 = valid0 || valid1;
+                  if (!valid0) {
+                    var errs_1 = errors;
+                    if ((data && typeof data === "object" && !Array.isArray(data))) {
+                      if (data.prompts === undefined) {
+                        var err = {
+                          keyword: 'required',
+                          dataPath: (dataPath || '') + "",
+                          schemaPath: '#/anyOf/7/required',
+                          params: {
+                            missingProperty: 'prompts'
+                          },
+                          message: 'should have required property \'prompts\''
+                        };
+                        if (vErrors === null) vErrors = [err];
+                        else vErrors.push(err);
+                        errors++;
+                      }
+                      var errs__1 = errors;
+                      var valid2 = true;
+                      if (data.type !== undefined) {
+                        var errs_2 = errors;
+                        var schema2 = validate.schema.anyOf[7].properties.type.enum;
+                        var valid2;
+                        valid2 = false;
+                        for (var i2 = 0; i2 < schema2.length; i2++)
+                          if (equal(data.type, schema2[i2])) {
+                            valid2 = true;
+                            break;
+                          } if (!valid2) {
+                          var err = {
+                            keyword: 'enum',
+                            dataPath: (dataPath || '') + '.type',
+                            schemaPath: '#/anyOf/7/properties/type/enum',
+                            params: {
+                              allowedValues: schema2
+                            },
+                            message: 'should be equal to one of the allowed values'
+                          };
+                          if (vErrors === null) vErrors = [err];
+                          else vErrors.push(err);
+                          errors++;
+                        }
+                        var valid2 = errors === errs_2;
+                      }
+                    }
+                    var valid1 = errors === errs_1;
+                    valid0 = valid0 || valid1;
+                  }
                 }
               }
             }
@@ -3424,9 +3527,12 @@ var validate = (function() {
       "id": {
         "type": "string"
       },
+      "interviewScript": {
+        "type": "string"
+      },
       "type": {
         "type": "string",
-        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "Information", "OrdinalBin", "CategoricalBin"]
+        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
       },
       "label": {
         "type": "string"
@@ -3535,7 +3641,14 @@ var validate = (function() {
           "const": "DyadCensus"
         }
       },
-      "required": ["subject", "introductionPanel"]
+      "required": ["subject", "introductionPanel", "prompts"]
+    }, {
+      "properties": {
+        "type": {
+          "const": "TieStrengthCensus"
+        }
+      },
+      "required": ["subject", "introductionPanel", "prompts"]
     }, {
       "properties": {
         "type": {
@@ -4823,6 +4936,42 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
+        if (data.edgeVariable !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.edgeVariable !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.edgeVariable',
+              schemaPath: '#/properties/edgeVariable/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        if (data.negativeLabel !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.negativeLabel !== "string") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.negativeLabel',
+              schemaPath: '#/properties/negativeLabel/type',
+              params: {
+                type: 'string'
+              },
+              message: 'should be string'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
         if (data.otherVariable !== undefined) {
           var errs_1 = errors;
           if (typeof data.otherVariable !== "string") {
@@ -5322,6 +5471,12 @@ var validate = (function() {
         "$ref": "#/definitions/AdditionalAttributes"
       },
       "variable": {
+        "type": "string"
+      },
+      "edgeVariable": {
+        "type": "string"
+      },
+      "negativeLabel": {
         "type": "string"
       },
       "otherVariable": {
@@ -6918,9 +7073,12 @@ validate.schema = {
         "id": {
           "type": "string"
         },
+        "interviewScript": {
+          "type": "string"
+        },
         "type": {
           "type": "string",
-          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "Information", "OrdinalBin", "CategoricalBin"]
+          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
         },
         "label": {
           "type": "string"
@@ -7029,7 +7187,14 @@ validate.schema = {
             "const": "DyadCensus"
           }
         },
-        "required": ["subject", "introductionPanel"]
+        "required": ["subject", "introductionPanel", "prompts"]
+      }, {
+        "properties": {
+          "type": {
+            "const": "TieStrengthCensus"
+          }
+        },
+        "required": ["subject", "introductionPanel", "prompts"]
       }, {
         "properties": {
           "type": {
@@ -7209,6 +7374,12 @@ validate.schema = {
           "$ref": "#/definitions/AdditionalAttributes"
         },
         "variable": {
+          "type": "string"
+        },
+        "edgeVariable": {
+          "type": "string"
+        },
+        "negativeLabel": {
           "type": "string"
         },
         "otherVariable": {

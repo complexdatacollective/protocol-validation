@@ -85,6 +85,9 @@
         "id": {
           "type": "string"
         },
+        "interviewScript": {
+          "type": "string"
+        },
         "type": {
           "type": "string",
           "enum": [
@@ -98,6 +101,7 @@
             "NameGeneratorAutoComplete",
             "Sociogram",
             "DyadCensus",
+            "TieStrengthCensus",
             "Information",
             "OrdinalBin",
             "CategoricalBin"
@@ -221,7 +225,20 @@
           },
           "required": [
             "subject",
-            "introductionPanel"
+            "introductionPanel",
+            "prompts"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "TieStrengthCensus"
+            }
+          },
+          "required": [
+            "subject",
+            "introductionPanel",
+            "prompts"
           ]
         },
         {
@@ -481,6 +498,12 @@
           "$ref": "#/definitions/AdditionalAttributes"
         },
         "variable": {
+          "type": "string"
+        },
+        "edgeVariable": {
+          "type": "string"
+        },
+        "negativeLabel": {
           "type": "string"
         },
         "otherVariable": {

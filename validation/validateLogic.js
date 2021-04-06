@@ -157,15 +157,52 @@ const validateLogic = (protocol) => {
     variableMap => `Duplicate variable name "${duplicateInArray(getVariableNames(variableMap))}"`,
   );
 
+  // Ordinal and categorical bin interfaces have a variable property on the prompt.
+  // Check this variable exists in the stage subject codebook
   v.addValidation('prompts[].variable',
     (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
     (variable, subject) => `"${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
 
+  // 'otherVariable' is used by categorical bin for 'other' responses. Check this variable
+  // exists in the stage subject codebook
   v.addValidation('prompts[].otherVariable',
     (otherVariable, subject) => getVariablesForSubject(codebook, subject)[otherVariable],
     (otherVariable, subject) => `"${otherVariable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
   );
+
+  // Sociogram and TieStrengthCensus use createEdge to know which edge type to create.
+  // Check this edge type exists in the edge codebook
+  v.addValidation('prompts[].createEdge',
+    createEdge => Object.keys(codebook['edge']).includes(createEdge),
+    createEdge => `"${createEdge}" definition for createEdge not found in codebook["edge"]`,
+  );
+
+  // TieStrengthCensus uses edgeVariable to indicate which ordinal variable should be used to provide the strength
+  // options.
+  // Check that it exists on the edge type specified by createEdge, and that its type is ordinal.
+  v.addValidationSequence('prompts[].edgeVariable',
+  [
+    (edgeVariable, _, keypath) => {
+      // Keypath = [ 'protocol', 'stages', '[{stageIndex}]', 'prompts', '[{promptIndex}]', 'edgeVariable' ]
+      const path = `stages.${keypath[2]}.prompts${keypath[4]}.createEdge`;
+      const createEdgeForPrompt = get(protocol, path);
+      return getVariablesForSubject(codebook, { entity: 'edge', type: createEdgeForPrompt})[edgeVariable];
+    },
+    (edgeVariable) => `"${edgeVariable}" not defined in codebook[edge][${createEdgeForPrompt}].variables`,
+  ],
+  [
+    (edgeVariable, _, keypath) => {
+      // Keypath = [ 'protocol', 'stages', '[{stageIndex}]', 'prompts', '[{promptIndex}]', 'edgeVariable' ]
+      const path = `stages.${keypath[2]}.prompts${keypath[4]}.createEdge`;
+      const createEdgeForPrompt = get(protocol, path);
+      const codebookEdgeVariable = getVariablesForSubject(codebook, { entity: 'edge', type: createEdgeForPrompt})[edgeVariable];
+
+      return codebookEdgeVariable.type === 'ordinal';
+    },
+    (edgeVariable) => `"${edgeVariable}" is not of type 'ordinal'.`,
+  ],
+);
 
   v.addValidation('prompts[].layout.layoutVariable',
     (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
