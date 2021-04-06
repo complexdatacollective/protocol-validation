@@ -1,3 +1,5 @@
+const get = require('lodash').get;
+
 const Validator = require('./Validator');
 const {
   duplicateId,
@@ -7,6 +9,8 @@ const {
   getVariableNames,
   getEntityNames,
   nodeVarsIncludeDisplayVar,
+  getVariableNameFromID,
+  getSubjectTypeName,
 } = require('./helpers');
 
 
@@ -18,51 +22,6 @@ const {
 const validateLogic = (protocol) => {
   const v = new Validator(protocol);
   const codebook = protocol.codebook;
-
-  const get = (obj, path, def) => {
-    /**
-     * If the path is a string, convert it to an array
-     * @param  {String|Array} path The path
-     * @return {Array}             The path array
-     */
-    const stringToPath = (inputPath) => {
-      // If the inputPath isn't a string, return it
-      if (typeof inputPath !== 'string') return inputPath;
-
-      // Create new array
-      const output = [];
-
-      // Split to an array with dot notation
-      inputPath.split('.').forEach((item) => {
-        // Split to an array with bracket notation
-        item.split(/\[([^}]+)\]/g).forEach((key) => {
-          // Push to the new array
-          if (key.length > 0) {
-            output.push(key);
-          }
-        });
-      });
-
-      return output;
-    };
-
-    // Get the path as an array
-    const pathArray = stringToPath(path);
-
-    // Cache the current object
-    let current = obj;
-
-    // For each item in the path, dig into the object
-    for (let i = 0; i < pathArray.length; i += 1) {
-      // If the item isn't found, return the default (or null)
-      if (!current[pathArray[i]]) return def;
-
-      // Otherwise, update the current  value
-      current = current[pathArray[i]];
-    }
-
-    return current;
-  };
 
   v.addValidation('codebook',
     codebook => !duplicateInArray(getEntityNames(codebook)),
@@ -111,6 +70,49 @@ const validateLogic = (protocol) => {
       () => 'Form field variable not found in codebook.',
     ],
   );
+
+  // Variable validation...validation (:/)
+  // Needs to:
+  //   1. Check that any variables referenced by a validation exist in the codebook
+  //   2. Check that validation is not applied on a variable that is on an inappropriate
+  //      entity type.
+  v.addValidation('codebook.ego.variables.*.validation',
+    // First, check that unique is not applied on any ego variables
+    validation => !Object.keys(validation).includes('unique'),
+    (_, __, keypath) => `The 'unique' variable validation cannot be used on ego variables. Was used on ego variable "${getVariableNameFromID(codebook, { entity: 'ego' }, keypath[4])}".`,
+  );
+
+  v.addValidation('codebook.*.*.variables.*.validation',
+    // Next, check that differentFrom and sameAs reference variables that exist in the codebook
+    // for the variable type
+    (validations, _, keypath) => {
+      // List of validation types that reference variables
+      const typesWithVariables = ['sameAs', 'differentFrom'];
+
+      // Get variable registryfor the current variable's entity type
+      const path = `codebook.${keypath[2]}.${keypath[3]}.variables`;
+      const variablesForType = get(protocol, path, {});
+
+      // Filter validations to only those that reference variables
+      const typesToCheck = Object.keys(validations).filter(
+        validation => typesWithVariables.includes(validation),
+      );
+
+      // Check that every validation references a variable defined in the codebook
+      return typesToCheck.every((type) => {
+        const variable = validations[type];
+        return !!variablesForType[variable];
+      });
+    },
+    (validation, _, keypath) => {
+      const subject = {
+        entity: keypath[2],
+        type: keypath[3],
+      };
+      return `Validation configuration for the variable "${getVariableNameFromID(codebook, subject, keypath[5])}" on the ${subject.entity} type "${getSubjectTypeName(codebook, subject)}" is invalid! The variable "${Object.values(validation)[0]}" referenced by the validation does not exist in the codebook for this type.`;
+    },
+  );
+
 
   v.addValidationSequence('filter.rules[]',
     [
@@ -174,35 +176,39 @@ const validateLogic = (protocol) => {
   // Sociogram and TieStrengthCensus use createEdge to know which edge type to create.
   // Check this edge type exists in the edge codebook
   v.addValidation('prompts[].createEdge',
-    createEdge => Object.keys(codebook['edge']).includes(createEdge),
+    createEdge => Object.keys(codebook.edge).includes(createEdge),
     createEdge => `"${createEdge}" definition for createEdge not found in codebook["edge"]`,
   );
 
-  // TieStrengthCensus uses edgeVariable to indicate which ordinal variable should be used to provide the strength
-  // options.
+  // TieStrengthCensus uses edgeVariable to indicate which ordinal variable should be used to
+  // provide the strength options.
   // Check that it exists on the edge type specified by createEdge, and that its type is ordinal.
   v.addValidationSequence('prompts[].edgeVariable',
-  [
-    (edgeVariable, _, keypath) => {
-      // Keypath = [ 'protocol', 'stages', '[{stageIndex}]', 'prompts', '[{promptIndex}]', 'edgeVariable' ]
-      const path = `stages.${keypath[2]}.prompts${keypath[4]}.createEdge`;
-      const createEdgeForPrompt = get(protocol, path);
-      return getVariablesForSubject(codebook, { entity: 'edge', type: createEdgeForPrompt})[edgeVariable];
-    },
-    (edgeVariable) => `"${edgeVariable}" not defined in codebook[edge][${createEdgeForPrompt}].variables`,
-  ],
-  [
-    (edgeVariable, _, keypath) => {
-      // Keypath = [ 'protocol', 'stages', '[{stageIndex}]', 'prompts', '[{promptIndex}]', 'edgeVariable' ]
-      const path = `stages.${keypath[2]}.prompts${keypath[4]}.createEdge`;
-      const createEdgeForPrompt = get(protocol, path);
-      const codebookEdgeVariable = getVariablesForSubject(codebook, { entity: 'edge', type: createEdgeForPrompt})[edgeVariable];
+    [
+      (edgeVariable, _, keypath) => {
+        // Keypath = [ 'protocol', 'stages', '[{stageIndex}]', 'prompts', '[{promptIndex}]', 'edgeVariable' ]
+        const path = `stages.${keypath[2]}.prompts${keypath[4]}.createEdge`;
+        const createEdgeForPrompt = get(protocol, path);
+        return getVariablesForSubject(codebook, { entity: 'edge', type: createEdgeForPrompt })[edgeVariable];
+      },
+      (edgeVariable, _, keypath) => {
+        const path = `stages.${keypath[2]}.prompts${keypath[4]}.createEdge`;
+        const createEdgeForPrompt = get(protocol, path);
+        return `"${edgeVariable}" not defined in codebook[edge][${createEdgeForPrompt}].variables`;
+      },
+    ],
+    [
+      (edgeVariable, _, keypath) => {
+        // Keypath = [ 'protocol', 'stages', '[{stageIndex}]', 'prompts', '[{promptIndex}]', 'edgeVariable' ]
+        const path = `stages.${keypath[2]}.prompts${keypath[4]}.createEdge`;
+        const createEdgeForPrompt = get(protocol, path);
+        const codebookEdgeVariable = getVariablesForSubject(codebook, { entity: 'edge', type: createEdgeForPrompt })[edgeVariable];
 
-      return codebookEdgeVariable.type === 'ordinal';
-    },
-    (edgeVariable) => `"${edgeVariable}" is not of type 'ordinal'.`,
-  ],
-);
+        return codebookEdgeVariable.type === 'ordinal';
+      },
+      edgeVariable => `"${edgeVariable}" is not of type 'ordinal'.`,
+    ],
+  );
 
   v.addValidation('prompts[].layout.layoutVariable',
     (variable, subject) => getVariablesForSubject(codebook, subject)[variable],

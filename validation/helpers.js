@@ -1,3 +1,5 @@
+const get = require('lodash').get;
+
 // For some error types, AJV returns info separate from message
 const additionalErrorInfo = (errorObj) => {
   const params = errorObj.params || {};
@@ -32,12 +34,28 @@ const entityDefFromRule = (rule, codebook) => {
   return codebook[rule.type === 'edge' ? 'edge' : 'node'][rule.options.type];
 };
 
-const getVariablesForSubject = (registry, subject = {}) =>
-  (
-    registry[subject.entity] &&
-    registry[subject.entity][subject.type] &&
-    registry[subject.entity][subject.type].variables
-  ) || {};
+const getVariablesForSubject = (codebook, subject) => {
+  if (subject && subject.entity === 'ego') {
+    return get(codebook, ['ego', 'variables'], {});
+  }
+
+  return get(codebook, [subject.entity, subject.type, 'variables'], {});
+};
+
+const getVariableNameFromID = (codebook, subject, variableID) => {
+  const variables = getVariablesForSubject(codebook, subject);
+  return get(variables, [variableID, 'name'], variableID);
+};
+
+const getSubjectTypeName = (codebook, subject) => {
+  if (!subject) { return 'entity'; }
+
+  if (subject.entity === 'ego') {
+    return 'ego';
+  }
+
+  return get(codebook, [subject.entity, subject.type, 'name'], subject.type);
+};
 
 const getVariableNames = registryVars => Object.values(registryVars).map(vari => vari.name);
 
@@ -78,7 +96,9 @@ module.exports = {
   entityDefFromRule,
   errToString,
   getVariablesForSubject,
+  getVariableNameFromID,
   getVariableNames,
+  getSubjectTypeName,
   getEntityNames,
   nodeVarsIncludeDisplayVar,
   undefinedFormVariables,

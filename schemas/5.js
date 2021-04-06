@@ -1076,15 +1076,15 @@ var validate = (function() {
             }
             if (data1.unique !== undefined) {
               var errs_3 = errors;
-              if (typeof data1.unique !== "string") {
+              if (typeof data1.unique !== "boolean") {
                 var err = {
                   keyword: 'type',
                   dataPath: (dataPath || '') + '.validation.unique',
                   schemaPath: '#/definitions/Validation/properties/unique/type',
                   params: {
-                    type: 'string'
+                    type: 'boolean'
                   },
-                  message: 'should be string'
+                  message: 'should be boolean'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -1512,7 +1512,7 @@ var validate = (function() {
         "type": "integer"
       },
       "unique": {
-        "type": "string"
+        "type": "boolean"
       },
       "differentFrom": {
         "type": "string"
@@ -7802,7 +7802,7 @@ validate.schema = {
           "type": "integer"
         },
         "unique": {
-          "type": "string"
+          "type": "boolean"
         },
         "differentFrom": {
           "type": "string"
