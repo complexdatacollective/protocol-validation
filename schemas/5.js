@@ -1177,7 +1177,7 @@ var validate = (function() {
       },
       "component": {
         "type": "string",
-        "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "TextArea", "Toggle", "ToggleButtonGroup", "Slider", "VisualAnalogScale", "LikertScale", "DatePicker", "RelativeDatePicker"]
+        "enum": ["Boolean", "CheckboxGroup", "Number", "RadioGroup", "Text", "TextArea", "Toggle", "ToggleButtonGroup", "Slider", "VisualAnalogScale", "LikertScale", "DatePicker", "RelativeDatePicker"]
       },
       "options": {
         "type": "array",
@@ -1417,6 +1417,25 @@ var validate = (function() {
             }
             var valid3 = errors === errs_3;
             valid2 = valid2 || valid3;
+            if (!valid2) {
+              var errs_3 = errors;
+              if (typeof data1 !== "boolean") {
+                var err = {
+                  keyword: 'type',
+                  dataPath: (dataPath || '') + '.value',
+                  schemaPath: '#/definitions/Value/anyOf/2/type',
+                  params: {
+                    type: 'boolean'
+                  },
+                  message: 'should be boolean'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+              var valid3 = errors === errs_3;
+              valid2 = valid2 || valid3;
+            }
           }
           if (!valid2) {
             var err = {
@@ -1479,6 +1498,8 @@ var validate = (function() {
     }, {
       "type": "string",
       "pattern": "^[a-zA-Z0-9._:-]+$"
+    }, {
+      "type": "boolean"
     }],
     "title": "Value"
   };
@@ -7741,7 +7762,7 @@ validate.schema = {
         },
         "component": {
           "type": "string",
-          "enum": ["CheckboxGroup", "Number", "RadioGroup", "Text", "TextArea", "Toggle", "ToggleButtonGroup", "Slider", "VisualAnalogScale", "LikertScale", "DatePicker", "RelativeDatePicker"]
+          "enum": ["Boolean", "CheckboxGroup", "Number", "RadioGroup", "Text", "TextArea", "Toggle", "ToggleButtonGroup", "Slider", "VisualAnalogScale", "LikertScale", "DatePicker", "RelativeDatePicker"]
         },
         "options": {
           "type": "array",
@@ -7870,6 +7891,8 @@ validate.schema = {
       }, {
         "type": "string",
         "pattern": "^[a-zA-Z0-9._:-]+$"
+      }, {
+        "type": "boolean"
       }],
       "title": "Value"
     },

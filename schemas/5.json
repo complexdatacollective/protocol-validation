@@ -919,6 +919,7 @@
         "component": {
           "type": "string",
           "enum": [
+            "Boolean",
             "CheckboxGroup",
             "Number",
             "RadioGroup",
@@ -1075,6 +1076,9 @@
         {
           "type": "string",
           "pattern": "^[a-zA-Z0-9._:-]+$"
+        },
+        {
+          "type": "boolean"
         }
       ],
       "title": "Value"
