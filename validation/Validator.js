@@ -1,3 +1,5 @@
+const { getSubjectTypeName } = require("./helpers");
+
 const debugLog = (...args) => {
   if (typeof process !== 'undefined' && process.env.NC_DEBUG_VALIDATOR) {
     console.log(...args); // eslint-disable-line no-console
@@ -109,7 +111,10 @@ class Validator {
     if (!result) {
       let failureMessage;
       try {
-        failureMessage = makeFailureMessage(fragment, subject);
+        // Try to decorate the failure message with useful info
+        // const subjectTypeName = getSubjectTypeName(this.protocol.codebook, subject);
+        // console.log('subjtn', subjectTypeName);
+        failureMessage = makeFailureMessage(fragment, subject, keypath);
       } catch (err) {
         debugLog(err);
         this.warnings.push(`makeFailureMessage error for ${keypathString(keypath.shift())}: ${err.toString()}`);
