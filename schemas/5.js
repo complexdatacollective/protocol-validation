@@ -3076,20 +3076,6 @@ var validate = (function() {
           else vErrors.push(err);
           errors++;
         }
-        if (data.introductionPanel === undefined) {
-          var err = {
-            keyword: 'required',
-            dataPath: (dataPath || '') + "",
-            schemaPath: '#/anyOf/0/required',
-            params: {
-              missingProperty: 'introductionPanel'
-            },
-            message: 'should have required property \'introductionPanel\''
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        }
         var errs__1 = errors;
         var valid2 = true;
         if (data.type !== undefined) {
@@ -3127,20 +3113,6 @@ var validate = (function() {
                 missingProperty: 'subject'
               },
               message: 'should have required property \'subject\''
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
-          if (data.introductionPanel === undefined) {
-            var err = {
-              keyword: 'required',
-              dataPath: (dataPath || '') + "",
-              schemaPath: '#/anyOf/1/required',
-              params: {
-                missingProperty: 'introductionPanel'
-              },
-              message: 'should have required property \'introductionPanel\''
             };
             if (vErrors === null) vErrors = [err];
             else vErrors.push(err);
@@ -3202,20 +3174,6 @@ var validate = (function() {
               else vErrors.push(err);
               errors++;
             }
-            if (data.introductionPanel === undefined) {
-              var err = {
-                keyword: 'required',
-                dataPath: (dataPath || '') + "",
-                schemaPath: '#/anyOf/2/required',
-                params: {
-                  missingProperty: 'introductionPanel'
-                },
-                message: 'should have required property \'introductionPanel\''
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
             if (data.prompts === undefined) {
               var err = {
                 keyword: 'required',
@@ -3272,20 +3230,6 @@ var validate = (function() {
                 else vErrors.push(err);
                 errors++;
               }
-              if (data.introductionPanel === undefined) {
-                var err = {
-                  keyword: 'required',
-                  dataPath: (dataPath || '') + "",
-                  schemaPath: '#/anyOf/3/required',
-                  params: {
-                    missingProperty: 'introductionPanel'
-                  },
-                  message: 'should have required property \'introductionPanel\''
-                };
-                if (vErrors === null) vErrors = [err];
-                else vErrors.push(err);
-                errors++;
-              }
               var errs__1 = errors;
               var valid2 = true;
               if (data.type !== undefined) {
@@ -3323,20 +3267,6 @@ var validate = (function() {
                       missingProperty: 'form'
                     },
                     message: 'should have required property \'form\''
-                  };
-                  if (vErrors === null) vErrors = [err];
-                  else vErrors.push(err);
-                  errors++;
-                }
-                if (data.introductionPanel === undefined) {
-                  var err = {
-                    keyword: 'required',
-                    dataPath: (dataPath || '') + "",
-                    schemaPath: '#/anyOf/4/required',
-                    params: {
-                      missingProperty: 'introductionPanel'
-                    },
-                    message: 'should have required property \'introductionPanel\''
                   };
                   if (vErrors === null) vErrors = [err];
                   else vErrors.push(err);
@@ -3655,35 +3585,35 @@ var validate = (function() {
           "const": "EgoForm"
         }
       },
-      "required": ["form", "introductionPanel"]
+      "required": ["form"]
     }, {
       "properties": {
         "type": {
           "const": "DyadCensus"
         }
       },
-      "required": ["subject", "introductionPanel", "prompts"]
+      "required": ["subject", "prompts"]
     }, {
       "properties": {
         "type": {
           "const": "TieStrengthCensus"
         }
       },
-      "required": ["subject", "introductionPanel", "prompts"]
+      "required": ["subject", "prompts"]
     }, {
       "properties": {
         "type": {
           "const": "AlterForm"
         }
       },
-      "required": ["form", "introductionPanel"]
+      "required": ["form"]
     }, {
       "properties": {
         "type": {
           "const": "AlterEdgeForm"
         }
       },
-      "required": ["form", "introductionPanel"]
+      "required": ["form"]
     }, {
       "properties": {
         "type": {
@@ -7201,35 +7131,35 @@ validate.schema = {
             "const": "EgoForm"
           }
         },
-        "required": ["form", "introductionPanel"]
+        "required": ["form"]
       }, {
         "properties": {
           "type": {
             "const": "DyadCensus"
           }
         },
-        "required": ["subject", "introductionPanel", "prompts"]
+        "required": ["subject", "prompts"]
       }, {
         "properties": {
           "type": {
             "const": "TieStrengthCensus"
           }
         },
-        "required": ["subject", "introductionPanel", "prompts"]
+        "required": ["subject", "prompts"]
       }, {
         "properties": {
           "type": {
             "const": "AlterForm"
           }
         },
-        "required": ["form", "introductionPanel"]
+        "required": ["form"]
       }, {
         "properties": {
           "type": {
             "const": "AlterEdgeForm"
           }
         },
-        "required": ["form", "introductionPanel"]
+        "required": ["form"]
       }, {
         "properties": {
           "type": {

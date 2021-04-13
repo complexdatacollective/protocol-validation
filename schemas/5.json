@@ -213,8 +213,7 @@
             }
           },
           "required": [
-            "form",
-            "introductionPanel"
+            "form"
           ]
         },
         {
@@ -225,7 +224,6 @@
           },
           "required": [
             "subject",
-            "introductionPanel",
             "prompts"
           ]
         },
@@ -237,7 +235,6 @@
           },
           "required": [
             "subject",
-            "introductionPanel",
             "prompts"
           ]
         },
@@ -248,8 +245,7 @@
             }
           },
           "required": [
-            "form",
-            "introductionPanel"
+            "form"
           ]
         },
         {
@@ -259,8 +255,7 @@
             }
           },
           "required": [
-            "form",
-            "introductionPanel"
+            "form"
           ]
         },
         {
