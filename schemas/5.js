@@ -1298,7 +1298,7 @@ var validate = (function() {
         var errs__0 = errors;
         var valid1 = true;
         for (var key0 in data) {
-          var isAdditional0 = !(false || key0 == 'label' || key0 == 'value');
+          var isAdditional0 = !(false || key0 == 'label' || key0 == 'value' || key0 == 'negative');
           if (isAdditional0) {
             valid1 = false;
             var err = {
@@ -1458,6 +1458,24 @@ var validate = (function() {
           var valid2 = errors === errs_2;
           var valid1 = errors === errs_1;
         }
+        if (data.negative !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.negative !== "boolean") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.negative',
+              schemaPath: '#/properties/negative/type',
+              params: {
+                type: 'boolean'
+              },
+              message: 'should be boolean'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
       } else {
         var err = {
           keyword: 'type',
@@ -1485,6 +1503,9 @@ var validate = (function() {
       },
       "value": {
         "$ref": "#/definitions/Value"
+      },
+      "negative": {
+        "type": "boolean"
       }
     },
     "required": ["label", "value"],
@@ -7719,6 +7740,9 @@ validate.schema = {
         },
         "value": {
           "$ref": "#/definitions/Value"
+        },
+        "negative": {
+          "type": "boolean"
         }
       },
       "required": ["label", "value"],
