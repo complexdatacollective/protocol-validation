@@ -2321,103 +2321,6 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
-        var data1 = data.forceDirectedLayout;
-        if (data1 !== undefined) {
-          var errs_1 = errors;
-          if ((!data1 || typeof data1 !== "object" || Array.isArray(data1))) {
-            var err = {
-              keyword: 'type',
-              dataPath: (dataPath || '') + '.forceDirectedLayout',
-              schemaPath: '#/properties/forceDirectedLayout/type',
-              params: {
-                type: 'object'
-              },
-              message: 'should be object'
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
-          if (Array.isArray(data1)) {
-            var errs__1 = errors;
-            var valid1;
-            for (var i1 = 0; i1 < data1.length; i1++) {
-              var data2 = data1[i1];
-              var errs_2 = errors;
-              var errs_3 = errors;
-              if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
-                var errs__3 = errors;
-                var valid4 = true;
-                for (var key3 in data2) {
-                  var isAdditional3 = !(false || key3 == 'enabled');
-                  if (isAdditional3) {
-                    valid4 = false;
-                    var err = {
-                      keyword: 'additionalProperties',
-                      dataPath: (dataPath || '') + '.forceDirectedLayout[' + i1 + ']',
-                      schemaPath: '#/definitions/ForceDirectedLayout/additionalProperties',
-                      params: {
-                        additionalProperty: '' + key3 + ''
-                      },
-                      message: 'should NOT have additional properties'
-                    };
-                    if (vErrors === null) vErrors = [err];
-                    else vErrors.push(err);
-                    errors++;
-                  }
-                }
-                if (data2.enabled === undefined) {
-                  valid4 = false;
-                  var err = {
-                    keyword: 'required',
-                    dataPath: (dataPath || '') + '.forceDirectedLayout[' + i1 + ']',
-                    schemaPath: '#/definitions/ForceDirectedLayout/required',
-                    params: {
-                      missingProperty: 'enabled'
-                    },
-                    message: 'should have required property \'enabled\''
-                  };
-                  if (vErrors === null) vErrors = [err];
-                  else vErrors.push(err);
-                  errors++;
-                } else {
-                  var errs_4 = errors;
-                  if (typeof data2.enabled !== "boolean") {
-                    var err = {
-                      keyword: 'type',
-                      dataPath: (dataPath || '') + '.forceDirectedLayout[' + i1 + '].enabled',
-                      schemaPath: '#/definitions/ForceDirectedLayout/properties/enabled/type',
-                      params: {
-                        type: 'boolean'
-                      },
-                      message: 'should be boolean'
-                    };
-                    if (vErrors === null) vErrors = [err];
-                    else vErrors.push(err);
-                    errors++;
-                  }
-                  var valid4 = errors === errs_4;
-                }
-              } else {
-                var err = {
-                  keyword: 'type',
-                  dataPath: (dataPath || '') + '.forceDirectedLayout[' + i1 + ']',
-                  schemaPath: '#/definitions/ForceDirectedLayout/type',
-                  params: {
-                    type: 'object'
-                  },
-                  message: 'should be object'
-                };
-                if (vErrors === null) vErrors = [err];
-                else vErrors.push(err);
-                errors++;
-              }
-              var valid3 = errors === errs_3;
-              var valid2 = errors === errs_2;
-            }
-          }
-          var valid1 = errors === errs_1;
-        }
         var data1 = data.sortOptions;
         if (data1 !== undefined) {
           var errs_1 = errors;
@@ -2440,9 +2343,9 @@ var validate = (function() {
             var valid1;
             for (var i1 = 0; i1 < data1.length; i1++) {
               var errs_2 = errors;
-              if (!refVal36(data1[i1], (dataPath || '') + '.sortOptions[' + i1 + ']', data1, i1, rootData)) {
-                if (vErrors === null) vErrors = refVal36.errors;
-                else vErrors = vErrors.concat(refVal36.errors);
+              if (!refVal35(data1[i1], (dataPath || '') + '.sortOptions[' + i1 + ']', data1, i1, rootData)) {
+                if (vErrors === null) vErrors = refVal35.errors;
+                else vErrors = vErrors.concat(refVal35.errors);
                 errors = vErrors.length;
               }
               var valid2 = errors === errs_2;
@@ -2472,9 +2375,9 @@ var validate = (function() {
             var valid1;
             for (var i1 = 0; i1 < data1.length; i1++) {
               var errs_2 = errors;
-              if (!refVal38(data1[i1], (dataPath || '') + '.cardOptions[' + i1 + ']', data1, i1, rootData)) {
-                if (vErrors === null) vErrors = refVal38.errors;
-                else vErrors = vErrors.concat(refVal38.errors);
+              if (!refVal37(data1[i1], (dataPath || '') + '.cardOptions[' + i1 + ']', data1, i1, rootData)) {
+                if (vErrors === null) vErrors = refVal37.errors;
+                else vErrors = vErrors.concat(refVal37.errors);
                 errors = vErrors.length;
               }
               var valid2 = errors === errs_2;
@@ -2668,99 +2571,12 @@ var validate = (function() {
             var errs__1 = errors;
             var valid1;
             for (var i1 = 0; i1 < data1.length; i1++) {
-              var data2 = data1[i1];
               var errs_2 = errors;
-              var errs_3 = errors;
-              if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
-                var errs__3 = errors;
-                var valid4 = true;
-                for (var key3 in data2) {
-                  var isAdditional3 = !(false || key3 == 'freeDraw' || key3 == 'featureNode' || key3 == 'allowRepositioning');
-                  if (isAdditional3) {
-                    valid4 = false;
-                    var err = {
-                      keyword: 'additionalProperties',
-                      dataPath: (dataPath || '') + '.behaviours[' + i1 + ']',
-                      schemaPath: '#/definitions/Behaviours/additionalProperties',
-                      params: {
-                        additionalProperty: '' + key3 + ''
-                      },
-                      message: 'should NOT have additional properties'
-                    };
-                    if (vErrors === null) vErrors = [err];
-                    else vErrors.push(err);
-                    errors++;
-                  }
-                }
-                if (data2.freeDraw !== undefined) {
-                  var errs_4 = errors;
-                  if (typeof data2.freeDraw !== "boolean") {
-                    var err = {
-                      keyword: 'type',
-                      dataPath: (dataPath || '') + '.behaviours[' + i1 + '].freeDraw',
-                      schemaPath: '#/definitions/Behaviours/properties/freeDraw/type',
-                      params: {
-                        type: 'boolean'
-                      },
-                      message: 'should be boolean'
-                    };
-                    if (vErrors === null) vErrors = [err];
-                    else vErrors.push(err);
-                    errors++;
-                  }
-                  var valid4 = errors === errs_4;
-                }
-                if (data2.featureNode !== undefined) {
-                  var errs_4 = errors;
-                  if (typeof data2.featureNode !== "boolean") {
-                    var err = {
-                      keyword: 'type',
-                      dataPath: (dataPath || '') + '.behaviours[' + i1 + '].featureNode',
-                      schemaPath: '#/definitions/Behaviours/properties/featureNode/type',
-                      params: {
-                        type: 'boolean'
-                      },
-                      message: 'should be boolean'
-                    };
-                    if (vErrors === null) vErrors = [err];
-                    else vErrors.push(err);
-                    errors++;
-                  }
-                  var valid4 = errors === errs_4;
-                }
-                if (data2.allowRepositioning !== undefined) {
-                  var errs_4 = errors;
-                  if (typeof data2.allowRepositioning !== "boolean") {
-                    var err = {
-                      keyword: 'type',
-                      dataPath: (dataPath || '') + '.behaviours[' + i1 + '].allowRepositioning',
-                      schemaPath: '#/definitions/Behaviours/properties/allowRepositioning/type',
-                      params: {
-                        type: 'boolean'
-                      },
-                      message: 'should be boolean'
-                    };
-                    if (vErrors === null) vErrors = [err];
-                    else vErrors.push(err);
-                    errors++;
-                  }
-                  var valid4 = errors === errs_4;
-                }
-              } else {
-                var err = {
-                  keyword: 'type',
-                  dataPath: (dataPath || '') + '.behaviours[' + i1 + ']',
-                  schemaPath: '#/definitions/Behaviours/type',
-                  params: {
-                    type: 'object'
-                  },
-                  message: 'should be object'
-                };
-                if (vErrors === null) vErrors = [err];
-                else vErrors.push(err);
-                errors++;
+              if (!refVal39(data1[i1], (dataPath || '') + '.behaviours[' + i1 + ']', data1, i1, rootData)) {
+                if (vErrors === null) vErrors = refVal39.errors;
+                else vErrors = vErrors.concat(refVal39.errors);
+                errors = vErrors.length;
               }
-              var valid3 = errors === errs_3;
               var valid2 = errors === errs_2;
             }
           }
@@ -3647,12 +3463,6 @@ var validate = (function() {
           "$ref": "#/definitions/Background"
         },
         "minItems": 1
-      },
-      "forceDirectedLayout": {
-        "type": "object",
-        "items": {
-          "$ref": "#/definitions/ForceDirectedLayout"
-        }
       },
       "sortOptions": {
         "type": "object",
@@ -6340,19 +6150,7 @@ var validate = (function() {
     "title": "Background"
   };
   refVal[34] = refVal34;
-  var refVal35 = {
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "enabled": {
-        "type": "boolean"
-      }
-    },
-    "required": ["enabled"],
-    "title": "ForceDirectedLayout"
-  };
-  refVal[35] = refVal35;
-  var refVal36 = (function() {
+  var refVal35 = (function() {
     var pattern0 = new RegExp('.+');
     var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
@@ -6586,7 +6384,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal36.schema = {
+  refVal35.schema = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -6606,9 +6404,9 @@ var validate = (function() {
     "required": ["sortOrder", "sortableProperties"],
     "title": "SortOptions"
   };
-  refVal36.errors = null;
-  refVal[36] = refVal36;
-  var refVal37 = {
+  refVal35.errors = null;
+  refVal[35] = refVal35;
+  var refVal36 = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -6622,8 +6420,8 @@ var validate = (function() {
     "required": ["label", "variable"],
     "title": "Property"
   };
-  refVal[37] = refVal37;
-  var refVal38 = (function() {
+  refVal[36] = refVal36;
+  var refVal37 = (function() {
     var pattern0 = new RegExp('.+');
     var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
@@ -6829,7 +6627,7 @@ var validate = (function() {
       return errors === 0;
     };
   })();
-  refVal38.schema = {
+  refVal37.schema = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -6846,9 +6644,9 @@ var validate = (function() {
     "required": ["displayLabel"],
     "title": "CardOptions"
   };
-  refVal38.errors = null;
-  refVal[38] = refVal38;
-  var refVal39 = {
+  refVal37.errors = null;
+  refVal[37] = refVal37;
+  var refVal38 = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -6865,8 +6663,205 @@ var validate = (function() {
     "required": ["fuzziness", "matchProperties"],
     "title": "SearchOptions"
   };
-  refVal[39] = refVal39;
-  var refVal40 = {
+  refVal[38] = refVal38;
+  var refVal39 = (function() {
+    var pattern0 = new RegExp('.+');
+    var pattern1 = new RegExp('^[a-zA-Z0-9._:-]+$');
+    return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
+      'use strict';
+      var vErrors = null;
+      var errors = 0;
+      if ((data && typeof data === "object" && !Array.isArray(data))) {
+        var errs__0 = errors;
+        var valid1 = true;
+        for (var key0 in data) {
+          var isAdditional0 = !(false || key0 == 'freeDraw' || key0 == 'featureNode' || key0 == 'allowRepositioning' || key0 == 'automaticLayout');
+          if (isAdditional0) {
+            valid1 = false;
+            var err = {
+              keyword: 'additionalProperties',
+              dataPath: (dataPath || '') + "",
+              schemaPath: '#/additionalProperties',
+              params: {
+                additionalProperty: '' + key0 + ''
+              },
+              message: 'should NOT have additional properties'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+        }
+        if (data.freeDraw !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.freeDraw !== "boolean") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.freeDraw',
+              schemaPath: '#/properties/freeDraw/type',
+              params: {
+                type: 'boolean'
+              },
+              message: 'should be boolean'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        if (data.featureNode !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.featureNode !== "boolean") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.featureNode',
+              schemaPath: '#/properties/featureNode/type',
+              params: {
+                type: 'boolean'
+              },
+              message: 'should be boolean'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        if (data.allowRepositioning !== undefined) {
+          var errs_1 = errors;
+          if (typeof data.allowRepositioning !== "boolean") {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.allowRepositioning',
+              schemaPath: '#/properties/allowRepositioning/type',
+              params: {
+                type: 'boolean'
+              },
+              message: 'should be boolean'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        var data1 = data.automaticLayout;
+        if (data1 !== undefined) {
+          var errs_1 = errors;
+          if ((!data1 || typeof data1 !== "object" || Array.isArray(data1))) {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.automaticLayout',
+              schemaPath: '#/properties/automaticLayout/type',
+              params: {
+                type: 'object'
+              },
+              message: 'should be object'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          if (Array.isArray(data1)) {
+            var errs__1 = errors;
+            var valid1;
+            for (var i1 = 0; i1 < data1.length; i1++) {
+              var data2 = data1[i1];
+              var errs_2 = errors;
+              var errs_3 = errors;
+              if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
+                var errs__3 = errors;
+                var valid4 = true;
+                for (var key3 in data2) {
+                  var isAdditional3 = !(false || key3 == 'enabled');
+                  if (isAdditional3) {
+                    valid4 = false;
+                    var err = {
+                      keyword: 'additionalProperties',
+                      dataPath: (dataPath || '') + '.automaticLayout[' + i1 + ']',
+                      schemaPath: '#/definitions/AutomaticLayout/additionalProperties',
+                      params: {
+                        additionalProperty: '' + key3 + ''
+                      },
+                      message: 'should NOT have additional properties'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                }
+                if (data2.enabled === undefined) {
+                  valid4 = false;
+                  var err = {
+                    keyword: 'required',
+                    dataPath: (dataPath || '') + '.automaticLayout[' + i1 + ']',
+                    schemaPath: '#/definitions/AutomaticLayout/required',
+                    params: {
+                      missingProperty: 'enabled'
+                    },
+                    message: 'should have required property \'enabled\''
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                } else {
+                  var errs_4 = errors;
+                  if (typeof data2.enabled !== "boolean") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.automaticLayout[' + i1 + '].enabled',
+                      schemaPath: '#/definitions/AutomaticLayout/properties/enabled/type',
+                      params: {
+                        type: 'boolean'
+                      },
+                      message: 'should be boolean'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid4 = errors === errs_4;
+                }
+              } else {
+                var err = {
+                  keyword: 'type',
+                  dataPath: (dataPath || '') + '.automaticLayout[' + i1 + ']',
+                  schemaPath: '#/definitions/AutomaticLayout/type',
+                  params: {
+                    type: 'object'
+                  },
+                  message: 'should be object'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+              var valid3 = errors === errs_3;
+              var valid2 = errors === errs_2;
+            }
+          }
+          var valid1 = errors === errs_1;
+        }
+      } else {
+        var err = {
+          keyword: 'type',
+          dataPath: (dataPath || '') + "",
+          schemaPath: '#/type',
+          params: {
+            type: 'object'
+          },
+          message: 'should be object'
+        };
+        if (vErrors === null) vErrors = [err];
+        else vErrors.push(err);
+        errors++;
+      }
+      validate.errors = vErrors;
+      return errors === 0;
+    };
+  })();
+  refVal39.schema = {
     "type": "object",
     "additionalProperties": false,
     "properties": {
@@ -6878,10 +6873,29 @@ var validate = (function() {
       },
       "allowRepositioning": {
         "type": "boolean"
+      },
+      "automaticLayout": {
+        "type": "object",
+        "items": {
+          "$ref": "#/definitions/AutomaticLayout"
+        }
       }
     },
     "required": [],
     "title": "Behaviours"
+  };
+  refVal39.errors = null;
+  refVal[39] = refVal39;
+  var refVal40 = {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean"
+      }
+    },
+    "required": ["enabled"],
+    "title": "AutomaticLayout"
   };
   refVal[40] = refVal40;
   var refVal41 = {
@@ -7211,12 +7225,6 @@ validate.schema = {
             "$ref": "#/definitions/Background"
           },
           "minItems": 1
-        },
-        "forceDirectedLayout": {
-          "type": "object",
-          "items": {
-            "$ref": "#/definitions/ForceDirectedLayout"
-          }
         },
         "sortOptions": {
           "type": "object",
@@ -7559,6 +7567,12 @@ validate.schema = {
         },
         "allowRepositioning": {
           "type": "boolean"
+        },
+        "automaticLayout": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/AutomaticLayout"
+          }
         }
       },
       "required": [],
@@ -7602,7 +7616,7 @@ validate.schema = {
       "required": ["concentricCircles", "skewedTowardCenter"],
       "title": "Background"
     },
-    "ForceDirectedLayout": {
+    "AutomaticLayout": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -7611,7 +7625,7 @@ validate.schema = {
         }
       },
       "required": ["enabled"],
-      "title": "ForceDirectedLayout"
+      "title": "AutomaticLayout"
     },
     "SortOrder": {
       "type": "object",

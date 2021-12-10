@@ -152,12 +152,6 @@
           },
           "minItems": 1
         },
-        "forceDirectedLayout": {
-          "type": "object",
-          "items": {
-            "$ref": "#/definitions/ForceDirectedLayout"
-          }
-        },
         "sortOptions": {
           "type": "object",
           "items": {
@@ -598,6 +592,12 @@
         },
         "allowRepositioning": {
           "type": "boolean"
+        },
+        "automaticLayout": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/AutomaticLayout"
+          }
         }
       },
       "required": [],
@@ -647,7 +647,7 @@
       ],
       "title": "Background"
     },
-    "ForceDirectedLayout": {
+    "AutomaticLayout": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -658,7 +658,7 @@
       "required": [
         "enabled"
       ],
-      "title": "ForceDirectedLayout"
+      "title": "AutomaticLayout"
     },
     "SortOrder": {
       "type": "object",
