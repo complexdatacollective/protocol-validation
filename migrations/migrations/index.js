@@ -1,4 +1,5 @@
 const version4 = require('./4');
+const version5 = require('./5');
 
 /**
  * These should be in order
@@ -9,6 +10,7 @@ const migrations = [
   { version: 2, migration: protocol => protocol },
   { version: 3, migration: protocol => protocol },
   version4,
+  version5,
 ];
 
 module.exports = migrations;
