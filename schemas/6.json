@@ -582,7 +582,7 @@
     },
     "Behaviours": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "freeDraw": {
           "type": "boolean"
