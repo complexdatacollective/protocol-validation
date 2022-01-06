@@ -3,6 +3,7 @@ const version_2 = require('./2.js');
 const version_3 = require('./3.js');
 const version_4 = require('./4.js');
 const version_5 = require('./5.js');
+const version_6 = require('./6.js');
 
 const versions = [
   { version: 1, validator: version_1 },
@@ -10,6 +11,7 @@ const versions = [
   { version: 3, validator: version_3 },
   { version: 4, validator: version_4 },
   { version: 5, validator: version_5 },
+  { version: 6, validator: version_6 },
 ];
 
 module.exports = versions;
