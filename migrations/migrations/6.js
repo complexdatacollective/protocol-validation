@@ -23,7 +23,7 @@ const migration = (protocol) => {
 
 // Markdown format
 const notes = `
-- Replace roster-based name generators (small and large) with a single new interface that combines the functionality of both.
+- Replace roster-based name generators (small and large) with a single new interface that combines the functionality of both. This will change the interview experience, and may impact your data collection!
 - Enable support for using the automatic node positioning feature on the Sociogram interface.
 `;
 
