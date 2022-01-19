@@ -3417,7 +3417,7 @@ var validate = (function() {
       },
       "type": {
         "type": "string",
-        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
+        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
       },
       "label": {
         "type": "string"
@@ -3565,7 +3565,7 @@ var validate = (function() {
     }, {
       "properties": {
         "type": {
-          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
+          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
         }
       },
       "required": ["prompts"]
@@ -6674,24 +6674,6 @@ var validate = (function() {
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
-        for (var key0 in data) {
-          var isAdditional0 = !(false || key0 == 'freeDraw' || key0 == 'featureNode' || key0 == 'allowRepositioning' || key0 == 'automaticLayout');
-          if (isAdditional0) {
-            valid1 = false;
-            var err = {
-              keyword: 'additionalProperties',
-              dataPath: (dataPath || '') + "",
-              schemaPath: '#/additionalProperties',
-              params: {
-                additionalProperty: '' + key0 + ''
-              },
-              message: 'should NOT have additional properties'
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          }
-        }
         if (data.freeDraw !== undefined) {
           var errs_1 = errors;
           if (typeof data.freeDraw !== "boolean") {
@@ -6863,7 +6845,7 @@ var validate = (function() {
   })();
   refVal39.schema = {
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "properties": {
       "freeDraw": {
         "type": "boolean"
@@ -7179,7 +7161,7 @@ validate.schema = {
         },
         "type": {
           "type": "string",
-          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
+          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
         },
         "label": {
           "type": "string"
@@ -7327,7 +7309,7 @@ validate.schema = {
       }, {
         "properties": {
           "type": {
-            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
+            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
           }
         },
         "required": ["prompts"]
@@ -7557,7 +7539,7 @@ validate.schema = {
     },
     "Behaviours": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "freeDraw": {
           "type": "boolean"
