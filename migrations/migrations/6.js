@@ -4,7 +4,7 @@
 
 const migrateStages = (stages = []) => stages.map(stage => {
 
-  if (stage.type !== 'NameGeneratorAutocomplete' && stage.type !== 'NameGeneratorList') {
+  if (stage.type !== 'NameGeneratorAutoComplete' && stage.type !== 'NameGeneratorList') {
     return stage;
   }
 
