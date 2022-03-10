@@ -6674,6 +6674,44 @@ var validate = (function() {
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
+        var data1 = data.minNodes;
+        if (data1 !== undefined) {
+          var errs_1 = errors;
+          if ((typeof data1 !== "number" || (data1 % 1) || data1 !== data1)) {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.minNodes',
+              schemaPath: '#/properties/minNodes/type',
+              params: {
+                type: 'integer'
+              },
+              message: 'should be integer'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        var data1 = data.maxNodes;
+        if (data1 !== undefined) {
+          var errs_1 = errors;
+          if ((typeof data1 !== "number" || (data1 % 1) || data1 !== data1)) {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.maxNodes',
+              schemaPath: '#/properties/maxNodes/type',
+              params: {
+                type: 'integer'
+              },
+              message: 'should be integer'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
         if (data.freeDraw !== undefined) {
           var errs_1 = errors;
           if (typeof data.freeDraw !== "boolean") {
@@ -6847,6 +6885,12 @@ var validate = (function() {
     "type": "object",
     "additionalProperties": true,
     "properties": {
+      "minNodes": {
+        "type": "integer"
+      },
+      "maxNodes": {
+        "type": "integer"
+      },
       "freeDraw": {
         "type": "boolean"
       },
@@ -7541,6 +7585,12 @@ validate.schema = {
       "type": "object",
       "additionalProperties": true,
       "properties": {
+        "minNodes": {
+          "type": "integer"
+        },
+        "maxNodes": {
+          "type": "integer"
+        },
         "freeDraw": {
           "type": "boolean"
         },
