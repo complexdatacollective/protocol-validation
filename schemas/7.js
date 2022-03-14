@@ -3417,7 +3417,7 @@ var validate = (function() {
       },
       "type": {
         "type": "string",
-        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
+        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
       },
       "label": {
         "type": "string"
@@ -3565,7 +3565,7 @@ var validate = (function() {
     }, {
       "properties": {
         "type": {
-          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
+          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
         }
       },
       "required": ["prompts"]
@@ -4679,7 +4679,7 @@ var validate = (function() {
       },
       "operator": {
         "type": "string",
-        "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES"]
+        "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
       },
       "value": {
         "type": ["integer", "string", "boolean"]
@@ -4691,7 +4691,7 @@ var validate = (function() {
       "if": {
         "properties": {
           "operator": {
-            "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES"]
+            "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
           }
         }
       },
@@ -6674,6 +6674,44 @@ var validate = (function() {
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
+        var data1 = data.minNodes;
+        if (data1 !== undefined) {
+          var errs_1 = errors;
+          if ((typeof data1 !== "number" || (data1 % 1) || data1 !== data1)) {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.minNodes',
+              schemaPath: '#/properties/minNodes/type',
+              params: {
+                type: 'integer'
+              },
+              message: 'should be integer'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        var data1 = data.maxNodes;
+        if (data1 !== undefined) {
+          var errs_1 = errors;
+          if ((typeof data1 !== "number" || (data1 % 1) || data1 !== data1)) {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.maxNodes',
+              schemaPath: '#/properties/maxNodes/type',
+              params: {
+                type: 'integer'
+              },
+              message: 'should be integer'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
         if (data.freeDraw !== undefined) {
           var errs_1 = errors;
           if (typeof data.freeDraw !== "boolean") {
@@ -6847,6 +6885,12 @@ var validate = (function() {
     "type": "object",
     "additionalProperties": true,
     "properties": {
+      "minNodes": {
+        "type": "integer"
+      },
+      "maxNodes": {
+        "type": "integer"
+      },
       "freeDraw": {
         "type": "boolean"
       },
@@ -7161,7 +7205,7 @@ validate.schema = {
         },
         "type": {
           "type": "string",
-          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
+          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
         },
         "label": {
           "type": "string"
@@ -7309,7 +7353,7 @@ validate.schema = {
       }, {
         "properties": {
           "type": {
-            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
+            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
           }
         },
         "required": ["prompts"]
@@ -7422,7 +7466,7 @@ validate.schema = {
         },
         "operator": {
           "type": "string",
-          "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES"]
+          "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
         },
         "value": {
           "type": ["integer", "string", "boolean"]
@@ -7434,7 +7478,7 @@ validate.schema = {
         "if": {
           "properties": {
             "operator": {
-              "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES"]
+              "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
             }
           }
         },
@@ -7541,6 +7585,12 @@ validate.schema = {
       "type": "object",
       "additionalProperties": true,
       "properties": {
+        "minNodes": {
+          "type": "integer"
+        },
+        "maxNodes": {
+          "type": "integer"
+        },
         "freeDraw": {
           "type": "boolean"
         },
