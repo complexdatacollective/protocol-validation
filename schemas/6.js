@@ -3417,7 +3417,7 @@ var validate = (function() {
       },
       "type": {
         "type": "string",
-        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
+        "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
       },
       "label": {
         "type": "string"
@@ -3565,7 +3565,7 @@ var validate = (function() {
     }, {
       "properties": {
         "type": {
-          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
+          "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
         }
       },
       "required": ["prompts"]
@@ -7161,7 +7161,7 @@ validate.schema = {
         },
         "type": {
           "type": "string",
-          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
+          "enum": ["Narrative", "AlterForm", "AlterEdgeForm", "EgoForm", "NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "DyadCensus", "TieStrengthCensus", "Information", "OrdinalBin", "CategoricalBin"]
         },
         "label": {
           "type": "string"
@@ -7309,7 +7309,7 @@ validate.schema = {
       }, {
         "properties": {
           "type": {
-            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorList", "NameGeneratorAutoComplete", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
+            "enum": ["NameGenerator", "NameGeneratorQuickAdd", "NameGeneratorRoster", "Sociogram", "OrdinalBin", "CategoricalBin", "DyadCensus"]
           }
         },
         "required": ["prompts"]
