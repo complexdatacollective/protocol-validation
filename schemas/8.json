@@ -388,11 +388,13 @@
             "OPTIONS_GREATER_THAN",
             "OPTIONS_LESS_THAN",
             "OPTIONS_EQUALS",
-            "OPTIONS_NOT_EQUALS"
+            "OPTIONS_NOT_EQUALS",
+            "CONTAINS",
+            "DOES NOT CONTAIN"
           ]
         },
         "value": {
-          "type": ["integer", "string", "boolean"]
+          "type": ["integer", "string", "boolean", "array"]
         }
       },
       "required": ["operator"],
@@ -414,7 +416,9 @@
                   "OPTIONS_GREATER_THAN",
                   "OPTIONS_LESS_THAN",
                   "OPTIONS_EQUALS",
-                  "OPTIONS_NOT_EQUALS"
+                  "OPTIONS_NOT_EQUALS",
+                  "CONTAINS",
+                  "DOES NOT CONTAIN"
                 ]
               }
             }

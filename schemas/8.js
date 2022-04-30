@@ -4571,15 +4571,15 @@ var validate = (function() {
             var data2 = data1.value;
             if (data2 !== undefined) {
               var errs_3 = errors;
-              if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2) && typeof data2 !== "string" && typeof data2 !== "boolean") {
+              if ((typeof data2 !== "number" || (data2 % 1) || data2 !== data2) && typeof data2 !== "string" && typeof data2 !== "boolean" && !Array.isArray(data2)) {
                 var err = {
                   keyword: 'type',
                   dataPath: (dataPath || '') + '.options.value',
                   schemaPath: '#/definitions/Options/properties/value/type',
                   params: {
-                    type: 'integer,string,boolean'
+                    type: 'integer,string,boolean,array'
                   },
-                  message: 'should be integer,string,boolean'
+                  message: 'should be integer,string,boolean,array'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -4721,10 +4721,10 @@ var validate = (function() {
       },
       "operator": {
         "type": "string",
-        "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
+        "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS", "CONTAINS", "DOES NOT CONTAIN"]
       },
       "value": {
-        "type": ["integer", "string", "boolean"]
+        "type": ["integer", "string", "boolean", "array"]
       }
     },
     "required": ["operator"],
@@ -4733,7 +4733,7 @@ var validate = (function() {
       "if": {
         "properties": {
           "operator": {
-            "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
+            "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS", "CONTAINS", "DOES NOT CONTAIN"]
           }
         }
       },
@@ -7508,10 +7508,10 @@ validate.schema = {
         },
         "operator": {
           "type": "string",
-          "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
+          "enum": ["EXISTS", "NOT_EXISTS", "EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS", "CONTAINS", "DOES NOT CONTAIN"]
         },
         "value": {
-          "type": ["integer", "string", "boolean"]
+          "type": ["integer", "string", "boolean", "array"]
         }
       },
       "required": ["operator"],
@@ -7520,7 +7520,7 @@ validate.schema = {
         "if": {
           "properties": {
             "operator": {
-              "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS"]
+              "enum": ["EXACTLY", "NOT", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "INCLUDES", "EXCLUDES", "OPTIONS_GREATER_THAN", "OPTIONS_LESS_THAN", "OPTIONS_EQUALS", "OPTIONS_NOT_EQUALS", "CONTAINS", "DOES NOT CONTAIN"]
             }
           }
         },
