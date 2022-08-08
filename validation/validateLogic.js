@@ -87,7 +87,7 @@ const validateLogic = (protocol) => {
     // for the variable type
     (validations, _, keypath) => {
       // List of validation types that reference variables
-      const typesWithVariables = ['sameAs', 'differentFrom'];
+      const typesWithVariables = ['sameAs', 'differentFrom', 'greaterThanVariable', 'lessThanVariable'];
 
       // Get variable registryfor the current variable's entity type
       const path = `codebook.${keypath[2]}.${keypath[3]}.variables`;
