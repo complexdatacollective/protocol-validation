@@ -33,10 +33,7 @@
           "minItems": 1
         }
       },
-      "required": [
-        "stages",
-        "codebook"
-      ],
+      "required": ["stages", "codebook"],
       "title": "Protocol"
     },
     "AssetManifest": {
@@ -57,9 +54,7 @@
           }
         }
       },
-      "required": [
-        "fields"
-      ],
+      "required": ["fields"],
       "title": "Form"
     },
     "Field": {
@@ -73,10 +68,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "variable",
-        "prompt"
-      ],
+      "required": ["variable", "prompt"],
       "title": "Field"
     },
     "Stage": {
@@ -182,7 +174,7 @@
             "$ref": "#/definitions/Item"
           }
         },
-        "introductionPanel" : {
+        "introductionPanel": {
           "$ref": "#/definitions/IntroductionPanel"
         },
         "skipLogic": {
@@ -192,11 +184,7 @@
           "$ref": "#/definitions/Filter"
         }
       },
-      "required": [
-        "id",
-        "label",
-        "type"
-      ],
+      "required": ["id", "label", "type"],
       "title": "Interface",
       "anyOf": [
         {
@@ -205,10 +193,7 @@
               "const": "EgoForm"
             }
           },
-          "required": [
-            "form",
-            "introductionPanel"
-          ]
+          "required": ["form", "introductionPanel"]
         },
         {
           "properties": {
@@ -216,10 +201,7 @@
               "const": "AlterForm"
             }
           },
-          "required": [
-            "form",
-            "introductionPanel"
-          ]
+          "required": ["form", "introductionPanel"]
         },
         {
           "properties": {
@@ -227,10 +209,7 @@
               "const": "AlterEdgeForm"
             }
           },
-          "required": [
-            "form",
-            "introductionPanel"
-          ]
+          "required": ["form", "introductionPanel"]
         },
         {
           "properties": {
@@ -238,9 +217,7 @@
               "const": "Information"
             }
           },
-          "required": [
-            "items"
-          ]
+          "required": ["items"]
         },
         {
           "properties": {
@@ -248,10 +225,7 @@
               "const": "Narrative"
             }
           },
-          "required": [
-            "presets",
-            "background"
-          ]
+          "required": ["presets", "background"]
         },
         {
           "properties": {
@@ -267,9 +241,7 @@
               ]
             }
           },
-          "required": [
-            "prompts"
-          ]
+          "required": ["prompts"]
         }
       ]
     },
@@ -282,10 +254,7 @@
         },
         "type": {
           "type": "string",
-          "enum": [
-            "text",
-            "asset"
-          ]
+          "enum": ["text", "asset"]
         },
         "content": {
           "type": "string"
@@ -300,11 +269,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "content",
-        "id",
-        "type"
-      ],
+      "required": ["content", "id", "type"],
       "title": "Item"
     },
     "IntroductionPanel": {
@@ -318,10 +283,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "title",
-        "text"
-      ]
+      "required": ["title", "text"]
     },
     "Panel": {
       "type": "object",
@@ -340,11 +302,7 @@
           "type": ["string", "null"]
         }
       },
-      "required": [
-        "id",
-        "title",
-        "dataSource"
-      ],
+      "required": ["id", "title", "dataSource"],
       "title": "Panel"
     },
     "Filter": {
@@ -353,10 +311,7 @@
       "properties": {
         "join": {
           "type": "string",
-          "enum": [
-            "OR",
-            "AND"
-          ]
+          "enum": ["OR", "AND"]
         },
         "rules": {
           "type": "array",
@@ -373,11 +328,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "alter",
-            "ego",
-            "edge"
-          ]
+          "enum": ["alter", "ego", "edge"]
         },
         "id": {
           "type": "string"
@@ -386,11 +337,7 @@
           "$ref": "#/definitions/Options"
         }
       },
-      "required": [
-        "id",
-        "options",
-        "type"
-      ],
+      "required": ["id", "options", "type"],
       "title": "Rule"
     },
     "Options": {
@@ -422,9 +369,7 @@
           "type": ["integer", "string", "boolean"]
         }
       },
-      "required": [
-        "operator"
-      ],
+      "required": ["operator"],
       "title": "Rule Options",
       "allOf": [
         {
@@ -445,9 +390,7 @@
             }
           },
           "then": {
-            "required": [
-              "value"
-            ]
+            "required": ["value"]
           }
         }
       ]
@@ -499,10 +442,7 @@
           "$ref": "#/definitions/Highlight"
         }
       },
-      "required": [
-        "id",
-        "text"
-      ],
+      "required": ["id", "text"],
       "title": "Prompt"
     },
     "Preset": {
@@ -528,11 +468,7 @@
           "$ref": "#/definitions/NarrativeHighlight"
         }
       },
-      "required": [
-        "id",
-        "label",
-        "layoutVariable"
-      ],
+      "required": ["id", "label", "layoutVariable"],
       "title": "Preset"
     },
     "Behaviours": {
@@ -570,10 +506,7 @@
           "type": ["integer", "string", "array", "boolean"]
         }
       },
-      "required": [
-        "variable",
-        "value"
-      ],
+      "required": ["variable", "value"],
       "title": "AdditionalAttribute"
     },
     "Background": {
@@ -590,10 +523,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "concentricCircles",
-        "skewedTowardCenter"
-      ],
+      "required": ["concentricCircles", "skewedTowardCenter"],
       "title": "Background"
     },
     "SortOrder": {
@@ -607,10 +537,7 @@
           "$ref": "#/definitions/Direction"
         }
       },
-      "required": [
-        "direction",
-        "property"
-      ],
+      "required": ["direction", "property"],
       "title": "SortOrder"
     },
     "CardOptions": {
@@ -627,9 +554,7 @@
           }
         }
       },
-      "required": [
-        "displayLabel"
-      ],
+      "required": ["displayLabel"],
       "title": "CardOptions"
     },
     "Property": {
@@ -643,10 +568,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "label",
-        "variable"
-      ],
+      "required": ["label", "variable"],
       "title": "Property"
     },
     "Edges": {
@@ -685,9 +607,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "allowHighlighting"
-      ],
+      "required": ["allowHighlighting"],
       "title": "Highlight"
     },
     "Layout": {
@@ -701,9 +621,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "layoutVariable"
-      ],
+      "required": ["layoutVariable"],
       "title": "Layout"
     },
     "SearchOptions": {
@@ -720,10 +638,7 @@
           }
         }
       },
-      "required": [
-        "fuzziness",
-        "matchProperties"
-      ],
+      "required": ["fuzziness", "matchProperties"],
       "title": "SearchOptions"
     },
     "SortOptions": {
@@ -743,10 +658,7 @@
           }
         }
       },
-      "required": [
-        "sortOrder",
-        "sortableProperties"
-      ],
+      "required": ["sortOrder", "sortableProperties"],
       "title": "SortOptions"
     },
     "Subject": {
@@ -760,10 +672,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "entity",
-        "type"
-      ],
+      "required": ["entity", "type"],
       "title": "Subject"
     },
     "SkipLogic": {
@@ -772,19 +681,13 @@
       "properties": {
         "action": {
           "type": "string",
-          "enum": [
-            "SHOW",
-            "SKIP"
-          ]
+          "enum": ["SHOW", "SKIP"]
         },
         "filter": {
           "$ref": "#/definitions/Filter"
         }
       },
-      "required": [
-        "action",
-        "filter"
-      ],
+      "required": ["action", "filter"],
       "title": "SkipLogic"
     },
     "codebook": {
@@ -828,10 +731,7 @@
           "$ref": "#/definitions/Variables"
         }
       },
-      "required": [
-        "name",
-        "color"
-      ],
+      "required": ["name", "color"],
       "title": "EdgeTypeDef"
     },
     "Variables": {
@@ -885,10 +785,7 @@
           "$ref": "#/definitions/Validation"
         }
       },
-      "required": [
-        "type",
-        "name"
-      ],
+      "required": ["type", "name"],
       "title": "Variable"
     },
     "OptionClass": {
@@ -902,10 +799,7 @@
           "$ref": "#/definitions/Value"
         }
       },
-      "required": [
-        "label",
-        "value"
-      ],
+      "required": ["label", "value"],
       "title": "OptionClass"
     },
     "Validation": {
@@ -969,18 +863,16 @@
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "color"
-      ],
+      "required": ["name", "color"],
       "title": "NodeTypeDef"
     },
     "Ego": {
-      "label": "string",
-      "color": "string",
-      "title": "Ego",
-      "variables": {
-        "$ref": "#/definitions/Variables"
+      "type:": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        }
       }
     },
     "OptionElement": {
@@ -1010,19 +902,12 @@
     },
     "Entity": {
       "type": "string",
-      "enum": [
-        "edge",
-        "node",
-        "ego"
-      ],
+      "enum": ["edge", "node", "ego"],
       "title": "Entity"
     },
     "Direction": {
       "type": "string",
-      "enum": [
-        "desc",
-        "asc"
-      ],
+      "enum": ["desc", "asc"],
       "title": "Direction"
     }
   }

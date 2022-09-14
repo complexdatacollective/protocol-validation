@@ -1623,16 +1623,51 @@ var validate = (function() {
     var pattern0 = new RegExp('.+');
     return function validate(data, dataPath, parentData, parentDataProperty, rootData) {
       'use strict';
-      validate.errors = null;
-      return true;
+      var vErrors = null;
+      var errors = 0;
+      if (rootData === undefined) rootData = data;
+      if ((data && typeof data === "object" && !Array.isArray(data))) {
+        var errs__0 = errors;
+        var valid1 = true;
+        for (var key0 in data) {
+          var isAdditional0 = !(false || key0 == 'variables');
+          if (isAdditional0) {
+            valid1 = false;
+            var err = {
+              keyword: 'additionalProperties',
+              dataPath: (dataPath || '') + "",
+              schemaPath: '#/additionalProperties',
+              params: {
+                additionalProperty: '' + key0 + ''
+              },
+              message: 'should NOT have additional properties'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+        }
+        if (data.variables !== undefined) {
+          var errs_1 = errors;
+          if (!refVal[5](data.variables, (dataPath || '') + '.variables', data, 'variables', rootData)) {
+            if (vErrors === null) vErrors = refVal[5].errors;
+            else vErrors = vErrors.concat(refVal[5].errors);
+            errors = vErrors.length;
+          }
+          var valid1 = errors === errs_1;
+        }
+      }
+      validate.errors = vErrors;
+      return errors === 0;
     };
   })();
   refVal13.schema = {
-    "label": "string",
-    "color": "string",
-    "title": "Ego",
-    "variables": {
-      "$ref": "#/definitions/Variables"
+    "type:": "object",
+    "additionalProperties": false,
+    "properties": {
+      "variables": {
+        "$ref": "#/definitions/Variables"
+      }
     }
   };
   refVal13.errors = null;
@@ -7331,11 +7366,12 @@ validate.schema = {
       "title": "NodeTypeDef"
     },
     "Ego": {
-      "label": "string",
-      "color": "string",
-      "title": "Ego",
-      "variables": {
-        "$ref": "#/definitions/Variables"
+      "type:": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        }
       }
     },
     "OptionElement": {
