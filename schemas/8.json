@@ -972,11 +972,12 @@
       "title": "NodeTypeDef"
     },
     "Ego": {
-      "label": "string",
-      "color": "string",
-      "title": "Ego",
-      "variables": {
-        "$ref": "#/definitions/Variables"
+      "type:": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        }
       }
     },
     "OptionElement": {
