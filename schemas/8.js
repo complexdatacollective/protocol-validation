@@ -2122,6 +2122,34 @@ var validate = (function() {
           if (!valid1) {
             var errs_2 = errors;
             if (Array.isArray(data1)) {
+              if (data1.length > 2) {
+                var err = {
+                  keyword: 'maxItems',
+                  dataPath: (dataPath || '') + '.subject',
+                  schemaPath: '#/properties/subject/anyOf/1/maxItems',
+                  params: {
+                    limit: 2
+                  },
+                  message: 'should NOT have more than 2 items'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+              if (data1.length < 1) {
+                var err = {
+                  keyword: 'minItems',
+                  dataPath: (dataPath || '') + '.subject',
+                  schemaPath: '#/properties/subject/anyOf/1/minItems',
+                  params: {
+                    limit: 1
+                  },
+                  message: 'should NOT have fewer than 1 items'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
               var errs__2 = errors;
               var valid2;
               for (var i2 = 0; i2 < data1.length; i2++) {
@@ -3571,6 +3599,8 @@ var validate = (function() {
           "$ref": "#/definitions/Subject"
         }, {
           "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
           "items": {
             "$ref": "#/definitions/Subject"
           }
@@ -7632,6 +7662,8 @@ validate.schema = {
             "$ref": "#/definitions/Subject"
           }, {
             "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
             "items": {
               "$ref": "#/definitions/Subject"
             }

@@ -12,6 +12,7 @@ const {
   getVariableNameFromID,
   getSubjectTypeName,
 } = require('./helpers');
+const { isArray, has, isObject } = require('lodash');
 
 
 /**
@@ -32,14 +33,36 @@ const validateLogic = (protocol) => {
     nodeType => nodeVarsIncludeDisplayVar(nodeType),
     nodeType => `node displayVariable "${nodeType.displayVariable}" did not match any node variable`);
 
+  // Subject can either by an object, or a collection, depending on the stage.
+  // Currently, sociogram is the only stage type allowing a collection.
   v.addValidationSequence('stages[].subject',
     [
-      subject => codebook[subject.entity],
-      subject => `"${subject.entity}" is not defined in the codebook`,
+      (subject, _, keypath) => {
+        const stage = get(protocol, `${keypath[1]}${keypath[2]}`);
+        return !(isArray(subject) && stage.type !== 'Sociogram');
+      },
+      () => 'Only the sociogram interface may use multiple node types',
     ],
     [
-      subject => Object.keys(codebook[subject.entity]).includes(subject.type),
-      subject => `"${subject.type}" definition not found in codebook["${subject.entity}"]`,
+      (subject) => {
+        if (isArray(subject)) {
+          return !duplicateInArray(subject.map(getSubjectTypeName));
+        }
+
+        return true;
+      },
+      subject => `Duplicate subject type "${duplicateInArray(subject.map(getSubjectTypeName))}"`,
+    ],
+    [
+      (subject) => {
+        // Check all subject entities are defined in the codebook section for their type
+        if (isArray(subject)) {
+          return subject.every(s => has(codebook, `${s.entity}.${s.type}`));
+        }
+
+        return codebook[subject.entity][subject.type];
+      },
+      () => 'One or more subjects are not defined in the codebook',
     ],
   );
 
@@ -210,9 +233,24 @@ const validateLogic = (protocol) => {
     ],
   );
 
+  // layoutVariable can either be a string, or an object where the key is a node type and the value
+  // is a variable ID.
   v.addValidation('prompts[].layout.layoutVariable',
-    (variable, subject) => getVariablesForSubject(codebook, subject)[variable],
-    (variable, subject) => `Layout variable "${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables`,
+    (variable, subject) => {
+      if (isObject(variable)) {
+        return Object.keys(variable).every(nodeType => getVariablesForSubject(codebook, { entity: 'node', type: nodeType })[variable[nodeType]]);
+      }
+
+      return getVariablesForSubject(codebook, subject)[variable];
+    },
+    (variable, subject) => {
+      if (isObject(variable)) {
+        const missing = Object.keys(variable).filter(nodeType => !getVariablesForSubject(codebook, { entity: 'node', type: nodeType })[variable[nodeType]]);
+        return missing.map(nodeType => `Layout variable "${variable[nodeType]}" not defined in codebook[node][${nodeType}].variables.`).join(' ');
+      }
+
+      return `Layout variable "${variable}" not defined in codebook[${subject.entity}][${subject.type}].variables.`;
+    },
   );
 
   v.addValidation('prompts[].additionalAttributes',
