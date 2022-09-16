@@ -114,7 +114,17 @@
           "type": ["string", "null"]
         },
         "subject": {
-          "$ref": "#/definitions/Subject"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Subject"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Subject"
+              }
+            }
+          ]
         },
         "panels": {
           "type": "array",
@@ -606,7 +616,14 @@
       "additionalProperties": false,
       "properties": {
         "property": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object"
+            }
+          ]
         },
         "direction": {
           "$ref": "#/definitions/Direction"
@@ -658,6 +675,18 @@
         },
         "create": {
           "type": "string"
+        },
+        "restrict": {
+          "type": "object",
+          "properties": {
+            "origin": {
+              "type": "string"
+            },
+            "destination": {
+              "type": "string",
+              "enum": ["same", "different", "all"]
+            }
+          }
         }
       },
       "required": [],
@@ -690,7 +719,14 @@
       "additionalProperties": false,
       "properties": {
         "layoutVariable": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object"
+            }
+          ]
         },
         "allowPositioning": {
           "type": "boolean"

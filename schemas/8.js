@@ -2106,12 +2106,67 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
         }
-        if (data.subject !== undefined) {
+        var data1 = data.subject;
+        if (data1 !== undefined) {
           var errs_1 = errors;
-          if (!refVal18(data.subject, (dataPath || '') + '.subject', data, 'subject', rootData)) {
+          var errs__1 = errors;
+          var valid1 = false;
+          var errs_2 = errors;
+          if (!refVal18(data1, (dataPath || '') + '.subject', data, 'subject', rootData)) {
             if (vErrors === null) vErrors = refVal18.errors;
             else vErrors = vErrors.concat(refVal18.errors);
             errors = vErrors.length;
+          }
+          var valid2 = errors === errs_2;
+          valid1 = valid1 || valid2;
+          if (!valid1) {
+            var errs_2 = errors;
+            if (Array.isArray(data1)) {
+              var errs__2 = errors;
+              var valid2;
+              for (var i2 = 0; i2 < data1.length; i2++) {
+                var errs_3 = errors;
+                if (!refVal[18](data1[i2], (dataPath || '') + '.subject[' + i2 + ']', data1, i2, rootData)) {
+                  if (vErrors === null) vErrors = refVal[18].errors;
+                  else vErrors = vErrors.concat(refVal[18].errors);
+                  errors = vErrors.length;
+                }
+                var valid3 = errors === errs_3;
+              }
+            } else {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.subject',
+                schemaPath: '#/properties/subject/anyOf/1/type',
+                params: {
+                  type: 'array'
+                },
+                message: 'should be array'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+            valid1 = valid1 || valid2;
+          }
+          if (!valid1) {
+            var err = {
+              keyword: 'anyOf',
+              dataPath: (dataPath || '') + '.subject',
+              schemaPath: '#/properties/subject/anyOf',
+              params: {},
+              message: 'should match some schema in anyOf'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          } else {
+            errors = errs__1;
+            if (vErrors !== null) {
+              if (errs__1) vErrors.length = errs__1;
+              else vErrors = null;
+            }
           }
           var valid1 = errors === errs_1;
         }
@@ -3512,7 +3567,14 @@ var validate = (function() {
         "type": ["string", "null"]
       },
       "subject": {
-        "$ref": "#/definitions/Subject"
+        "anyOf": [{
+          "$ref": "#/definitions/Subject"
+        }, {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Subject"
+          }
+        }]
       },
       "panels": {
         "type": "array",
@@ -5124,7 +5186,8 @@ var validate = (function() {
                 errors++;
               }
             }
-            if (data1.layoutVariable === undefined) {
+            var data2 = data1.layoutVariable;
+            if (data2 === undefined) {
               valid3 = false;
               var err = {
                 keyword: 'required',
@@ -5140,11 +5203,14 @@ var validate = (function() {
               errors++;
             } else {
               var errs_3 = errors;
-              if (typeof data1.layoutVariable !== "string") {
+              var errs__3 = errors;
+              var valid3 = false;
+              var errs_4 = errors;
+              if (typeof data2 !== "string") {
                 var err = {
                   keyword: 'type',
                   dataPath: (dataPath || '') + '.layout.layoutVariable',
-                  schemaPath: '#/definitions/Layout/properties/layoutVariable/type',
+                  schemaPath: '#/definitions/Layout/properties/layoutVariable/anyOf/0/type',
                   params: {
                     type: 'string'
                   },
@@ -5153,6 +5219,45 @@ var validate = (function() {
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
                 errors++;
+              }
+              var valid4 = errors === errs_4;
+              valid3 = valid3 || valid4;
+              if (!valid3) {
+                var errs_4 = errors;
+                if ((!data2 || typeof data2 !== "object" || Array.isArray(data2))) {
+                  var err = {
+                    keyword: 'type',
+                    dataPath: (dataPath || '') + '.layout.layoutVariable',
+                    schemaPath: '#/definitions/Layout/properties/layoutVariable/anyOf/1/type',
+                    params: {
+                      type: 'object'
+                    },
+                    message: 'should be object'
+                  };
+                  if (vErrors === null) vErrors = [err];
+                  else vErrors.push(err);
+                  errors++;
+                }
+                var valid4 = errors === errs_4;
+                valid3 = valid3 || valid4;
+              }
+              if (!valid3) {
+                var err = {
+                  keyword: 'anyOf',
+                  dataPath: (dataPath || '') + '.layout.layoutVariable',
+                  schemaPath: '#/definitions/Layout/properties/layoutVariable/anyOf',
+                  params: {},
+                  message: 'should match some schema in anyOf'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              } else {
+                errors = errs__3;
+                if (vErrors !== null) {
+                  if (errs__3) vErrors.length = errs__3;
+                  else vErrors = null;
+                }
               }
               var valid3 = errors === errs_3;
             }
@@ -5199,7 +5304,7 @@ var validate = (function() {
             var errs__2 = errors;
             var valid3 = true;
             for (var key2 in data1) {
-              var isAdditional2 = !(false || key2 == 'display' || key2 == 'create');
+              var isAdditional2 = !(false || key2 == 'display' || key2 == 'create' || key2 == 'restrict');
               if (isAdditional2) {
                 valid3 = false;
                 var err = {
@@ -5267,6 +5372,86 @@ var validate = (function() {
                     type: 'string'
                   },
                   message: 'should be string'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+              var valid3 = errors === errs_3;
+            }
+            var data2 = data1.restrict;
+            if (data2 !== undefined) {
+              var errs_3 = errors;
+              if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
+                var errs__3 = errors;
+                var valid4 = true;
+                if (data2.origin !== undefined) {
+                  var errs_4 = errors;
+                  if (typeof data2.origin !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.edges.restrict.origin',
+                      schemaPath: '#/definitions/Edges/properties/restrict/properties/origin/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid4 = errors === errs_4;
+                }
+                var data3 = data2.destination;
+                if (data3 !== undefined) {
+                  var errs_4 = errors;
+                  if (typeof data3 !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.edges.restrict.destination',
+                      schemaPath: '#/definitions/Edges/properties/restrict/properties/destination/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var schema4 = refVal30.properties.restrict.properties.destination.enum;
+                  var valid4;
+                  valid4 = false;
+                  for (var i4 = 0; i4 < schema4.length; i4++)
+                    if (equal(data3, schema4[i4])) {
+                      valid4 = true;
+                      break;
+                    } if (!valid4) {
+                    var err = {
+                      keyword: 'enum',
+                      dataPath: (dataPath || '') + '.edges.restrict.destination',
+                      schemaPath: '#/definitions/Edges/properties/restrict/properties/destination/enum',
+                      params: {
+                        allowedValues: schema4
+                      },
+                      message: 'should be equal to one of the allowed values'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid4 = errors === errs_4;
+                }
+              } else {
+                var err = {
+                  keyword: 'type',
+                  dataPath: (dataPath || '') + '.edges.restrict',
+                  schemaPath: '#/definitions/Edges/properties/restrict/type',
+                  params: {
+                    type: 'object'
+                  },
+                  message: 'should be object'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -5675,7 +5860,8 @@ var validate = (function() {
             errors++;
           }
         }
-        if (data.property === undefined) {
+        var data1 = data.property;
+        if (data1 === undefined) {
           valid1 = false;
           var err = {
             keyword: 'required',
@@ -5691,11 +5877,14 @@ var validate = (function() {
           errors++;
         } else {
           var errs_1 = errors;
-          if (typeof data.property !== "string") {
+          var errs__1 = errors;
+          var valid1 = false;
+          var errs_2 = errors;
+          if (typeof data1 !== "string") {
             var err = {
               keyword: 'type',
               dataPath: (dataPath || '') + '.property',
-              schemaPath: '#/properties/property/type',
+              schemaPath: '#/properties/property/anyOf/0/type',
               params: {
                 type: 'string'
               },
@@ -5704,6 +5893,45 @@ var validate = (function() {
             if (vErrors === null) vErrors = [err];
             else vErrors.push(err);
             errors++;
+          }
+          var valid2 = errors === errs_2;
+          valid1 = valid1 || valid2;
+          if (!valid1) {
+            var errs_2 = errors;
+            if ((!data1 || typeof data1 !== "object" || Array.isArray(data1))) {
+              var err = {
+                keyword: 'type',
+                dataPath: (dataPath || '') + '.property',
+                schemaPath: '#/properties/property/anyOf/1/type',
+                params: {
+                  type: 'object'
+                },
+                message: 'should be object'
+              };
+              if (vErrors === null) vErrors = [err];
+              else vErrors.push(err);
+              errors++;
+            }
+            var valid2 = errors === errs_2;
+            valid1 = valid1 || valid2;
+          }
+          if (!valid1) {
+            var err = {
+              keyword: 'anyOf',
+              dataPath: (dataPath || '') + '.property',
+              schemaPath: '#/properties/property/anyOf',
+              params: {},
+              message: 'should match some schema in anyOf'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          } else {
+            errors = errs__1;
+            if (vErrors !== null) {
+              if (errs__1) vErrors.length = errs__1;
+              else vErrors = null;
+            }
           }
           var valid1 = errors === errs_1;
         }
@@ -5786,7 +6014,11 @@ var validate = (function() {
     "additionalProperties": false,
     "properties": {
       "property": {
-        "type": "string"
+        "anyOf": [{
+          "type": "string"
+        }, {
+          "type": "object"
+        }]
       },
       "direction": {
         "$ref": "#/definitions/Direction"
@@ -5808,7 +6040,11 @@ var validate = (function() {
     "additionalProperties": false,
     "properties": {
       "layoutVariable": {
-        "type": "string"
+        "anyOf": [{
+          "type": "string"
+        }, {
+          "type": "object"
+        }]
       },
       "allowPositioning": {
         "type": "boolean"
@@ -5830,6 +6066,18 @@ var validate = (function() {
       },
       "create": {
         "type": "string"
+      },
+      "restrict": {
+        "type": "object",
+        "properties": {
+          "origin": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string",
+            "enum": ["same", "different", "all"]
+          }
+        }
       }
     },
     "required": [],
@@ -6001,7 +6249,7 @@ var validate = (function() {
             var errs__2 = errors;
             var valid3 = true;
             for (var key2 in data1) {
-              var isAdditional2 = !(false || key2 == 'display' || key2 == 'create');
+              var isAdditional2 = !(false || key2 == 'display' || key2 == 'create' || key2 == 'restrict');
               if (isAdditional2) {
                 valid3 = false;
                 var err = {
@@ -6069,6 +6317,86 @@ var validate = (function() {
                     type: 'string'
                   },
                   message: 'should be string'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+              var valid3 = errors === errs_3;
+            }
+            var data2 = data1.restrict;
+            if (data2 !== undefined) {
+              var errs_3 = errors;
+              if ((data2 && typeof data2 === "object" && !Array.isArray(data2))) {
+                var errs__3 = errors;
+                var valid4 = true;
+                if (data2.origin !== undefined) {
+                  var errs_4 = errors;
+                  if (typeof data2.origin !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.edges.restrict.origin',
+                      schemaPath: '#/definitions/Edges/properties/restrict/properties/origin/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid4 = errors === errs_4;
+                }
+                var data3 = data2.destination;
+                if (data3 !== undefined) {
+                  var errs_4 = errors;
+                  if (typeof data3 !== "string") {
+                    var err = {
+                      keyword: 'type',
+                      dataPath: (dataPath || '') + '.edges.restrict.destination',
+                      schemaPath: '#/definitions/Edges/properties/restrict/properties/destination/type',
+                      params: {
+                        type: 'string'
+                      },
+                      message: 'should be string'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var schema4 = refVal[30].properties.restrict.properties.destination.enum;
+                  var valid4;
+                  valid4 = false;
+                  for (var i4 = 0; i4 < schema4.length; i4++)
+                    if (equal(data3, schema4[i4])) {
+                      valid4 = true;
+                      break;
+                    } if (!valid4) {
+                    var err = {
+                      keyword: 'enum',
+                      dataPath: (dataPath || '') + '.edges.restrict.destination',
+                      schemaPath: '#/definitions/Edges/properties/restrict/properties/destination/enum',
+                      params: {
+                        allowedValues: schema4
+                      },
+                      message: 'should be equal to one of the allowed values'
+                    };
+                    if (vErrors === null) vErrors = [err];
+                    else vErrors.push(err);
+                    errors++;
+                  }
+                  var valid4 = errors === errs_4;
+                }
+              } else {
+                var err = {
+                  keyword: 'type',
+                  dataPath: (dataPath || '') + '.edges.restrict',
+                  schemaPath: '#/definitions/Edges/properties/restrict/type',
+                  params: {
+                    type: 'object'
+                  },
+                  message: 'should be object'
                 };
                 if (vErrors === null) vErrors = [err];
                 else vErrors.push(err);
@@ -7300,7 +7628,14 @@ validate.schema = {
           "type": ["string", "null"]
         },
         "subject": {
-          "$ref": "#/definitions/Subject"
+          "anyOf": [{
+            "$ref": "#/definitions/Subject"
+          }, {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Subject"
+            }
+          }]
         },
         "panels": {
           "type": "array",
@@ -7741,7 +8076,11 @@ validate.schema = {
       "additionalProperties": false,
       "properties": {
         "property": {
-          "type": "string"
+          "anyOf": [{
+            "type": "string"
+          }, {
+            "type": "object"
+          }]
         },
         "direction": {
           "$ref": "#/definitions/Direction"
@@ -7793,6 +8132,18 @@ validate.schema = {
         },
         "create": {
           "type": "string"
+        },
+        "restrict": {
+          "type": "object",
+          "properties": {
+            "origin": {
+              "type": "string"
+            },
+            "destination": {
+              "type": "string",
+              "enum": ["same", "different", "all"]
+            }
+          }
         }
       },
       "required": [],
@@ -7825,7 +8176,11 @@ validate.schema = {
       "additionalProperties": false,
       "properties": {
         "layoutVariable": {
-          "type": "string"
+          "anyOf": [{
+            "type": "string"
+          }, {
+            "type": "object"
+          }]
         },
         "allowPositioning": {
           "type": "boolean"
