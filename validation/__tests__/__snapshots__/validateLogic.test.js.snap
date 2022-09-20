@@ -3,14 +3,7 @@
 exports[`validateLogic A well formed protocol will return an array of errors 1`] = `
 Array [
   "protocol.codebook: Duplicate entity name \\"du\\"",
-  "protocol.stages[0].subject: Only the sociogram may use multiple node types",
   "protocol.stages[0].form.fields[0]: Form field variable not found in codebook.",
-  "protocol.stages[1].subject: Only the sociogram may use multiple node types",
-  "protocol.stages[2].subject: Only the sociogram may use multiple node types",
-  "protocol.stages[3].subject: Only the sociogram may use multiple node types",
-  "protocol.stages[4].subject: Only the sociogram may use multiple node types",
-  "protocol.stages[5].subject: Only the sociogram may use multiple node types",
   "protocol.stages[5].form.fields[0]: Form field variable not found in codebook.",
-  "protocol.stages[6].subject: Only the sociogram may use multiple node types",
 ]
 `;

@@ -260,6 +260,14 @@ const validateLogic = (protocol) => {
     additionalAttributes => `One or more sortable properties not defined in codebook: ${additionalAttributes.map(({ variable }) => variable)}`,
   );
 
+  // Sociogram prompt edges key can contain a restrict object.
+
+  // If restrict.origin is present, its value must be a valid node type.
+  v.addValidation('prompts[].edges.restrict.origin',
+    origin => Object.keys(codebook.node).includes(origin),
+    origin => `"${origin}" is not a valid node type.`,
+  );
+
   v.runValidations();
 
   v.warnings.forEach(warning => console.error(warning)); // eslint-disable-line no-console
