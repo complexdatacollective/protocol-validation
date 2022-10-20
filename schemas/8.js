@@ -5873,7 +5873,7 @@ var validate = (function() {
         var errs__0 = errors;
         var valid1 = true;
         for (var key0 in data) {
-          var isAdditional0 = !(false || key0 == 'property' || key0 == 'direction');
+          var isAdditional0 = !(false || key0 == 'property' || key0 == 'direction' || key0 == 'type' || key0 == 'hierarchy');
           if (isAdditional0) {
             valid1 = false;
             var err = {
@@ -5890,8 +5890,7 @@ var validate = (function() {
             errors++;
           }
         }
-        var data1 = data.property;
-        if (data1 === undefined) {
+        if (data.property === undefined) {
           valid1 = false;
           var err = {
             keyword: 'required',
@@ -5907,14 +5906,11 @@ var validate = (function() {
           errors++;
         } else {
           var errs_1 = errors;
-          var errs__1 = errors;
-          var valid1 = false;
-          var errs_2 = errors;
-          if (typeof data1 !== "string") {
+          if (typeof data.property !== "string") {
             var err = {
               keyword: 'type',
               dataPath: (dataPath || '') + '.property',
-              schemaPath: '#/properties/property/anyOf/0/type',
+              schemaPath: '#/properties/property/type',
               params: {
                 type: 'string'
               },
@@ -5924,63 +5920,10 @@ var validate = (function() {
             else vErrors.push(err);
             errors++;
           }
-          var valid2 = errors === errs_2;
-          valid1 = valid1 || valid2;
-          if (!valid1) {
-            var errs_2 = errors;
-            if ((!data1 || typeof data1 !== "object" || Array.isArray(data1))) {
-              var err = {
-                keyword: 'type',
-                dataPath: (dataPath || '') + '.property',
-                schemaPath: '#/properties/property/anyOf/1/type',
-                params: {
-                  type: 'object'
-                },
-                message: 'should be object'
-              };
-              if (vErrors === null) vErrors = [err];
-              else vErrors.push(err);
-              errors++;
-            }
-            var valid2 = errors === errs_2;
-            valid1 = valid1 || valid2;
-          }
-          if (!valid1) {
-            var err = {
-              keyword: 'anyOf',
-              dataPath: (dataPath || '') + '.property',
-              schemaPath: '#/properties/property/anyOf',
-              params: {},
-              message: 'should match some schema in anyOf'
-            };
-            if (vErrors === null) vErrors = [err];
-            else vErrors.push(err);
-            errors++;
-          } else {
-            errors = errs__1;
-            if (vErrors !== null) {
-              if (errs__1) vErrors.length = errs__1;
-              else vErrors = null;
-            }
-          }
           var valid1 = errors === errs_1;
         }
         var data1 = data.direction;
-        if (data1 === undefined) {
-          valid1 = false;
-          var err = {
-            keyword: 'required',
-            dataPath: (dataPath || '') + "",
-            schemaPath: '#/required',
-            params: {
-              missingProperty: 'direction'
-            },
-            message: 'should have required property \'direction\''
-          };
-          if (vErrors === null) vErrors = [err];
-          else vErrors.push(err);
-          errors++;
-        } else {
+        if (data1 !== undefined) {
           var errs_1 = errors;
           var errs_2 = errors;
           if (typeof data1 !== "string") {
@@ -6021,6 +5964,72 @@ var validate = (function() {
           var valid2 = errors === errs_2;
           var valid1 = errors === errs_1;
         }
+        if (data.type !== undefined) {
+          var errs_1 = errors;
+          var schema1 = validate.schema.properties.type.enum;
+          var valid1;
+          valid1 = false;
+          for (var i1 = 0; i1 < schema1.length; i1++)
+            if (equal(data.type, schema1[i1])) {
+              valid1 = true;
+              break;
+            } if (!valid1) {
+            var err = {
+              keyword: 'enum',
+              dataPath: (dataPath || '') + '.type',
+              schemaPath: '#/properties/type/enum',
+              params: {
+                allowedValues: schema1
+              },
+              message: 'should be equal to one of the allowed values'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
+        var data1 = data.hierarchy;
+        if (data1 !== undefined) {
+          var errs_1 = errors;
+          if (Array.isArray(data1)) {
+            var errs__1 = errors;
+            var valid1;
+            for (var i1 = 0; i1 < data1.length; i1++) {
+              var data2 = data1[i1];
+              var errs_2 = errors;
+              if (typeof data2 !== "string" && typeof data2 !== "number" && typeof data2 !== "boolean") {
+                var err = {
+                  keyword: 'type',
+                  dataPath: (dataPath || '') + '.hierarchy[' + i1 + ']',
+                  schemaPath: '#/properties/hierarchy/items/type',
+                  params: {
+                    type: 'string,number,boolean'
+                  },
+                  message: 'should be string,number,boolean'
+                };
+                if (vErrors === null) vErrors = [err];
+                else vErrors.push(err);
+                errors++;
+              }
+              var valid2 = errors === errs_2;
+            }
+          } else {
+            var err = {
+              keyword: 'type',
+              dataPath: (dataPath || '') + '.hierarchy',
+              schemaPath: '#/properties/hierarchy/type',
+              params: {
+                type: 'array'
+              },
+              message: 'should be array'
+            };
+            if (vErrors === null) vErrors = [err];
+            else vErrors.push(err);
+            errors++;
+          }
+          var valid1 = errors === errs_1;
+        }
       } else {
         var err = {
           keyword: 'type',
@@ -6044,17 +6053,22 @@ var validate = (function() {
     "additionalProperties": false,
     "properties": {
       "property": {
-        "anyOf": [{
-          "type": "string"
-        }, {
-          "type": "object"
-        }]
+        "type": "string"
       },
       "direction": {
         "$ref": "#/definitions/Direction"
+      },
+      "type": {
+        "enum": ["string", "number", "boolean", "date", "hierarchy"]
+      },
+      "hierarchy": {
+        "type": "array",
+        "items": {
+          "type": ["string", "number", "boolean"]
+        }
       }
     },
-    "required": ["direction", "property"],
+    "required": ["property"],
     "title": "SortOrder"
   };
   refVal27.errors = null;
@@ -8108,17 +8122,22 @@ validate.schema = {
       "additionalProperties": false,
       "properties": {
         "property": {
-          "anyOf": [{
-            "type": "string"
-          }, {
-            "type": "object"
-          }]
+          "type": "string"
         },
         "direction": {
           "$ref": "#/definitions/Direction"
+        },
+        "type": {
+          "enum": ["string", "number", "boolean", "date", "hierarchy"]
+        },
+        "hierarchy": {
+          "type": "array",
+          "items": {
+            "type": ["string", "number", "boolean"]
+          }
         }
       },
-      "required": ["direction", "property"],
+      "required": ["property"],
       "title": "SortOrder"
     },
     "CardOptions": {

@@ -618,20 +618,22 @@
       "additionalProperties": false,
       "properties": {
         "property": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "object"
-            }
-          ]
+          "type": "string"
         },
         "direction": {
           "$ref": "#/definitions/Direction"
+        },
+        "type": {
+          "enum": ["string", "number", "boolean", "date", "hierarchy"]
+        },
+        "hierarchy": {
+          "type": "array",
+          "items": {
+            "type": ["string", "number", "boolean"]
+          }
         }
       },
-      "required": ["direction", "property"],
+      "required": ["property"],
       "title": "SortOrder"
     },
     "CardOptions": {
