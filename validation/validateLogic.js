@@ -105,37 +105,26 @@ const validateLogic = (protocol) => {
     (_, __, keypath) => `The 'unique' variable validation cannot be used on ego variables. Was used on ego variable "${getVariableNameFromID(codebook, { entity: 'ego' }, keypath[4])}".`,
   );
 
-  v.addValidation('codebook.*.*.variables.*.validation',
-    // Next, check that differentFrom and sameAs reference variables that exist in the codebook
-    // for the variable type
-    (validations, _, keypath) => {
-      // List of validation types that reference variables
-      const typesWithVariables = ['sameAs', 'differentFrom', 'greaterThanVariable', 'lessThanVariable'];
+  v.addValidation(new RegExp('codebook\\..*\\.variables\\..*\\.validation\\.(sameAs|differentFrom|greaterThanVariable|lessThanVariable)'), (validation, _, keypath) => {
+    let variablesForType;
 
+    if (keypath[2] === 'ego') {
       // Get variable registryfor the current variable's entity type
+      variablesForType = get(protocol, ['codebook', 'ego', 'variables'], {});
+    } else {
       const path = `codebook.${keypath[2]}.${keypath[3]}.variables`;
-      const variablesForType = get(protocol, path, {});
+      variablesForType = get(protocol, path, {});
+    }
 
-      // Filter validations to only those that reference variables
-      const typesToCheck = Object.keys(validations).filter(
-        validation => typesWithVariables.includes(validation),
-      );
+    // Check that the variable referenced by the validation exists in the codebook
+    return !!variablesForType[validation];
+  }, (validation, _, keypath) => {
+    if (keypath[2] === 'ego') {
+      return `Validation configuration for the variable "${getVariableNameFromID(codebook, { entity: 'ego' }, keypath[4])}" is invalid! The variable "${validation}" does not exist in the codebook for this type.`;
+    }
 
-      // Check that every validation references a variable defined in the codebook
-      return typesToCheck.every((type) => {
-        const variable = validations[type];
-        return !!variablesForType[variable];
-      });
-    },
-    (validation, _, keypath) => {
-      const subject = {
-        entity: keypath[2],
-        type: keypath[3],
-      };
-      return `Validation configuration for the variable "${getVariableNameFromID(codebook, subject, keypath[5])}" on the ${subject.entity} type "${getSubjectTypeName(codebook, subject)}" is invalid! The variable "${Object.values(validation)[0]}" referenced by the validation does not exist in the codebook for this type.`;
-    },
-  );
-
+    return `Validation configuration for the variable "${getVariableNameFromID(codebook, { entity: keypath[2], type: keypath[3] }, keypath[5])}" is invalid! The variable "${validation}" does not exist in the codebook for this type.`;
+  });
 
   v.addValidationSequence('filter.rules[]',
     [
@@ -177,7 +166,7 @@ const validateLogic = (protocol) => {
     items => `Items contain duplicate ID "${duplicateId(items)}"`,
   );
 
-  v.addValidation('codebook.*.*.variables',
+  v.addValidation(new RegExp('codebook\\..*\\.variables'),
     variableMap => !duplicateInArray(getVariableNames(variableMap)),
     variableMap => `Duplicate variable name "${duplicateInArray(getVariableNames(variableMap))}"`,
   );
