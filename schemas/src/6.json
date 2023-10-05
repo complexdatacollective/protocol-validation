@@ -598,7 +598,6 @@
           }
         }
       },
-      "required": ["displayLabel"],
       "title": "CardOptions"
     },
     "Property": {
