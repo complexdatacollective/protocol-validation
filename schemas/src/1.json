@@ -132,35 +132,24 @@
         },
         "background": {
           "type": "object",
-          "items": {
-            "$ref": "#/definitions/Background"
-          },
-          "minItems": 1
+          "$ref": "#/definitions/Background",
+          "minProperties": 1
         },
         "sortOptions": {
-          "type": "object",
-          "items": {
             "$ref": "#/definitions/SortOptions"
-          }
         },
         "cardOptions": {
           "type": "object",
-          "items": {
-            "$ref": "#/definitions/CardOptions"
-          }
+          "$ref": "#/definitions/CardOptions"
         },
         "searchOptions": {
           "type": "object",
-          "items": {
-            "$ref": "#/definitions/SearchOptions"
-          }
+           "$ref": "#/definitions/SearchOptions"
         },
         "behaviours": {
           "type": "object",
-          "items": {
-            "$ref": "#/definitions/Behaviours"
-          },
-          "minItems": 1
+          "$ref": "#/definitions/Behaviours",
+          "minProperties": 1
         },
         "showExistingNodes": {
           "type": "boolean"
@@ -583,7 +572,6 @@
     },
     "NarrativeHighlight": {
       "type": "array",
-      "additionalProperties": false,
       "items": {
         "type": "string"
       },

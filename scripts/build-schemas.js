@@ -7,7 +7,7 @@ import standaloneCode from "ajv/dist/standalone/index.js";
 const SCHEMA_SRC_PATH = "schemas/src";
 const SCHEMA_OUTPUT_PATH = "schemas";
 
-const ajv = new Ajv({ code: { source: true, esm: true, lines: true }, allErrors: true });
+const ajv = new Ajv({ code: { source: true, esm: true, lines: true }, allErrors: true, allowUnionTypes: true });
 ajv.addFormat("integer", /\d+/);
 ajv.addFormat('date-time', /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/);
 
