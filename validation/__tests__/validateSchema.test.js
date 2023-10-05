@@ -1,7 +1,6 @@
 /* eslint-env jest */
-
-const validateSchema = require("../validateSchema");
-const schemas = require("../../schemas");
+import validateSchema from "../validateSchema";
+import schemas from "../../schemas";
 
 jest.mock("../../schemas");
 

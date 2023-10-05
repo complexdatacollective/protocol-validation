@@ -73,6 +73,7 @@ var validate = (function() {
         var data1 = data.lastModified;
         if (data1 !== undefined) {
           var errs_1 = errors;
+          if ((typeof data1 === "number")) {}
           if (typeof data1 === "string") {
             if (!formats['date-time'].test(data1)) {
               var err = {
@@ -106,7 +107,7 @@ var validate = (function() {
         }
         if (data.schemaVersion !== undefined) {
           var errs_1 = errors;
-          if (typeof data.schemaVersion !== "number") {
+          if ((typeof data.schemaVersion !== "number")) {
             var err = {
               keyword: 'type',
               dataPath: (dataPath || '') + '.schemaVersion',
@@ -1197,6 +1198,7 @@ var validate = (function() {
           }
           var valid1 = errors === errs_1;
           valid0 = valid0 || valid1;
+          if (!valid0) {}
         }
       }
       if (!valid0) {
@@ -1240,6 +1242,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
@@ -1363,6 +1366,7 @@ var validate = (function() {
             }
             var valid3 = errors === errs_3;
             valid2 = valid2 || valid3;
+            if (!valid2) {}
           }
           if (!valid2) {
             var err = {
@@ -2358,7 +2362,7 @@ var validate = (function() {
                   errors++;
                 } else {
                   var errs_4 = errors;
-                  if (typeof data2.fuzziness !== "number") {
+                  if ((typeof data2.fuzziness !== "number")) {
                     var err = {
                       keyword: 'type',
                       dataPath: (dataPath || '') + '.searchOptions[' + i1 + '].fuzziness',
@@ -3361,6 +3365,7 @@ var validate = (function() {
                   }
                   var valid1 = errors === errs_1;
                   valid0 = valid0 || valid1;
+                  if (!valid0) {}
                 }
               }
             }
@@ -3554,6 +3559,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if ((!data || typeof data !== "object" || Array.isArray(data)) && data !== null) {
         var err = {
           keyword: 'type',
@@ -3795,6 +3801,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
@@ -4264,6 +4271,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
@@ -5351,6 +5359,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if (Array.isArray(data)) {
         var errs__0 = errors;
         var valid0;
@@ -5509,6 +5518,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
@@ -5713,6 +5723,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;
@@ -6360,6 +6371,7 @@ var validate = (function() {
       'use strict';
       var vErrors = null;
       var errors = 0;
+      if (rootData === undefined) rootData = data;
       if ((data && typeof data === "object" && !Array.isArray(data))) {
         var errs__0 = errors;
         var valid1 = true;

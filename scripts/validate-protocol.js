@@ -10,11 +10,8 @@
 import chalk from 'chalk';
 import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
-
-
-
-const { validateSchema, validateLogic } = require("../validation");
-const { errToString } = require("../validation/helpers");
+import { validateSchema, validateLogic } from '../validation';
+import { errToString } from '../validation/helpers';
 
 const protocolArg = process.argv[2];
 const forceSchemaArg = process.argv[3];

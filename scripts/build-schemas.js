@@ -1,13 +1,16 @@
-import { readdir, readJson, writeFile, resolve } from "node:fs";
-import { join, extname, basename } from "node:path";
+import { readJson } from "fs-extra/esm";
+import { readdir, writeFile } from "node:fs/promises";
+import { join, extname, basename, resolve } from "node:path";
 import Ajv from "ajv";
 import pack from "ajv-pack";
+
+const SCHEMA_SRC_PATH = "schemas/src";
+const SCHEMA_OUTPUT_PATH = "schemas";
 
 const ajv = new Ajv({ sourceCode: true, allErrors: true });
 ajv.addFormat("integer", /\d+/);
 
 const isJsonFile = (fileName) => extname(fileName) === ".json";
-
 const getBaseName = (schemaFileName) => basename(schemaFileName, ".json");
 
 const asVariableName = (schemaName) =>
@@ -22,15 +25,17 @@ const asIntName = (schemaName) => {
 };
 
 // get schemas,
-const getSchemas = (directory) => readdir(directory)
-  .then((files) => files.filter(isJsonFile).map(getBaseName));
+const getSchemas = async (directory) => {
+  const files = await readdir(directory);
+  return files.filter(isJsonFile).map(getBaseName);
+}
 
 const generateModuleIndex = (schemas) => {
   const formatRequire = (baseSchemaName) => {
     const relativeModulePath = join(`./${baseSchemaName}.js`);
-    return `const ${asVariableName(
+    return `import ${asVariableName(
       baseSchemaName,
-    )} = require('./${relativeModulePath}');`;
+    )} from './${relativeModulePath}';`;
   };
 
   const formatVersions = (baseSchemaName) =>
@@ -47,18 +52,18 @@ const versions = [
 ${schemaVersions}
 ];
 
-module.exports = versions;
+export default versions;
 \r\n`;
 };
 
 const buildSchemas = async () => {
-  const schemasDirectory = resolve("schemas");
-
-  const schemas = await getSchemas(schemasDirectory);
+  const schemaSrcDirectory = resolve(SCHEMA_SRC_PATH);
+  const schemaOutputDirectory = resolve(SCHEMA_OUTPUT_PATH);
+  const schemas = await getSchemas(schemaSrcDirectory);
 
   schemas.forEach(async (baseSchemaName) => {
-    const schemaPath = join(schemasDirectory, `${baseSchemaName}.json`);
-    const modulePath = join(schemasDirectory, `${baseSchemaName}.js`);
+    const schemaPath = join(schemaSrcDirectory, `${baseSchemaName}.json`);
+    const modulePath = join(schemaOutputDirectory, `${baseSchemaName}.js`);
 
     const schema = await readJson(schemaPath);
     const validate = ajv.compile(schema);
@@ -69,7 +74,7 @@ const buildSchemas = async () => {
     console.log(`${baseSchemaName} done.`); // eslint-disable-line
   });
 
-  const moduleIndexPath = join(schemasDirectory, "index.js");
+  const moduleIndexPath = join(schemaOutputDirectory, "index.js");
   const moduleIndex = generateModuleIndex(schemas);
   await writeFile(moduleIndexPath, moduleIndex);
 };

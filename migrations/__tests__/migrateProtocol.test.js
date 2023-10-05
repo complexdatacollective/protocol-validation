@@ -1,7 +1,6 @@
 /* eslint-env jest */
-
-const migrateProtocol = require("../migrateProtocol");
-const migrations = require("../migrations");
+import migrations from "../migrations";
+import migrateProtocol from "../migrateProtocol";
 
 jest.mock("../migrations");
 

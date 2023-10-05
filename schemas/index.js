@@ -1,11 +1,11 @@
-const version_1 = require('./1.js');
-const version_2 = require('./2.js');
-const version_3 = require('./3.js');
-const version_4 = require('./4.js');
-const version_5 = require('./5.js');
-const version_6 = require('./6.js');
-const version_7 = require('./7.js');
-const version_8 = require('./8.js');
+import version_1 from './1.js';
+import version_2 from './2.js';
+import version_3 from './3.js';
+import version_4 from './4.js';
+import version_5 from './5.js';
+import version_6 from './6.js';
+import version_7 from './7.js';
+import version_8 from './8.js';
 
 const versions = [
   { version: 1, validator: version_1 },
@@ -18,5 +18,5 @@ const versions = [
   { version: 8, validator: version_8 },
 ];
 
-module.exports = versions;
+export default versions;
 

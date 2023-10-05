@@ -37,4 +37,4 @@ const migrateProtocol = (protocol, targetSchemaVersion) => {
   return [resultProtocol, migrations];
 };
 
-module.exports = migrateProtocol;
+export default migrateProtocol;

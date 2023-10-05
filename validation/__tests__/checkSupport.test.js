@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-const checkSupport = require("../checkSupport");
+import checkSupport from "../checkSupport";
 
 const getProtocol = (mergeProps) => ({
   schemaVersion: 1,

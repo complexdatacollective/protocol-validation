@@ -1,4 +1,4 @@
-import schemas from "../schemas/";
+import schemas from "../schemas";
 
 const getSchema = (version) =>
   schemas.find(({ version: _version }) => _version === version);

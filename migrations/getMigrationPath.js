@@ -46,4 +46,4 @@ const getMigrationPath = (rawSourceSchemaVersion, targetSchemaVersion) => {
   return migrationPath;
 };
 
-module.exports = getMigrationPath;
+export default getMigrationPath;

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
-const validateLogic = require("../validateLogic");
-const invalidProtocol = require("./invalidProtocol.json");
+import validateLogic from "../validateLogic";
+import invalidProtocol from "./invalidProtocol.json";
 
 describe("validateLogic", () => {
   it("A well formed protocol will return an array of errors", () => {
