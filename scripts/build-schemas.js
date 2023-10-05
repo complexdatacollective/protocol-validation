@@ -2,15 +2,14 @@ import { readJson } from "fs-extra/esm";
 import { readdir, writeFile } from "node:fs/promises";
 import { join, extname, basename, resolve } from "node:path";
 import Ajv from "ajv";
-import addFormats from "ajv-formats"
 import standaloneCode from "ajv/dist/standalone/index.js";
 
 const SCHEMA_SRC_PATH = "schemas/src";
 const SCHEMA_OUTPUT_PATH = "schemas";
 
-const ajv = new Ajv({ code: { source: true, esm: true }, allErrors: true });
-addFormats(ajv);
+const ajv = new Ajv({ code: { source: true, esm: true, lines: true }, allErrors: true });
 ajv.addFormat("integer", /\d+/);
+ajv.addFormat('date-time', /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/);
 
 const isJsonFile = (fileName) => extname(fileName) === ".json";
 const getBaseName = (schemaFileName) => basename(schemaFileName, ".json");

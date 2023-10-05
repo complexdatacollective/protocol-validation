@@ -1,4 +1,4 @@
-import { schemas } from "../schemas/index.js";
+import { default as schemas } from "../schemas/index.js";
 
 const getSchema = (version) =>
   schemas.find(({ version: _version }) => _version === version);
