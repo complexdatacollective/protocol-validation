@@ -40,6 +40,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build schemas
+        run: pnpm run build
+
       - name: Run lint
         run: pnpm run lint
 
