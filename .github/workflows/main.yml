@@ -17,7 +17,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20 # Choose the Node.js version you need
-          cache: "pnpm"
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
