@@ -4,7 +4,7 @@ import { join, extname, basename, resolve } from "node:path";
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone/index.js";
 
-const SCHEMA_SRC_PATH = "schemas/src";
+const SCHEMA_SRC_PATH = "schemaSource";
 const SCHEMA_OUTPUT_PATH = "schemas";
 
 const ajv = new Ajv({ code: { source: true, esm: true, lines: true }, allErrors: true, allowUnionTypes: true });

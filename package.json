@@ -2,7 +2,7 @@
   "name": "@codaco/protocol-validation",
   "version": "3.0.0-alpha.1",
   "description": "A utility for validating a Network Canvas protocol against a versioned JSON schema",
-  "main": "index.js",
+  "main": "schemas/index.js",
   "scripts": {
     "validate-protocol": "node scripts/validate-protocol.js",
     "build": "node scripts/build-schemas.js",
@@ -24,6 +24,9 @@
     "testEnvironment": "node",
     "transform": {}
   },
+  "files": [
+    "schemas"
+  ],
   "dependencies": {},
   "devDependencies": {
     "chalk": "^5.3.0",
