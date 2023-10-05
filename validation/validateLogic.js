@@ -1,5 +1,5 @@
 import { get, isArray, has, isObject } from "lodash-es";
-import Validator from "./Validator";
+import Validator from "./Validator.js";
 import {
   duplicateId,
   duplicateInArray,
@@ -10,14 +10,14 @@ import {
   nodeVarsIncludeDisplayVar,
   getVariableNameFromID,
   getSubjectTypeName,
-} from "./helpers";
+} from "./helpers.js";
 
 /**
  * Define and run all dynamic validations (which aren't covered by the JSON Schema).
  *
  * @return {string[]} an array of failure messages from the validator
  */
-const validateLogic = (protocol) => {
+export const validateLogic = (protocol) => {
   const v = new Validator(protocol);
   const codebook = protocol.codebook;
 
@@ -338,5 +338,3 @@ const validateLogic = (protocol) => {
 
   return v.errors;
 };
-
-export default validateLogic;

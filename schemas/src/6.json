@@ -948,7 +948,7 @@
       "title": "NodeTypeDef"
     },
     "Ego": {
-      "type:": "object",
+      "type": "object",
       "additionalProperties": false,
       "properties": {
         "variables": {

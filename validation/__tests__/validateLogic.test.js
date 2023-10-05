@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import validateLogic from "../validateLogic";
+import { validateLogic } from "../validateLogic";
 import invalidProtocol from "./invalidProtocol.json";
 
 describe("validateLogic", () => {

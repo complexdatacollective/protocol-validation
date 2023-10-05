@@ -1,4 +1,3 @@
-/* eslint-env node */
 /* eslint-disable no-console */
 
 /**
@@ -10,8 +9,9 @@
 import chalk from 'chalk';
 import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
-import { validateSchema, validateLogic } from '../validation';
-import { errToString } from '../validation/helpers';
+import { validateLogic } from "../validation/validateLogic.js";
+import { validateSchema } from '../validation/validateSchema.js';
+import { errToString } from '../validation/helpers.js';
 
 const protocolArg = process.argv[2];
 const forceSchemaArg = process.argv[3];

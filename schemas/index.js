@@ -7,7 +7,7 @@ import version_6 from './6.js';
 import version_7 from './7.js';
 import version_8 from './8.js';
 
-const schemas = [
+const versions = [
   { version: 1, validator: version_1 },
   { version: 2, validator: version_2 },
   { version: 3, validator: version_3 },
@@ -18,5 +18,5 @@ const schemas = [
   { version: 8, validator: version_8 },
 ];
 
-export default schemas;
+export default versions;
 

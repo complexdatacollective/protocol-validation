@@ -1,4 +1,4 @@
-import { schemas } from "../schemas";
+import { schemas } from "../schemas/index.js";
 
 const getSchema = (version) =>
   schemas.find(({ version: _version }) => _version === version);
@@ -29,5 +29,3 @@ export const validateSchema = (protocol, forceVersion) => {
   validator(protocol, "Protocol");
   return validator.errors || [];
 };
-
-export default validateSchema;

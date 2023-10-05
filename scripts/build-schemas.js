@@ -2,12 +2,14 @@ import { readJson } from "fs-extra/esm";
 import { readdir, writeFile } from "node:fs/promises";
 import { join, extname, basename, resolve } from "node:path";
 import Ajv from "ajv";
-import pack from "ajv-pack";
+import addFormats from "ajv-formats"
+import standaloneCode from "ajv/dist/standalone/index.js";
 
 const SCHEMA_SRC_PATH = "schemas/src";
 const SCHEMA_OUTPUT_PATH = "schemas";
 
-const ajv = new Ajv({ sourceCode: true, allErrors: true });
+const ajv = new Ajv({ code: { source: true, esm: true }, allErrors: true });
+addFormats(ajv);
 ajv.addFormat("integer", /\d+/);
 
 const isJsonFile = (fileName) => extname(fileName) === ".json";
@@ -67,7 +69,7 @@ const buildSchemas = async () => {
 
     const schema = await readJson(schemaPath);
     const validate = ajv.compile(schema);
-    const moduleCode = pack(ajv, validate);
+    const moduleCode = standaloneCode(ajv, validate);
 
     await writeFile(modulePath, moduleCode);
 
