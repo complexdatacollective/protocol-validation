@@ -7,7 +7,7 @@
     "validate-protocol": "node scripts/validate-protocol.js",
     "build": "node scripts/build-schemas.js",
     "lint": "eslint .",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "type": "module",
   "repository": {
