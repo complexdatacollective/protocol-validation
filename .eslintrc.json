@@ -8,6 +8,10 @@
     "eslint:recommended",
     "prettier"
   ],
+  "ignorePatterns": [
+    "node_modules/",
+    "schemas/*.js"
+  ],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"

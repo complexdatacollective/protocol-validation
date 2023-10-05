@@ -1,5 +1,3 @@
-import { getSubjectTypeName } from "./helpers";
-
 const debugLog = (...args) => {
   if (typeof process !== "undefined" && process.env.NC_DEBUG_VALIDATOR) {
     console.log(...args); // eslint-disable-line no-console

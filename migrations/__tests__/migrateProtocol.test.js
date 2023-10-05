@@ -18,7 +18,7 @@ migrations.push({
 });
 migrations.push({
   version: 3,
-  migration: jest.fn(({ foo, ...protocol }) => ({ ...protocol, fizz: "pop" })),
+  migration: jest.fn(({ ...protocol }) => ({ ...protocol, fizz: "pop" })),
 });
 migrations.push({ version: 4, migration: null });
 migrations.push({ version: 5, migration: jest.fn((protocol) => protocol) });
