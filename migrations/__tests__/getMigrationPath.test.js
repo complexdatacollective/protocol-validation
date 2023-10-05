@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-const getMigrationPath = require('../getMigrationPath');
+const getMigrationPath = require("../getMigrationPath");
 
 /**
  * Migrations are run in the order that they are defined relative to one another
@@ -33,8 +33,8 @@ const getMigrationPath = require('../getMigrationPath');
 //   return migrationPath;
 // };
 
-describe('migrateProtocol', () => {
-  it('gets the correct migration path for a protocol', () => {
+describe("migrateProtocol", () => {
+  it("gets the correct migration path for a protocol", () => {
     const migrationPath = getMigrationPath(1, 4);
 
     expect(migrationPath.length).toBe(3);

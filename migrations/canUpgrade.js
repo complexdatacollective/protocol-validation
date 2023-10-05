@@ -1,4 +1,4 @@
-const getMigrationPath = require('./getMigrationPath');
+const getMigrationPath = require("./getMigrationPath");
 
 const canUpgrade = (sourceSchemaVersion, targetSchemaVersion) => {
   try {

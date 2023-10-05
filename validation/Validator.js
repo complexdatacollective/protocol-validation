@@ -1,7 +1,7 @@
-const { getSubjectTypeName } = require("./helpers");
+import { getSubjectTypeName } from "./helpers";
 
 const debugLog = (...args) => {
-  if (typeof process !== 'undefined' && process.env.NC_DEBUG_VALIDATOR) {
+  if (typeof process !== "undefined" && process.env.NC_DEBUG_VALIDATOR) {
     console.log(...args); // eslint-disable-line no-console
   }
 };
@@ -26,28 +26,28 @@ const debugLog = (...args) => {
  * @private
  */
 const makePattern = (pattern) => {
-  if (typeof pattern === 'string') {
+  if (typeof pattern === "string") {
     const re = pattern
-      .replace(/\./g, '\\.')
-      .replace(/\*/g, '[^.]+')
-      .replace(/\[\]/g, '.?\\[\\d+\\]');
+      .replace(/\./g, "\\.")
+      .replace(/\*/g, "[^.]+")
+      .replace(/\[\]/g, ".?\\[\\d+\\]");
     return new RegExp(`${re}$`);
   }
   return pattern;
 };
 
 const keypathString = (keypath) => {
-  if (typeof keypath === 'string') {
+  if (typeof keypath === "string") {
     return keypath;
   }
 
   return keypath.reduce((acc, path) => {
-    if ((/\[\d+\]/).test(path)) {
+    if (/\[\d+\]/.test(path)) {
       return `${acc}${path}`;
     }
     return `${acc}.${path}`;
   });
-}
+};
 
 /**
  * @class
@@ -80,7 +80,11 @@ class Validator {
    *                                      Return a user-facing error message.
    */
   addValidation(pattern, validate, makeFailureMessage) {
-    this.validations.push({ pattern: makePattern(pattern), validate, makeFailureMessage });
+    this.validations.push({
+      pattern: makePattern(pattern),
+      validate,
+      makeFailureMessage,
+    });
   }
 
   /**
@@ -110,7 +114,9 @@ class Validator {
       result = validate(fragment, subject, keypath);
     } catch (err) {
       debugLog(err);
-      this.warnings.push(`Validation error for ${keypathString(keypath)}: ${err.toString()}`);
+      this.warnings.push(
+        `Validation error for ${keypathString(keypath)}: ${err.toString()}`,
+      );
       return true;
     }
     if (!result) {
@@ -122,7 +128,11 @@ class Validator {
         failureMessage = makeFailureMessage(fragment, subject, keypath);
       } catch (err) {
         debugLog(err);
-        this.warnings.push(`makeFailureMessage error for ${keypathString(keypath.shift())}: ${err.toString()}`);
+        this.warnings.push(
+          `makeFailureMessage error for ${keypathString(
+            keypath.shift(),
+          )}: ${err.toString()}`,
+        );
         return true;
       }
       this.errors.push(`${keypathString(keypath)}: ${failureMessage}`);
@@ -136,9 +146,13 @@ class Validator {
    * @private
    */
   validateSequence(keypath, fragment, sequence, subject) {
-    sequence.every(
-      ([validate, makeFailureMessage]) =>
-        this.validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject),
+    sequence.every(([validate, makeFailureMessage]) =>
+      this.validateSingle(
+        keypath,
+        fragment,
+        { validate, makeFailureMessage },
+        subject,
+      ),
     );
   }
 
@@ -147,16 +161,23 @@ class Validator {
    * @private
    */
   checkFragment(keypath, fragment, subject) {
-    this.validations.forEach(({ pattern, sequence, validate, makeFailureMessage }) => {
-      if (!pattern.test(keypathString(keypath))) {
-        return;
-      }
-      if (sequence) {
-        this.validateSequence(keypath, fragment, sequence, subject);
-      } else {
-        this.validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject);
-      }
-    });
+    this.validations.forEach(
+      ({ pattern, sequence, validate, makeFailureMessage }) => {
+        if (!pattern.test(keypathString(keypath))) {
+          return;
+        }
+        if (sequence) {
+          this.validateSequence(keypath, fragment, sequence, subject);
+        } else {
+          this.validateSingle(
+            keypath,
+            fragment,
+            { validate, makeFailureMessage },
+            subject,
+          );
+        }
+      },
+    );
   }
 
   /**
@@ -175,9 +196,9 @@ class Validator {
    * Recursively traverse to validate parts of a protocol for which we have validations
    * @private
    */
-  traverse(fragment, keypath = ['protocol'], subject = null) {
+  traverse(fragment, keypath = ["protocol"], subject = null) {
     if (!fragment) {
-      debugLog('-', keypathString(keypath));
+      debugLog("-", keypathString(keypath));
       return;
     }
 
@@ -189,14 +210,15 @@ class Validator {
       fragment.forEach((v, i) => {
         this.traverse(v, [...keypath, `[${i}]`], stageSubject);
       });
-    } else if (fragment && typeof fragment === 'object') {
+    } else if (fragment && typeof fragment === "object") {
       Object.entries(fragment).forEach(([key, val]) => {
         this.traverse(val, [...keypath, key], stageSubject);
       });
-    } else { // Leaf node
-      debugLog('-', keypathString(keypath));
+    } else {
+      // Leaf node
+      debugLog("-", keypathString(keypath));
     }
   }
 }
 
-module.exports = Validator;
+export default Validator;

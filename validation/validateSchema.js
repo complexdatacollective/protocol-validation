@@ -1,6 +1,6 @@
-const schemas = require('../schemas/');
+import schemas from "../schemas/";
 
-const getSchema = version =>
+const getSchema = (version) =>
   schemas.find(({ version: _version }) => _version === version);
 
 /**
@@ -10,7 +10,7 @@ const validateSchema = (protocol, forceVersion) => {
   const version = parseInt(forceVersion || protocol.schemaVersion, 10);
 
   if (isNaN(version)) {
-    throw new Error('schemaVersion must be number-like');
+    throw new Error("schemaVersion must be number-like");
   }
 
   if (forceVersion) {
@@ -26,8 +26,8 @@ const validateSchema = (protocol, forceVersion) => {
 
   // Validate
   const validator = schema.validator;
-  validator(protocol, 'Protocol');
+  validator(protocol, "Protocol");
   return validator.errors || [];
 };
 
-module.exports = validateSchema;
+export default validateSchema;

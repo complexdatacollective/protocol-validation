@@ -1,9 +1,9 @@
-const validateLogic = require('./validateLogic');
-const validateSchema = require('./validateSchema');
-const validateExternalData = require('./validateExternalData');
-const logErrors = require('./logErrors');
+import validateLogic from "./validateLogic";
+import validateSchema from "./validateSchema";
+import validateExternalData from "./validateExternalData";
+import logErrors from "./logErrors";
 
-module.exports = {
+export default {
   logErrors,
   validateLogic,
   validateSchema,

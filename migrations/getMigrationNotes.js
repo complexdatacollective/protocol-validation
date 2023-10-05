@@ -1,10 +1,15 @@
-const getMigrationPath = require('./getMigrationPath');
+const getMigrationPath = require("./getMigrationPath");
 
 const getMigrationNotes = (sourceSchemaVersion, targetSchemaVersion) => {
   try {
-    const migrationPath = getMigrationPath(sourceSchemaVersion, targetSchemaVersion);
+    const migrationPath = getMigrationPath(
+      sourceSchemaVersion,
+      targetSchemaVersion,
+    );
     const notes = migrationPath.reduce((acc, migration) => {
-      if (!migration.notes) { return acc; }
+      if (!migration.notes) {
+        return acc;
+      }
       return [...acc, { notes: migration.notes, version: migration.version }];
     }, []);
     return notes;

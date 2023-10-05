@@ -1,49 +1,47 @@
-const fs = require('fs-extra');
-const path = require('path');
-const Ajv = require('ajv');
-const pack = require('ajv-pack');
+const fs = require("fs-extra");
+const path = require("path");
+const Ajv = require("ajv");
+const pack = require("ajv-pack");
 
 const ajv = new Ajv({ sourceCode: true, allErrors: true });
-ajv.addFormat('integer', /\d+/);
+ajv.addFormat("integer", /\d+/);
 
-const isJsonFile = fileName =>
-  path.extname(fileName) === '.json';
+const isJsonFile = (fileName) => path.extname(fileName) === ".json";
 
-const getBaseName = schemaFileName =>
-  path.basename(schemaFileName, '.json');
+const getBaseName = (schemaFileName) => path.basename(schemaFileName, ".json");
 
-const asVariableName = schemaName =>
-  `version_${schemaName.replace(/\./g, '_')}`;
+const asVariableName = (schemaName) =>
+  `version_${schemaName.replace(/\./g, "_")}`;
 
 const asIntName = (schemaName) => {
   if (isNaN(parseInt(schemaName, 10))) {
-    throw Error('Schema version could not be converted to integer');
+    throw Error("Schema version could not be converted to integer");
   }
 
   return parseInt(schemaName, 10);
-}
+};
 
 // get schemas,
-const getSchemas = directory =>
-  fs.readdir(directory)
-    .then(
-      files =>
-        files
-          .filter(isJsonFile)
-          .map(getBaseName),
-    );
+const getSchemas = (directory) =>
+  fs
+    .readdir(directory)
+    .then((files) => files.filter(isJsonFile).map(getBaseName));
 
 const generateModuleIndex = (schemas) => {
   const formatRequire = (baseSchemaName) => {
     const relativeModulePath = path.join(`./${baseSchemaName}.js`);
-    return `const ${asVariableName(baseSchemaName)} = require('./${relativeModulePath}');`;
+    return `const ${asVariableName(
+      baseSchemaName,
+    )} = require('./${relativeModulePath}');`;
   };
 
-  const formatVersions = baseSchemaName =>
-    `  { version: ${asIntName(baseSchemaName)}, validator: ${asVariableName(baseSchemaName)} },`;
+  const formatVersions = (baseSchemaName) =>
+    `  { version: ${asIntName(baseSchemaName)}, validator: ${asVariableName(
+      baseSchemaName,
+    )} },`;
 
-  const schemaRequires = schemas.map(formatRequire).join('\n');
-  const schemaVersions = `${schemas.map(formatVersions).join('\n')}`;
+  const schemaRequires = schemas.map(formatRequire).join("\n");
+  const schemaVersions = `${schemas.map(formatVersions).join("\n")}`;
 
   return `${schemaRequires}
 
@@ -56,7 +54,7 @@ module.exports = versions;
 };
 
 const buildSchemas = async () => {
-  const schemasDirectory = path.resolve('schemas');
+  const schemasDirectory = path.resolve("schemas");
 
   const schemas = await getSchemas(schemasDirectory);
 
@@ -73,7 +71,7 @@ const buildSchemas = async () => {
     console.log(`${baseSchemaName} done.`); // eslint-disable-line
   });
 
-  const moduleIndexPath = path.join(schemasDirectory, 'index.js');
+  const moduleIndexPath = path.join(schemasDirectory, "index.js");
   const moduleIndex = generateModuleIndex(schemas);
   await fs.writeFile(moduleIndexPath, moduleIndex);
 };

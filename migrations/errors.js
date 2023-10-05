@@ -6,8 +6,10 @@ class MigrationNotPossibleError extends Error {
       Error.captureStackTrace(this, MigrationNotPossibleError);
     }
 
-    this.name = 'MigrationNotPossibleError';
-    this.message = `Migration to this version is not possible (${JSON.stringify(from)} -> ${JSON.stringify(to)}).`;
+    this.name = "MigrationNotPossibleError";
+    this.message = `Migration to this version is not possible (${JSON.stringify(
+      from,
+    )} -> ${JSON.stringify(to)}).`;
   }
 }
 
@@ -19,8 +21,10 @@ class VersionMismatchError extends Error {
       Error.captureStackTrace(this, VersionMismatchError);
     }
 
-    this.name = 'VersionMismatchError';
-    this.message = `Nonsensical migration path (${JSON.stringify(from)} -> ${JSON.stringify(to)}).`;
+    this.name = "VersionMismatchError";
+    this.message = `Nonsensical migration path (${JSON.stringify(
+      from,
+    )} -> ${JSON.stringify(to)}).`;
   }
 }
 
@@ -32,7 +36,7 @@ class MigrationStepError extends Error {
       Error.captureStackTrace(this, MigrationStepError);
     }
 
-    this.name = 'MigrationStepError';
+    this.name = "MigrationStepError";
     this.message = `Migration step failed (${JSON.stringify(version)}).`;
   }
 }
@@ -45,8 +49,10 @@ class StringVersionError extends Error {
       Error.captureStackTrace(this, MigrationNotPossibleError);
     }
 
-    this.name = 'StringVersionError';
-    this.message = `The ${type} schema version is not recognised, must be an integer (${JSON.stringify(version)}).`;
+    this.name = "StringVersionError";
+    this.message = `The ${type} schema version is not recognised, must be an integer (${JSON.stringify(
+      version,
+    )}).`;
   }
 }
 

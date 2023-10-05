@@ -1,4 +1,5 @@
 # protocol-validation
+
 Submodule implementing protocol schema validation
 
 - Schemas are defined in the JSON schema format: https://json-schema.org/latest/json-schema-validation.html
