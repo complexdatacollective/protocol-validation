@@ -1,12 +1,15 @@
 /* eslint-env jest */
 import { jest } from '@jest/globals';
 
-jest.unstable_mockModule('../../schemas', () => ({
-  schemas: [],
-}));
+jest.unstable_mockModule('../../schemas/index.js', () => {
+  const schemas = [];
+  return {
+    default: schemas,
+  };
+});
 
-const { schemas } = await import('../../schemas');
-const { validateSchema } = await import('../validateSchema');
+const { default: schemas } = await import('../../schemas/index.js');
+const { validateSchema } = await import('../validateSchema.js');
 
 const validator_1 = jest.fn(() => []);
 const validator_2 = jest.fn(() => []);

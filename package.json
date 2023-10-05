@@ -20,6 +20,10 @@
     "url": "https://github.com/codaco/protocol-validation/issues"
   },
   "homepage": "https://github.com/codaco/protocol-validation",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "dependencies": {},
   "devDependencies": {
     "chalk": "^5.3.0",
