@@ -1,15 +1,17 @@
-const migrations = require("./migrations");
-const MigrationNotPossibleError = require("./errors").MigrationNotPossibleError;
-const VersionMismatchError = require("./errors").VersionMismatchError;
-const StringVersionError = require("./errors").StringVersionError;
+import migrations from "./migrations";
+import {
+  MigrationNotPossibleError,
+  VersionMismatchError,
+  StringVersionError,
+} from "./errors";
 
 const isMigrationPathValid = (path) =>
   !path.some(({ migration }) => !migration);
 
 const matchMigrations =
   (sourceVersion, targetVersion) =>
-  ({ version }) =>
-    version > sourceVersion && version <= targetVersion;
+    ({ version }) =>
+      version > sourceVersion && version <= targetVersion;
 
 const getMigrationPath = (rawSourceSchemaVersion, targetSchemaVersion) => {
   if (!Number.isInteger(targetSchemaVersion)) {

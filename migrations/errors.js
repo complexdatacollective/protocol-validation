@@ -56,7 +56,7 @@ class StringVersionError extends Error {
   }
 }
 
-module.exports = {
+export default {
   VersionMismatchError,
   MigrationNotPossibleError,
   MigrationStepError,

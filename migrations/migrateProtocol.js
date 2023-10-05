@@ -1,5 +1,5 @@
-const getMigrationPath = require("./getMigrationPath");
-const MigrationStepError = require("./errors").MigrationStepError;
+import getMigrationPath from "./getMigrationPath";
+import { MigrationStepError } from "./errors";
 
 const migrateStep = (protocol, { version, migration }) => {
   try {

@@ -145,4 +145,4 @@ const v4 = {
   migration,
 };
 
-module.exports = v4;
+export default v4;

@@ -1,4 +1,4 @@
-const getMigrationPath = require("./getMigrationPath");
+import getMigrationPath from "./getMigrationPath";
 
 const getMigrationNotes = (sourceSchemaVersion, targetSchemaVersion) => {
   try {
@@ -18,4 +18,4 @@ const getMigrationNotes = (sourceSchemaVersion, targetSchemaVersion) => {
   }
 };
 
-module.exports = getMigrationNotes;
+export default getMigrationNotes;

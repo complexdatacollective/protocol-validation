@@ -7,9 +7,11 @@
  *
  * Errors & Validation failures are written to stderr.
  */
-const Chalk = require("chalk").constructor;
-const fs = require("fs");
-const path = require("path");
+import chalk from 'chalk';
+import { readFileSync } from 'node:fs';
+import { basename } from 'node:path';
+
+
 
 const { validateSchema, validateLogic } = require("../validation");
 const { errToString } = require("../validation/helpers");
@@ -23,12 +25,10 @@ if (!protocolArg) {
 }
 
 const protocolFilepath = protocolArg;
-const protocolName = path.basename(protocolFilepath);
+const protocolName = basename(protocolFilepath);
 const exitOnValidationFailure = !!process.env.CI;
 
 let data;
-
-const chalk = new Chalk({ enabled: !!process.stderr.isTTY });
 
 const validateJson = (jsonString) => {
   try {
@@ -64,7 +64,7 @@ const validateJson = (jsonString) => {
 };
 
 try {
-  validateJson(fs.readFileSync(protocolFilepath));
+  validateJson(readFileSync(protocolFilepath));
 } catch (err) {
   console.error(err);
   process.exit(1);
