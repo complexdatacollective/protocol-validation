@@ -2,8 +2,8 @@ name: CI/CD Workflow
 
 on:
   push:
-    branches:
-      - main # You can adjust this to your main branch's name
+    # branches:
+    #   - main # You can adjust this to your main branch's name
 
 jobs:
   build:

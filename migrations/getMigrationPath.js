@@ -1,4 +1,4 @@
-import migrations from "./migrations";
+import { migrations } from "./migrations";
 import {
   MigrationNotPossibleError,
   VersionMismatchError,

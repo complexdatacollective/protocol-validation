@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import migrateProtocol from "../migrateProtocol";
+import { migrateProtocol } from "../migrateProtocol";
 
 const v1Protocol = {
   schemaVersion: "1.0.0",

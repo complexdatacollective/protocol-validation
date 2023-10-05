@@ -152,7 +152,6 @@ describe("migrate v3 -> v4", () => {
   it("additional attributes values", () => {
     const result = version4.migration(v3ProtocolWithPrompts);
 
-    console.log(result.stages[0].prompts);
     const additionalAttributes =
       result.stages[0].prompts[0].additionalAttributes;
     expect(additionalAttributes).toEqual(

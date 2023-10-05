@@ -9,7 +9,7 @@ const migrateStep = (protocol, { version, migration }) => {
   }
 };
 
-const migrateProtocol = (protocol, targetSchemaVersion) => {
+export const migrateProtocol = (protocol, targetSchemaVersion) => {
   // Get migration steps between versions
   const migrationPath = getMigrationPath(
     protocol.schemaVersion,
@@ -36,5 +36,3 @@ const migrateProtocol = (protocol, targetSchemaVersion) => {
 
   return [resultProtocol, migrations];
 };
-
-export default migrateProtocol;

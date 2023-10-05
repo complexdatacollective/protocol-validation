@@ -1,8 +1,12 @@
 /* eslint-env jest */
-import migrations from "../migrations";
-import migrateProtocol from "../migrateProtocol";
+import { jest } from '@jest/globals';
 
-jest.mock("../migrations");
+jest.unstable_mockModule('../migrations', () => ({
+  migrations: [],
+}));
+
+const { migrations } = await import('../migrations');
+const { migrateProtocol } = await import('../migrateProtocol');
 
 /**
  * Migrations are run in the order that they are defined relative to one another
@@ -10,29 +14,31 @@ jest.mock("../migrations");
  */
 
 const specificMigrationError = new Error("whoops");
-migrations.push({ version: 1, migration: jest.fn((protocol) => protocol) });
-migrations.push({
-  version: 2,
-  migration: jest.fn((protocol) => ({ ...protocol, foo: "bar", bazz: "buzz" })),
-});
-migrations.push({
-  version: 3,
-  migration: jest.fn(({ ...protocol }) => ({ ...protocol, fizz: "pop" })),
-});
-migrations.push({ version: 4, migration: null });
-migrations.push({ version: 5, migration: jest.fn((protocol) => protocol) });
-migrations.push({
-  version: 6,
-  migration: jest.fn(() => {
-    throw specificMigrationError;
-  }),
-});
 
 const mockProtocol = {
   schemaVersion: 1,
 };
 
 describe("migrateProtocol", () => {
+  beforeAll(() => {
+    migrations.push({ version: 1, migration: jest.fn((protocol) => protocol) });
+    migrations.push({
+      version: 2,
+      migration: jest.fn(({ ...protocol }) => ({ ...protocol, bazz: "buzz" })),
+    });
+    migrations.push({
+      version: 3,
+      migration: jest.fn(({ ...protocol }) => ({ ...protocol, fizz: "pop" })),
+    });
+    migrations.push({ version: 4, migration: null });
+    migrations.push({ version: 5, migration: jest.fn((protocol) => protocol) });
+    migrations.push({
+      version: 6,
+      migration: jest.fn(() => {
+        throw specificMigrationError;
+      }),
+    });
+  });
   beforeEach(() => {
     // reset mocks
     migrations.forEach(({ migration }) => migration && migration.mockClear());

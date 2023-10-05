@@ -1,14 +1,14 @@
-import { get } from "lodash";
+import { get } from "lodash-es";
 
 // For some error types, AJV returns info separate from message
-const additionalErrorInfo = (errorObj) => {
+export const additionalErrorInfo = (errorObj) => {
   const params = errorObj.params || {};
   return (
     params.additionalProperty || params.allowedValues || params.allowedValue
   );
 };
 
-const errToString = (errorObj) => {
+export const errToString = (errorObj) => {
   if (typeof errorObj === "string") {
     return errorObj;
   }
@@ -20,27 +20,27 @@ const errToString = (errorObj) => {
   return `${str} \n\n`;
 };
 
-const undefinedFormVariables = (form, codebook) =>
+export const undefinedFormVariables = (form, codebook) =>
   form.fields
     .map((f) => f.variable)
     .filter(
       (variable) => !codebook[form.entity][form.type].variables[variable],
     );
 
-const nodeVarsIncludeDisplayVar = (node) =>
+export const nodeVarsIncludeDisplayVar = (node) =>
   !node.displayVariable || // displayVariable is optional
   Object.keys(node.variables).some(
     (variableId) => variableId === node.displayVariable,
   );
 
-const entityDefFromRule = (rule, codebook) => {
+export const entityDefFromRule = (rule, codebook) => {
   if (rule.type === "ego") {
     return codebook.ego;
   } // Ego is always defined
   return codebook[rule.type === "edge" ? "edge" : "node"][rule.options.type];
 };
 
-const getVariablesForSubject = (codebook, subject) => {
+export const getVariablesForSubject = (codebook, subject) => {
   if (subject && subject.entity === "ego") {
     return get(codebook, ["ego", "variables"], {});
   }
@@ -48,12 +48,12 @@ const getVariablesForSubject = (codebook, subject) => {
   return get(codebook, [subject.entity, subject.type, "variables"], {});
 };
 
-const getVariableNameFromID = (codebook, subject, variableID) => {
+export const getVariableNameFromID = (codebook, subject, variableID) => {
   const variables = getVariablesForSubject(codebook, subject);
   return get(variables, [variableID, "name"], variableID);
 };
 
-const getSubjectTypeName = (codebook, subject) => {
+export const getSubjectTypeName = (codebook, subject) => {
   if (!subject) {
     return "entity";
   }
@@ -65,16 +65,16 @@ const getSubjectTypeName = (codebook, subject) => {
   return get(codebook, [subject.entity, subject.type, "name"], subject.type);
 };
 
-const getVariableNames = (registryVars) =>
+export const getVariableNames = (registryVars) =>
   Object.values(registryVars).map((vari) => vari.name);
 
-const getEntityNames = (registryVars) => [
+export const getEntityNames = (registryVars) => [
   ...Object.values(registryVars.node || {}).map((vari) => vari.name),
   ...Object.values(registryVars.edge || {}).map((vari) => vari.name),
 ];
 
 // @return the ID (or other unique prop) which is a duplicate, undefined otherwise
-const duplicateId = (elements, uniqueProp = "id") => {
+export const duplicateId = (elements, uniqueProp = "id") => {
   const map = {};
   const dupe = elements.find((el) => {
     if (map[el[uniqueProp]]) {
@@ -87,7 +87,7 @@ const duplicateId = (elements, uniqueProp = "id") => {
 };
 
 // @return the item which is a duplicate, undefined otherwise
-const duplicateInArray = (items) => {
+export const duplicateInArray = (items) => {
   const set = new Set();
   const dupe = items.find((item) => {
     if (set.has(item)) {
@@ -97,18 +97,4 @@ const duplicateInArray = (items) => {
     return false;
   });
   return dupe;
-};
-
-export default {
-  duplicateId,
-  duplicateInArray,
-  entityDefFromRule,
-  errToString,
-  getVariablesForSubject,
-  getVariableNameFromID,
-  getVariableNames,
-  getSubjectTypeName,
-  getEntityNames,
-  nodeVarsIncludeDisplayVar,
-  undefinedFormVariables,
 };

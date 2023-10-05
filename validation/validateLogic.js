@@ -1,4 +1,4 @@
-import { get, isArray, has, isObject } from "lodash";
+import { get, isArray, has, isObject } from "lodash-es";
 import Validator from "./Validator";
 import {
   duplicateId,

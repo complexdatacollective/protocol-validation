@@ -1,4 +1,4 @@
-import schemas from "../schemas";
+import { schemas } from "../schemas";
 
 const getSchema = (version) =>
   schemas.find(({ version: _version }) => _version === version);
@@ -6,7 +6,7 @@ const getSchema = (version) =>
 /**
  * Statically validate the protocol based on JSON schema
  */
-const validateSchema = (protocol, forceVersion) => {
+export const validateSchema = (protocol, forceVersion) => {
   const version = parseInt(forceVersion || protocol.schemaVersion, 10);
 
   if (isNaN(version)) {
