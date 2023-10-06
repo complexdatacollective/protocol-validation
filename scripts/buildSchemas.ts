@@ -3,7 +3,7 @@ import { join, extname, basename, resolve } from "node:path";
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone/index.js";
 
-const SCHEMA_SRC_PATH = "./src/schemas/raw";
+const SCHEMA_SRC_PATH = "./src/schemas";
 const SCHEMA_OUTPUT_PATH = "./dist/schemas";
 
 const ajv = new Ajv({
