@@ -39,12 +39,12 @@ export const validateJson = async (data: Protocol) => {
       error(`${protocolName} is NOT valid!`);
       if (schemaErrors.length) {
         console.error(`${protocolName} has the following schema errors:`);
-        schemaErrors.forEach((err) => console.warn("-", errToString(err)));
+        schemaErrors.forEach((err) => error(`\t- ${errToString(err)}`));
       }
 
       if (logicErrors.length) {
         console.error(`${protocolName} has the following logic errors:`);
-        logicErrors.forEach((err) => console.warn("-", errToString(err)));
+        logicErrors.forEach((err) => error(`\t- ${errToString(err)}`));
       }
     }
 
