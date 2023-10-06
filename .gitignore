@@ -1,5 +1,2 @@
-.DS_Store
-/node_modules
-Icon^M^M
-/schemas
-
+node_modules
+dist

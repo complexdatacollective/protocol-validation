@@ -1,7 +1,26 @@
-# protocol-validation
+# bun starter
 
-Submodule implementing protocol schema validation
+## Getting Started
 
-- Schemas are defined in the JSON schema format: https://json-schema.org/latest/json-schema-validation.html
-- Schemas can be found in `/schemas/` (`*.json`)
-- When adding/modifying a schema run `npm run build` to compile the new validators (this will generate the corresponding `*.js` for each schema file)
+Click the [Use this template](https://github.com/wobsoriano/bun-lib-starter/generate) button to create a new repository with the contents starter.
+
+OR
+
+Run `bun create wobsoriano/bun-lib-starter ./my-lib`.
+
+## Setup
+
+```bash
+# install dependencies
+bun install
+
+# test the app
+bun test
+
+# build the app, available under dist
+bun run build
+```
+
+## License
+
+MIT

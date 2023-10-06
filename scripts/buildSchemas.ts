@@ -1,35 +1,40 @@
-import { readJson } from "fs-extra/esm";
 import { readdir, writeFile } from "node:fs/promises";
 import { join, extname, basename, resolve } from "node:path";
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone/index.js";
 
-const SCHEMA_SRC_PATH = "schemaSource";
-const SCHEMA_OUTPUT_PATH = "schemas";
+const SCHEMA_SRC_PATH = "./src/schemas/raw";
+const SCHEMA_OUTPUT_PATH = "./dist/schemas";
 
-const ajv = new Ajv({ code: { source: true, esm: true, lines: true }, allErrors: true, allowUnionTypes: true });
+const ajv = new Ajv({
+  code: { source: true, esm: true, lines: true },
+  allErrors: true,
+  allowUnionTypes: true,
+});
+
 ajv.addFormat("integer", /\d+/);
-ajv.addFormat('date-time', /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/);
+ajv.addFormat("date-time", /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/);
 
-const isJsonFile = (fileName) => extname(fileName) === ".json";
-const getBaseName = (schemaFileName) => basename(schemaFileName, ".json");
+const isJsonFile = (fileName: string) => extname(fileName) === ".json";
+const getBaseName = (schemaFileName: string) =>
+  basename(schemaFileName, ".json");
 
-const asVariableName = (schemaName) =>
+const asVariableName = (schemaName: string) =>
   `version_${schemaName.replace(/\./g, "_")}`;
 
-const asIntName = (schemaName) => {
-  if (isNaN(parseInt(schemaName, 10))) {
+const asIntName = (schemaVersion: string | number) => {
+  if (isNaN(parseInt(schemaVersion, 10))) {
     throw Error("Schema version could not be converted to integer");
   }
 
-  return parseInt(schemaName, 10);
+  return parseInt(schemaVersion, 10);
 };
 
 // get schemas,
-const getSchemas = async (directory) => {
+const getSchemas = async (directory: string) => {
   const files = await readdir(directory);
   return files.filter(isJsonFile).map(getBaseName);
-}
+};
 
 const generateModuleIndex = (schemas) => {
   const formatRequire = (baseSchemaName) => {
@@ -57,7 +62,7 @@ export default versions;
 \r\n`;
 };
 
-const buildSchemas = async () => {
+export const buildSchemas = async () => {
   const schemaSrcDirectory = resolve(SCHEMA_SRC_PATH);
   const schemaOutputDirectory = resolve(SCHEMA_OUTPUT_PATH);
   const schemas = await getSchemas(schemaSrcDirectory);
@@ -66,7 +71,7 @@ const buildSchemas = async () => {
     const schemaPath = join(schemaSrcDirectory, `${baseSchemaName}.json`);
     const modulePath = join(schemaOutputDirectory, `${baseSchemaName}.js`);
 
-    const schema = await readJson(schemaPath);
+    const schema = await Bun.file(schemaPath).json();
     const validate = ajv.compile(schema);
     const moduleCode = standaloneCode(ajv, validate);
 
@@ -79,5 +84,3 @@ const buildSchemas = async () => {
   const moduleIndex = generateModuleIndex(schemas);
   await writeFile(moduleIndexPath, moduleIndex);
 };
-
-buildSchemas();

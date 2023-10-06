@@ -1,8 +1,5 @@
-const debugLog = (...args) => {
-  if (typeof process !== "undefined" && process.env.NC_DEBUG_VALIDATOR) {
-    console.log(...args); // eslint-disable-line no-console
-  }
-};
+import { Protocol, StageSubject } from "@codaco/shared-consts";
+import { get } from "lodash-es";
 
 /**
  * See addValidation().
@@ -23,7 +20,7 @@ const debugLog = (...args) => {
  *
  * @private
  */
-const makePattern = (pattern) => {
+const ensurePatternRegExp = (pattern: string | RegExp): RegExp => {
   if (typeof pattern === "string") {
     const re = pattern
       .replace(/\./g, "\\.")
@@ -34,7 +31,9 @@ const makePattern = (pattern) => {
   return pattern;
 };
 
-const keypathString = (keypath) => {
+export type KeyPath = string[];
+
+const keypathToString = (keypath: string | Array<string>): string => {
   if (typeof keypath === "string") {
     return keypath;
   }
@@ -46,6 +45,41 @@ const keypathString = (keypath) => {
     return `${acc}.${path}`;
   });
 };
+
+export type ValidationPattern = RegExp;
+
+export type ValidationFunction<T> = (
+  fragment: T,
+  subject: StageSubject | null,
+  keypath: KeyPath,
+) => boolean;
+
+export type ValidationMakeFailureMessage<T> = (
+  fragment: T,
+  subject: StageSubject | null,
+  keypath: KeyPath,
+) => string;
+
+export type ValidationSequence<T> = [
+  ValidationFunction<T>,
+  ValidationMakeFailureMessage<T>,
+][];
+
+export type ValidationItemSingle<T> = {
+  validate: ValidationFunction<T>;
+  makeFailureMessage: ValidationMakeFailureMessage<T>;
+};
+
+export type ValidationItemSequence<T> = {
+  sequence: ValidationSequence<T>;
+};
+
+export type ValidationItemBase = {
+  pattern: ValidationPattern;
+};
+
+export type Validation<T> = ValidationItemBase &
+  (ValidationItemSingle<T> | ValidationItemSequence<T>);
 
 /**
  * @class
@@ -60,7 +94,12 @@ const keypathString = (keypath) => {
  * Validations are added with `addValidation()` or `addValidationSequence()`.
  */
 class Validator {
-  constructor(protocol) {
+  private protocol: Protocol;
+  errors: string[];
+  warnings: string[];
+  private validations: Validation<any>[];
+
+  constructor(protocol: Protocol) {
     this.errors = [];
     this.warnings = [];
     this.validations = [];
@@ -77,9 +116,13 @@ class Validator {
    *                                      `makeFailureMessage(fragment) => string`
    *                                      Return a user-facing error message.
    */
-  addValidation(pattern, validate, makeFailureMessage) {
+  addValidation<T>(
+    pattern: string | RegExp,
+    validate: ValidationFunction<T>,
+    makeFailureMessage: ValidationMakeFailureMessage<T>,
+  ) {
     this.validations.push({
-      pattern: makePattern(pattern),
+      pattern: ensurePatternRegExp(pattern),
       validate,
       makeFailureMessage,
     });
@@ -91,8 +134,11 @@ class Validator {
    *
    * To always run multiple validations on the same pattern, call addValidation multiple times.
    */
-  addValidationSequence(pattern, ...sequence) {
-    this.validations.push({ pattern: makePattern(pattern), sequence });
+  addValidationSequence<T>(
+    pattern: string | RegExp,
+    ...sequence: ValidationSequence<T>
+  ) {
+    this.validations.push({ pattern: ensurePatternRegExp(pattern), sequence });
   }
 
   /**
@@ -106,15 +152,34 @@ class Validator {
    * @return {boolean} result false if there was an error,
    *                          true if validation passed, or if validation couldn't be completed
    */
-  validateSingle(keypath, fragment, { validate, makeFailureMessage }, subject) {
+  validateSingle(
+    keypath: KeyPath,
+    fragment: unknown,
+    {
+      validate,
+      makeFailureMessage,
+    }: {
+      validate: ValidationFunction<unknown>;
+      makeFailureMessage: ValidationMakeFailureMessage<unknown>;
+    },
+    subject: StageSubject | null,
+  ) {
     let result;
     try {
       result = validate(fragment, subject, keypath);
-    } catch (err) {
-      debugLog(err);
-      this.warnings.push(
-        `Validation error for ${keypathString(keypath)}: ${err.toString()}`,
-      );
+    } catch (err: unknown) {
+      let errorString;
+      if (err instanceof Error) {
+        errorString = `Validation error for ${keypathToString(
+          keypath,
+        )}: ${err.toString()}`;
+      } else {
+        errorString = `Validation error for ${keypathToString(
+          keypath,
+        )}: ${err}`;
+      }
+
+      this.warnings.push(errorString);
       return true;
     }
     if (!result) {
@@ -125,15 +190,20 @@ class Validator {
         // console.log('subjtn', subjectTypeName);
         failureMessage = makeFailureMessage(fragment, subject, keypath);
       } catch (err) {
-        debugLog(err);
-        this.warnings.push(
-          `makeFailureMessage error for ${keypathString(
-            keypath.shift(),
-          )}: ${err.toString()}`,
-        );
+        let errorString;
+        if (err instanceof Error) {
+          errorString = `makeFailureMessage error for ${keypathToString(
+            keypath.shift() || [],
+          )}: ${err.toString()}`;
+        } else {
+          errorString = `makeFailureMessage error for ${keypathToString(
+            keypath.shift() || [],
+          )}: ${err}`;
+        }
+        this.warnings.push(errorString);
         return true;
       }
-      this.errors.push(`${keypathString(keypath)}: ${failureMessage}`);
+      this.errors.push(`${keypathToString(keypath)}: ${failureMessage}`);
       return false;
     }
     return true;
@@ -143,7 +213,12 @@ class Validator {
    * Run a sequence validations in-order until a failure is hit
    * @private
    */
-  validateSequence(keypath, fragment, sequence, subject) {
+  validateSequence(
+    keypath: KeyPath,
+    fragment: unknown,
+    sequence: ValidationSequence<unknown>,
+    subject: StageSubject | null,
+  ) {
     sequence.every(([validate, makeFailureMessage]) =>
       this.validateSingle(
         keypath,
@@ -158,24 +233,30 @@ class Validator {
    * Run supplied validations if the validation's pattern matches the keypath
    * @private
    */
-  checkFragment(keypath, fragment, subject) {
-    this.validations.forEach(
-      ({ pattern, sequence, validate, makeFailureMessage }) => {
-        if (!pattern.test(keypathString(keypath))) {
-          return;
-        }
-        if (sequence) {
-          this.validateSequence(keypath, fragment, sequence, subject);
-        } else {
-          this.validateSingle(
-            keypath,
-            fragment,
-            { validate, makeFailureMessage },
-            subject,
-          );
-        }
-      },
-    );
+  checkFragment(
+    keypath: KeyPath,
+    fragment: unknown,
+    subject: StageSubject | null,
+  ) {
+    this.validations.forEach((validation) => {
+      const { pattern } = validation;
+      if (!pattern.test(keypathToString(keypath))) {
+        return;
+      }
+      if ("sequence" in validation) {
+        this.validateSequence(keypath, fragment, validation.sequence, subject);
+      } else {
+        this.validateSingle(
+          keypath,
+          fragment,
+          {
+            validate: validation.validate,
+            makeFailureMessage: validation.makeFailureMessage,
+          },
+          subject,
+        );
+      }
+    });
   }
 
   /**
@@ -194,13 +275,22 @@ class Validator {
    * Recursively traverse to validate parts of a protocol for which we have validations
    * @private
    */
-  traverse(fragment, keypath = ["protocol"], subject = null) {
+  traverse(
+    fragment: unknown,
+    keypath = ["protocol"],
+    subject: StageSubject | null = null,
+  ) {
     if (!fragment) {
-      debugLog("-", keypathString(keypath));
       return;
     }
 
-    const stageSubject = subject || fragment.subject;
+    let stageSubject: StageSubject | null | null;
+
+    if (subject) {
+      stageSubject = subject;
+    } else {
+      stageSubject = get(fragment, "subject", null);
+    }
 
     this.checkFragment(keypath, fragment, stageSubject);
 
@@ -212,9 +302,6 @@ class Validator {
       Object.entries(fragment).forEach(([key, val]) => {
         this.traverse(val, [...keypath, key], stageSubject);
       });
-    } else {
-      // Leaf node
-      debugLog("-", keypathString(keypath));
     }
   }
 }

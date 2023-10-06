@@ -132,14 +132,17 @@ describe("migrate v3 -> v4", () => {
     const options =
       result.codebook.node.disallowedType.variables.invalidExampleVariable
         .options;
-    expect(options).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ value: "f_o_o" }),
-        expect.objectContaining({ value: "f_o_o2" }),
-        expect.objectContaining({ value: "b_a-r:." }),
-        expect.objectContaining({ value: 5 }),
-      ]),
-    );
+
+    // Not implemented in bun yet: https://github.com/oven-sh/bun/issues/1529
+
+    // expect(options).toEqual(
+    //   expect.arrayContaining([
+    //     expect.objectContaining({ value: "f_o_o" }),
+    //     expect.objectContaining({ value: "f_o_o2" }),
+    //     expect.objectContaining({ value: "b_a-r:." }),
+    //     expect.objectContaining({ value: 5 }),
+    //   ]),
+    // );
     expect(options).toMatchSnapshot();
   });
 
@@ -154,23 +157,28 @@ describe("migrate v3 -> v4", () => {
 
     const additionalAttributes =
       result.stages[0].prompts[0].additionalAttributes;
-    expect(additionalAttributes).toEqual(
-      expect.not.arrayContaining([
-        expect.objectContaining({ variable: "whizbang" }),
-      ]),
-    );
-    expect(additionalAttributes).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ variable: "foobar" }),
-        expect.objectContaining({ variable: "fizzpop" }),
-      ]),
-    );
+
+
+    // Not implemented in bun yet: https://github.com/oven-sh/bun/issues/1529
+    // expect(additionalAttributes).toEqual(
+    //   expect.not.arrayContaining([
+    //     expect.objectContaining({ variable: "whizbang" }),
+    //   ]),
+    // );
+    // expect(additionalAttributes).toEqual(
+    //   expect.arrayContaining([
+    //     expect.objectContaining({ variable: "foobar" }),
+    //     expect.objectContaining({ variable: "fizzpop" }),
+    //   ]),
+    // );
     expect(additionalAttributes).toMatchSnapshot();
 
     const prompt = result.stages[0].prompts[1];
-    expect(prompt).toEqual(
-      expect.not.objectContaining({ additionalAttributes: {} }),
-    );
+
+    // Not implemented in bun yet: https://github.com/oven-sh/bun/issues/1529
+    // expect(prompt).toEqual(
+    //   expect.not.objectContaining({ additionalAttributes: {} }),
+    // );
     expect(prompt).toMatchSnapshot();
   });
 });
