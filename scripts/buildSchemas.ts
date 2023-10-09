@@ -1,4 +1,4 @@
-import { readdir, writeFile } from "node:fs/promises";
+import { readdir, writeFile, exists, mkdir } from "node:fs/promises";
 import { join, extname, basename, resolve } from "node:path";
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone/index.js";
@@ -65,6 +65,11 @@ export default versions;
 export const buildSchemas = async () => {
   const schemaSrcDirectory = resolve(SCHEMA_SRC_PATH);
   const schemaOutputDirectory = resolve(SCHEMA_OUTPUT_PATH);
+
+  if (!(await exists(schemaOutputDirectory))) {
+    await mkdir(schemaOutputDirectory);
+  }
+
   const schemas = await getSchemas(schemaSrcDirectory);
 
   schemas.forEach(async (baseSchemaName) => {
@@ -72,10 +77,10 @@ export const buildSchemas = async () => {
     const modulePath = join(schemaOutputDirectory, `${baseSchemaName}.js`);
 
     const schema = await Bun.file(schemaPath).json();
-    const validate = ajv.compile(schema);
-    const moduleCode = standaloneCode(ajv, validate);
+    const validateFunction = ajv.compile(schema);
+    const moduleCode = standaloneCode(ajv, validateFunction);
 
-    await writeFile(modulePath, moduleCode);
+    await writeFile(modulePath, moduleCode, {});
 
     console.log(`${baseSchemaName} done.`); // eslint-disable-line
   });
