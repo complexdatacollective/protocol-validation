@@ -4,6 +4,10 @@
 
 // Bun doesn't support module mocking yet: https://github.com/oven-sh/bun/issues/5394
 
+it.todo(
+  "Bun doesn't support module mocking yet: reimplement this test when it does",
+)
+
 // jest.unstable_mockModule('../migrations', () => ({
 //   migrations: [],
 // }));
