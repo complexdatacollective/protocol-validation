@@ -1,6 +1,6 @@
 export class MigrationNotPossibleError extends Error {
-  constructor(from = undefined, to = undefined, ...params) {
-    super(...params);
+  constructor(from: number, to: number) {
+    super();
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, MigrationNotPossibleError);
@@ -14,8 +14,8 @@ export class MigrationNotPossibleError extends Error {
 }
 
 export class VersionMismatchError extends Error {
-  constructor(from = undefined, to = undefined, ...params) {
-    super(...params);
+  constructor(from: number, to: number) {
+    super();
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, VersionMismatchError);
@@ -29,8 +29,8 @@ export class VersionMismatchError extends Error {
 }
 
 export class MigrationStepError extends Error {
-  constructor(version = undefined, ...params) {
-    super(...params);
+  constructor(version: number) {
+    super();
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, MigrationStepError);
@@ -42,15 +42,16 @@ export class MigrationStepError extends Error {
 }
 
 export class StringVersionError extends Error {
-  constructor(version = undefined, type = undefined, ...params) {
-    super(...params);
+  constructor(version: number) {
+    super();
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, MigrationNotPossibleError);
     }
 
     this.name = "StringVersionError";
-    this.message = `The ${type} schema version is not recognised, must be an integer (${JSON.stringify(
+
+    this.message = `The schema version is not recognised, must be an integer (${JSON.stringify(
       version,
     )}).`;
   }

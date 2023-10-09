@@ -70,7 +70,7 @@
     "ego": {}
   },
   "assetManifest": {},
-  "schemaVersion": "1.0.0",
+  "schemaVersion": 1,
   "stages": [
     {
       "label": "ytf",

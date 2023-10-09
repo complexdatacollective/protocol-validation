@@ -4,27 +4,22 @@ import {
   VersionMismatchError,
   StringVersionError,
 } from "./errors";
+import { ProtocolMigration } from "./migrateProtocol";
 
-const isMigrationPathValid = (path) =>
+const isMigrationPathValid = (path: Array<ProtocolMigration>) =>
   !path.some(({ migration }) => !migration);
 
 const matchMigrations =
-  (sourceVersion, targetVersion) =>
-    ({ version }) =>
-      version > sourceVersion && version <= targetVersion;
+  (sourceVersion: number, targetVersion: number) =>
+  ({ version }: { version: number }) =>
+    version > sourceVersion && version <= targetVersion;
 
-const getMigrationPath = (rawSourceSchemaVersion, targetSchemaVersion) => {
-  if (!Number.isInteger(targetSchemaVersion)) {
-    throw new StringVersionError(targetSchemaVersion, "target");
-  }
-
-  // This is a shim for the original schema which used the format "1.0.0"
-  const sourceSchemaVersion =
-    rawSourceSchemaVersion === "1.0.0" ? 1 : rawSourceSchemaVersion;
-
-  // In case string version numbers are accidentally reintroduced.
+const getMigrationPath = (
+  sourceSchemaVersion: number,
+  targetSchemaVersion: number,
+) => {
   if (!Number.isInteger(sourceSchemaVersion)) {
-    throw new StringVersionError(sourceSchemaVersion, "source");
+    throw new StringVersionError(sourceSchemaVersion);
   }
 
   if (sourceSchemaVersion >= targetSchemaVersion) {
