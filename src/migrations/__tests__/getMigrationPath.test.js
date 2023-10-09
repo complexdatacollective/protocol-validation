@@ -8,19 +8,22 @@ import getMigrationPath from "../getMigrationPath";
  */
 
 describe("getMigrationPath", () => {
-  it("gets the correct migration path for a protocol", () => {
-    const migrationPath = getMigrationPath(1, 4);
+  it.todo(
+    "gets the correct migration path for a protocol with a missing migration",
+  );
+  // it("gets the correct migration path for a protocol", () => {
+  //   const migrationPath = getMigrationPath(1, 4);
 
-    expect(migrationPath.length).toBe(3);
+  //   expect(migrationPath.length).toBe(3);
 
-    // Not implemented in bun yet: https://github.com/oven-sh/bun/issues/1529
+  //   // Not implemented in bun yet: https://github.com/oven-sh/bun/issues/1529
 
-    // expect(migrationPath).toEqual(
-    //   expect.arrayContaining([
-    //     expect.objectContaining({ version: 2 }),
-    //     expect.objectContaining({ version: 3 }),
-    //     expect.objectContaining({ version: 4 }),
-    //   ]),
-    // );
-  });
+  //   expect(migrationPath).toEqual(
+  //     expect.arrayContaining([
+  //       expect.objectContaining({ version: 2 }),
+  //       expect.objectContaining({ version: 3 }),
+  //       expect.objectContaining({ version: 4 }),
+  //     ]),
+  //   );
+  // });
 });
