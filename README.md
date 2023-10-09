@@ -1,26 +1,38 @@
-# bun starter
+# @codaco/protocol-validation
 
-## Getting Started
+This npm package implements methods for validating Network Canvas protocol files against an appropriate JSON schema.
 
-Click the [Use this template](https://github.com/wobsoriano/bun-lib-starter/generate) button to create a new repository with the contents starter.
+It exports three methods:
 
-OR
+1. validateSchema - validates a schema against the JSON schema
 
-Run `bun create wobsoriano/bun-lib-starter ./my-lib`.
-
-## Setup
-
-```bash
-# install dependencies
-bun install
-
-# test the app
-bun test
-
-# build the app, available under dist
-bun run build
+```js
+const { hasErrors, errors } = validateSchema(schemaJson);
 ```
 
-## License
+2. validateLogic - validates the logic of the protocol to ensure there are no inconsistencies. This includes validations that cannot be implemented within the JSON schema.
 
-MIT
+```js
+const { hasErrors, errors } = validateLogic(protocolJson);
+```
+
+3. validateProtocol - validates the protocol against the schema and logic.
+
+```js
+try {
+  validateProtocol(protocolJson, schemaJson);
+  // schema is valid
+} catch (e) {
+  if (e instanceof ValidationError) {
+    // schema is invalid. e.schemaErrors and e.dataErrors contain the errors
+  } else {
+    // some other error happened during the process
+  }
+}
+```
+
+It also exports migration functionality for migrating protocols from one version to another.
+
+```js
+const migratedProtocol = migrateProtocol(8, protocolJson);
+```
