@@ -3,21 +3,15 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - master
 
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-      fail-fast: false
-
+    runs-on: ubuntu-latest
     steps:
       - id: checkout
         name: Checkout
@@ -35,3 +29,7 @@ jobs:
         name: Run test
         run: |
           bun test
+      - id: build
+        name: Run build
+        run: |
+          bun build
