@@ -28,8 +28,8 @@ jobs:
       - id: test
         name: Run test
         run: |
-          bun test
+          bun run test
       - id: build
         name: Run build
         run: |
-          bun build
+          bun run build
