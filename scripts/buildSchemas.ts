@@ -67,7 +67,7 @@ export const buildSchemas = async () => {
   const schemaOutputDirectory = resolve(SCHEMA_OUTPUT_PATH);
 
   if (!(await exists(schemaOutputDirectory))) {
-    await mkdir(schemaOutputDirectory);
+    await mkdir(schemaOutputDirectory, { recursive: true });
   }
 
   const schemas = await getSchemas(schemaSrcDirectory);
