@@ -1,4 +1,4 @@
-import { ProtocolMigration } from "../migrateProtocol";
+import type { ProtocolMigration } from "../migrateProtocol";
 import version4 from "./4";
 import version5 from "./5";
 import version6 from "./6";

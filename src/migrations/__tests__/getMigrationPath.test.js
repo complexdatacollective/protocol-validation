@@ -7,7 +7,7 @@ import getMigrationPath from "../getMigrationPath";
  * e.g. 1 -> 3, will run 1 -> 2 -> 3
  */
 
-describe("migrateProtocol", () => {
+describe("getMigrationPath", () => {
   it("gets the correct migration path for a protocol", () => {
     const migrationPath = getMigrationPath(1, 4);
 

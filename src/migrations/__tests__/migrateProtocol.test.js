@@ -60,7 +60,7 @@ it.todo(
 //   });
 
 //   it("migrations transform protocol successively", () => {
-//     const [resultProtocol] = migrateProtocol(mockProtocol, 3);
+//     const resultProtocol = migrateProtocol(mockProtocol, 3);
 
 //     expect(resultProtocol).toEqual({
 //       bazz: "buzz",
@@ -70,7 +70,7 @@ it.todo(
 //   });
 
 //   it("will migrate when there are no steps", () => {
-//     const [newProtocol] = migrateProtocol(
+//     const newProtocol = migrateProtocol(
 //       {
 //         schemaVersion: 99,
 //       },
