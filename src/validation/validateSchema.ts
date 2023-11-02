@@ -13,9 +13,7 @@ export const validateSchema = async (
 
   if (!version) {
     return new Error(
-      `Protocol does not have a schema version, and force version was not used: ${JSON.stringify(
-        protocol,
-      )}`,
+      "Protocol does not have a schema version, and force version was not used.",
     );
   }
 
