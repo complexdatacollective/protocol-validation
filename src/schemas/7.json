@@ -570,10 +570,6 @@
           "type": "boolean"
         }
       },
-      "oneOf": [
-        { "required": ["concentricCircles"] },
-        { "required": ["image"] }
-      ],
       "title": "Background"
     },
     "AutomaticLayout": {

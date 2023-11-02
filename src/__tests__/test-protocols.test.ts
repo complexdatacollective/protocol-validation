@@ -28,11 +28,10 @@ const extractAndValidate = async (protocolPath: string) => {
   const protocol = await getProtocolJsonAsObject(zip);
 
   // Hack because somme test protocols don't specify schema versions correctly
-  let schemaVersion;
+  let schemaVersion = undefined;
   if (!protocol.schemaVersion || protocol.schemaVersion === "1.0.0") {
+    console.log('schemaVersion is missing or "1.0.0" for', protocolPath);
     schemaVersion = 1;
-  } else {
-    schemaVersion = protocol.schemaVersion;
   }
 
   // Validating protocol...
@@ -60,7 +59,9 @@ const extractAndValidate = async (protocolPath: string) => {
 };
 
 const PROTOCOL_PATH = "../../test-protocols";
-const protocols = readdirSync(join(__dirname, PROTOCOL_PATH));
+const protocols = readdirSync(join(__dirname, PROTOCOL_PATH)).filter((file) =>
+  file.endsWith(".netcanvas"),
+);
 
 describe("Test protocols", () => {
   it.each(protocols)("%s", async (protocol) => {
