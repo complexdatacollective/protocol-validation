@@ -26,6 +26,7 @@
     "bun-plugin-dts": "0.2.1",
     "bun-types": "^1.0.1",
     "eslint": "^8.50.0",
+    "jszip": "^3.10.1",
     "typescript": "^5.1.6"
   },
   "dependencies": {

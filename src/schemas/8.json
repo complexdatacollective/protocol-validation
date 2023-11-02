@@ -574,7 +574,10 @@
           "type": "boolean"
         }
       },
-      "required": ["concentricCircles", "skewedTowardCenter"],
+      "oneOf": [
+        { "required": ["concentricCircles"] },
+        { "required": ["image"] }
+      ],
       "title": "Background"
     },
     "AutomaticLayout": {

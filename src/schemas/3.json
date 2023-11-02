@@ -140,7 +140,7 @@
           "minProperties": 1
         },
         "sortOptions": {
-            "$ref": "#/definitions/SortOptions"
+          "$ref": "#/definitions/SortOptions"
         },
         "cardOptions": {
           "type": "object",
@@ -148,7 +148,7 @@
         },
         "searchOptions": {
           "type": "object",
-           "$ref": "#/definitions/SearchOptions"
+          "$ref": "#/definitions/SearchOptions"
         },
         "behaviours": {
           "type": "object",
@@ -524,7 +524,10 @@
           "type": "boolean"
         }
       },
-      "required": ["concentricCircles", "skewedTowardCenter"],
+      "oneOf": [
+        { "required": ["concentricCircles"] },
+        { "required": ["image"] }
+      ],
       "title": "Background"
     },
     "SortOrder": {
@@ -555,7 +558,6 @@
           }
         }
       },
-      "required": ["displayLabel"],
       "title": "CardOptions"
     },
     "Property": {
