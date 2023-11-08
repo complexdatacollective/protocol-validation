@@ -1,28 +1,20 @@
 import { validateSchema } from "./validation/validateSchema";
 import { validateLogic } from "./validation/validateLogic";
 import { Protocol } from "@codaco/shared-consts";
-export class ValidationError extends Error {
-  public schemaErrors: string[];
-  public logicErrors: string[];
-  public schemaVersion: number;
-  public schemaForced: boolean;
+import { ensureError } from "./utils/ensureError";
 
-  constructor(
-    message: string,
-    schemaErrors: string[],
-    logicErrors: string[],
-    schemaVersion: number,
-    schemaForced: boolean,
-  ) {
-    super(message);
-    this.name = "ValidationError";
-    this.schemaErrors = schemaErrors;
-    this.logicErrors = logicErrors;
-    this.message = message;
-    this.schemaVersion = schemaVersion;
-    this.schemaForced = schemaForced;
-  }
-}
+export type ValidationError = {
+  path: string;
+  message: string;
+};
+
+export type ValidationResult = {
+  isValid: boolean;
+  schemaErrors: ValidationError[];
+  logicErrors: ValidationError[];
+  schemaVersion: number;
+  schemaForced: boolean;
+};
 
 const validateProtocol = async (
   protocol: Protocol,
@@ -32,28 +24,26 @@ const validateProtocol = async (
     throw new Error("Protocol is undefined");
   }
 
-  const schemaResult = await validateSchema(protocol, forceSchemaVersion);
-  const logicResult = validateLogic(protocol);
+  try {
+    const { hasErrors: hasSchemaErrors, errors: schemaErrors } =
+      await validateSchema(protocol, forceSchemaVersion);
+    const { hasErrors: hasLogicErrors, errors: logicErrors } =
+      validateLogic(protocol);
 
-  if (!(schemaResult instanceof Error) && !(logicResult instanceof Error)) {
-    const { hasErrors: hasSchemaErrors, errors: schemaErrors } = schemaResult;
-    const { hasErrors: hasLogicErrors, errors: logicErrors } = logicResult;
-    if (hasSchemaErrors || hasLogicErrors) {
-      throw new ValidationError(
-        "Protocol is invalid!",
-        schemaErrors,
-        logicErrors,
-        protocol.schemaVersion,
-        forceSchemaVersion !== undefined,
-      );
-    }
-  } else {
+    return {
+      isValid: !hasSchemaErrors && !hasLogicErrors,
+      schemaErrors,
+      logicErrors,
+      schemaVersion: protocol.schemaVersion,
+      schemaForced: forceSchemaVersion !== undefined,
+    } as ValidationResult;
+  } catch (e) {
+    const error = ensureError(e);
+
     throw new Error(
-      `Protocol validation failed due to an internal error: ${schemaResult}}`,
+      `Protocol validation failed due to an internal error: ${error.message}`,
     );
   }
-
-  return;
 };
 
 export { validateSchema, validateLogic, validateProtocol };

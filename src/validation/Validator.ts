@@ -1,5 +1,6 @@
 import { Protocol, StageSubject } from "@codaco/shared-consts";
 import { get } from "lodash-es";
+import { ValidationError } from "..";
 
 /**
  * See addValidation().
@@ -81,6 +82,8 @@ export type ValidationItemBase = {
 export type Validation<T> = ValidationItemBase &
   (ValidationItemSingle<T> | ValidationItemSequence<T>);
 
+export type LogicError = {};
+
 /**
  * @class
  * Support data validations on a protocol.
@@ -95,7 +98,7 @@ export type Validation<T> = ValidationItemBase &
  */
 class Validator {
   private protocol: Protocol;
-  errors: string[];
+  errors: ValidationError[];
   warnings: string[];
   private validations: Validation<any>[];
 
@@ -203,7 +206,12 @@ class Validator {
         this.warnings.push(errorString);
         return true;
       }
-      this.errors.push(`${keypathToString(keypath)}: ${failureMessage}`);
+
+      this.errors.push({
+        path: keypathToString(keypath),
+        message: failureMessage,
+      });
+
       return false;
     }
     return true;

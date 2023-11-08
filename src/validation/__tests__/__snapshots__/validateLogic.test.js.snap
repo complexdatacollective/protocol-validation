@@ -3,9 +3,18 @@
 exports[`validateLogic A well formed protocol will return an array of errors 1`] = `
 {
   "errors": [
-    "protocol.codebook: Duplicate entity name "du"",
-    "protocol.stages[0].form.fields[0]: Form field variable not found in codebook.",
-    "protocol.stages[5].form.fields[0]: Form field variable not found in codebook.",
+    {
+      "message": "Duplicate entity name "du"",
+      "path": "protocol.codebook",
+    },
+    {
+      "message": "Form field variable not found in codebook.",
+      "path": "protocol.stages[0].form.fields[0]",
+    },
+    {
+      "message": "Form field variable not found in codebook.",
+      "path": "protocol.stages[5].form.fields[0]",
+    },
   ],
   "hasErrors": true,
 }
