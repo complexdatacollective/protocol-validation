@@ -24,6 +24,7 @@ import { ValidationError } from "..";
 const ensurePatternRegExp = (pattern: string | RegExp): RegExp => {
   if (typeof pattern === "string") {
     const re = pattern
+      .replace(/\\/g, "\\\\")
       .replace(/\./g, "\\.")
       .replace(/\*/g, "[^.]+")
       .replace(/\[\]/g, ".?\\[\\d+\\]");
